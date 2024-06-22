@@ -1,4 +1,4 @@
-# Whack a mole VR
+# Whack-a-Punk: Neon Beatdown
 Game made for the VR-Jam 2 - 2024  
 
 
