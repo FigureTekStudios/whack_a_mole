@@ -1,3 +1,5 @@
+// original author: PixTrick
+// https://github.com/PixTrick/StencilBufferTutorial
 Shader "Custom/StencilMask"
 {
     Properties
