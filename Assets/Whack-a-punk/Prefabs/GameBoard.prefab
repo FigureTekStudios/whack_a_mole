@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 7936393818249197109}
   m_Layer: 0
   m_Name: GameBoard
-  m_TagString: Untagged
+  m_TagString: GameBoard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   molePrefab: {fileID: 0}
+  maxMoleHoles: 10
   areaSizeX: 3.5
   areaSizeZ: 1.75
-  yOriginTransform: {fileID: 8307788227185871330}
+  rayOrigin: {fileID: 8307788227185871330}

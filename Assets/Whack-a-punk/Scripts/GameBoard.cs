@@ -1,13 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class GameBoard : MonoBehaviour
 {
-    [SerializeField] GameObject molePrefab;    
+    [SerializeField] GameObject moleHolePrefab;
+    [SerializeField] List<GameObject> moleHoles = new List<GameObject>(); 
+
+    [SerializeField] int maxMoleHoles = 10; 
+    private int currentMoleHoles = 0;    
+
     public float areaSizeX = 0; 
     public float areaSizeZ = 0;
-    public Transform yOriginTransform; // Transform of the invisible object
+    public Transform rayOrigin; // Transform of the invisible object
+
+
+    [SerializeField] bool areaDetectionEnabled = false;
 
     // Start is called before the first frame update
     void Start()
@@ -18,19 +27,36 @@ public class GameBoard : MonoBehaviour
 
     void Update()
     {
+        if (areaDetectionEnabled)
+            AreaDetection();    
+    }
+
+    private void Init()
+    {
+
+    }
+
+    private void GenerateBoard()
+    {
+
+    }
+
+    // Checks surface area of game board for empty places to spawn mole hole at.
+    private void AreaDetection()
+    {
         // Check if yOriginTransform is assigned
-        if (yOriginTransform == null)
+        if (rayOrigin == null)
         {
-            Debug.LogError("yOriginTransform is not assigned.");
+            Debug.LogError("rayOrigin is not assigned.");
             return;
         }
 
         // Generate random x and z positions within the defined area
-        float randomX = Random.Range(yOriginTransform.position.x - areaSizeX / 2, yOriginTransform.position.x + areaSizeX / 2);
-        float randomZ = Random.Range(yOriginTransform.position.z - areaSizeZ / 2, yOriginTransform.position.z + areaSizeZ / 2);
+        float randomX = Random.Range(rayOrigin.position.x - areaSizeX / 2, rayOrigin.position.x + areaSizeX / 2);
+        float randomZ = Random.Range(rayOrigin.position.z - areaSizeZ / 2, rayOrigin.position.z + areaSizeZ / 2);
 
         // Create the random position vector
-        Vector3 randomPosition = new Vector3(randomX, yOriginTransform.position.y, randomZ);
+        Vector3 randomPosition = new Vector3(randomX, rayOrigin.position.y, randomZ);
 
         // Shoot a ray from the random position downwards
         Ray ray = new Ray(randomPosition, Vector3.down);
@@ -39,6 +65,15 @@ public class GameBoard : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             Debug.Log("Ray hit: " + hit.collider.name + " at position: " + hit.point);
+            if (hit.transform.tag == "MoleHole")
+            {
+                Debug.Log($"hitting moleHole: {hit.transform.name}");
+            }
+
+            else if (hit.transform.tag == "GameBoard")
+            {
+                Debug.Log($"hitting gameboard!");
+            }
         }
         else
         {
@@ -46,24 +81,15 @@ public class GameBoard : MonoBehaviour
         }
 
         // Optional: Draw the ray in the scene view for debugging
-        Debug.DrawRay(randomPosition, Vector3.down * 100f, Color.red, 1f);
-    }
-    void Init()
-    {
-
+        Debug.DrawRay(randomPosition, Vector3.down, Color.red, 1f);
     }
 
-    void GenerateBoard()
-    {
-
-    }
-
-    void SpawnHole(Vector3 targetPos) 
+    private void SpawnHole(Vector3 targetPos) 
     {
         
     }
 
-    void DeleteAllMoleHoles()
+    private void DeleteAllMoleHoles()
     {
 
     }

@@ -8,6 +8,8 @@ TagManager:
   - Flame
   - Water
   - Destroyer
+  - MoleHole
+  - GameBoard
   layers:
   - Default
   - TransparentFX
