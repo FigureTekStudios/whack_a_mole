@@ -123,8 +123,11 @@ public class GameBoard : MonoBehaviour
             drawSphere = false;
         }
 
+#if UNITY_EDITOR
         // Optional: Draw the ray in the scene view for debugging
         Debug.DrawRay(randomPosition, Vector3.down, Color.red, 1f);
+#endif
+
     }
 
     private void SpawnHole(Vector3 targetPos) 
@@ -150,6 +153,7 @@ public class GameBoard : MonoBehaviour
         moleHoleCount = 0;  
     }
 
+#if UNITY_EDITOR
     void OnDrawGizmos()
     {
         if (drawSphere)
@@ -158,4 +162,5 @@ public class GameBoard : MonoBehaviour
             Gizmos.DrawWireSphere(lastSpherePosition, sphereRadius);
         }
     }
+#endif
 }
