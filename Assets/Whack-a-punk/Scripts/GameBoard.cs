@@ -5,9 +5,8 @@ using UnityEngine;
 public class GameBoard : MonoBehaviour
 {
     [SerializeField] GameObject molePrefab;    
-
-    public int areaSizeX = 0; 
-    public int areaSizeZ = 0;
+    public float areaSizeX = 0; 
+    public float areaSizeZ = 0;
     public Transform yOriginTransform; // Transform of the invisible object
 
     // Start is called before the first frame update
@@ -27,8 +26,8 @@ public class GameBoard : MonoBehaviour
         }
 
         // Generate random x and z positions within the defined area
-        float randomX = Random.Range(-areaSizeX / 2, areaSizeX / 2);
-        float randomZ = Random.Range(-areaSizeZ / 2, areaSizeZ / 2);
+        float randomX = Random.Range(yOriginTransform.position.x - areaSizeX / 2, yOriginTransform.position.x + areaSizeX / 2);
+        float randomZ = Random.Range(yOriginTransform.position.z - areaSizeZ / 2, yOriginTransform.position.z + areaSizeZ / 2);
 
         // Create the random position vector
         Vector3 randomPosition = new Vector3(randomX, yOriginTransform.position.y, randomZ);
