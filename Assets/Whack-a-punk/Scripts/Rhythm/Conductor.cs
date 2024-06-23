@@ -70,7 +70,6 @@ public class Conductor : MonoBehaviour
             {
                 _invokedHalfBeat = true;
                 OnHalfBeat?.Invoke(-beatUntilStart, -1, -1);
-                Debug.Log("Half beat " + (-beatUntilStart));
             }
 
             if (positionInBeats > song.beatsBeforeStart - _beatUntilStart)
@@ -78,7 +77,6 @@ public class Conductor : MonoBehaviour
                 _invokedHalfBeat = false;
                 _beatUntilStart--;
                 OnBeat?.Invoke(-beatUntilStart, -1, -1);
-                Debug.Log("Beat " + (-beatUntilStart));
 
                 if (_beatUntilStart == 0)
                 {
@@ -105,13 +103,11 @@ public class Conductor : MonoBehaviour
             if (!_invokedHalfBeat && ((_songPosition % song.spb) > song.spb / 2))
             {
                 OnHalfBeatHandler();
-                Debug.Log("Half beat " + _currentBeatInSong + " measure " + _currentMeasure);
             }
 
             if (positionInBeats > _currentBeatInSong - song.beatsBeforeStart)
             {
                 OnBeatHandler();
-                Debug.Log("Beat " + _currentBeatInSong + " measure " + _currentMeasure);
             }
         }
     }
