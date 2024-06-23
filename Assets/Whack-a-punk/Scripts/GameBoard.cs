@@ -7,7 +7,7 @@ public class GameBoard : MonoBehaviour
     [SerializeField] GameObject moleHolePrefab;
     private List<GameObject> moleHoles = new List<GameObject>(); 
 
-    [SerializeField] readonly int maxMoleHoles = 10;
+    [SerializeField] int maxMoleHoles = 10;
     [SerializeField] int moleHoleCount = 0;    
 
     public float areaSizeX = 0; 
@@ -19,6 +19,8 @@ public class GameBoard : MonoBehaviour
     public float sphereRadius = 1f;
     private bool drawSphere = false;
     private Vector3 lastSpherePosition;
+
+    private float edgeBuffer = .25f;
 
     void Update()
     {
@@ -66,9 +68,14 @@ public class GameBoard : MonoBehaviour
             return;
         }
 
+
+        // Calculate the effective area size considering the edge buffer
+        float effectiveAreaSizeX = areaSizeX - 2 * edgeBuffer;
+        float effectiveAreaSizeZ = areaSizeZ - 2 * edgeBuffer;
+
         // Generate random x and z positions within the defined area
-        float randomX = Random.Range(rayOrigin.position.x - areaSizeX / 2, rayOrigin.position.x + areaSizeX / 2);
-        float randomZ = Random.Range(rayOrigin.position.z - areaSizeZ / 2, rayOrigin.position.z + areaSizeZ / 2);
+        float randomX = Random.Range(rayOrigin.position.x - effectiveAreaSizeX / 2, rayOrigin.position.x + effectiveAreaSizeX / 2);
+        float randomZ = Random.Range(rayOrigin.position.z - effectiveAreaSizeZ / 2, rayOrigin.position.z + effectiveAreaSizeZ / 2);
 
         // Create the random position vector
         Vector3 randomPosition = new Vector3(randomX, rayOrigin.position.y, randomZ);

@@ -651,7 +651,7 @@ PrefabInstance:
     - target: {fileID: 7936393818249197109, guid: ad741adca8f819c44a2d50b779fc56e6,
         type: 3}
       propertyPath: sphereRadius
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 8266305777335644805, guid: ad741adca8f819c44a2d50b779fc56e6,
         type: 3}
