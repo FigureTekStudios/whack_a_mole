@@ -27,8 +27,7 @@ public class GameBoard : MonoBehaviour
 
     private void Start()
     {
-        moleHolesParent = GameObject.Find("MoleHolesParent").transform;    
-        rayOrigin = GameObject.Find("SurfaceCheckOrigin").transform;
+        Init();
     }
 
     void Update()
@@ -45,7 +44,8 @@ public class GameBoard : MonoBehaviour
 
     private void Init()
     {
-        StartCoroutine(GenerateGameBoard());
+        moleHolesParent = GameObject.Find("MoleHolesParent").transform;
+        rayOrigin = GameObject.Find("SurfaceCheckOrigin").transform;
     }
 
     private IEnumerator GenerateGameBoard()

@@ -8,13 +8,14 @@ public class MoleHole : MonoBehaviour
 {
     private enum MoleState
     {
-        idle, hit, revealing, retreating
+        idle, hit, revealing, retreating, hiding
     }
-    private MoleState moleState;
+    private MoleState moleState = MoleState.hiding;
 
     // score that gets returned to game manager
     public int score = 10;
 
+    private Animator animator;
     public AnimationClip idleAnimClip, hitAnimClip, revealAnimClip, retreatAnimClip;
     public AudioClip idleAudioClip, hitAudioClip, revealAudioClip, retreatAudioClip;
     public ParticleSystem hitParticle, revealParticle, retreatParticle;
@@ -23,18 +24,20 @@ public class MoleHole : MonoBehaviour
 
     private void Init()
     {
-       
+       animator = GetComponent<Animator>(); 
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "Mallet")
             Hit();
-
     }
 
     private void Hit()
     {
+        //hitAnimClip.play();
+        //hitAudioClip.isReadyToPlay();
+        hitParticle.Play(); 
         OnMoleHit?.Invoke(score);   
     }
 
