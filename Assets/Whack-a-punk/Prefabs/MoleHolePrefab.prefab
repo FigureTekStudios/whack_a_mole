@@ -94,8 +94,7 @@ GameObject:
   - component: {fileID: 3140785310776773204}
   - component: {fileID: 7338587552428050821}
   - component: {fileID: 5683734497224921611}
-  - component: {fileID: 182223699721669961}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: HoleMaskShader
   m_TagString: MoleHole
   m_Icon: {fileID: 0}
@@ -167,28 +166,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &182223699721669961
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1500173977490750741}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2231620362976644649
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,6 +245,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59eb893032c861844bf0d28881aa4fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 10
+  idleAnimClip: {fileID: 0}
+  hitAnimClip: {fileID: 0}
+  revealAnimClip: {fileID: 0}
+  retreatAnimClip: {fileID: 0}
+  idleAudioClip: {fileID: 0}
+  hitAudioClip: {fileID: 0}
+  revealAudioClip: {fileID: 0}
+  retreatAudioClip: {fileID: 0}
+  hitParticle: {fileID: 0}
+  revealParticle: {fileID: 0}
+  retreatParticle: {fileID: 0}
 --- !u!1 &5241129281701421997
 GameObject:
   m_ObjectHideFlags: 0

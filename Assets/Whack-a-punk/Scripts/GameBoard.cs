@@ -105,7 +105,7 @@ public class GameBoard : MonoBehaviour
 
             foreach (var hitCollider in hitColliders)
             {
-                Debug.Log("Sphere hit: " + hitCollider.name + " at position: " + hit.point);
+                //Debug.Log("Sphere hit: " + hitCollider.name + " at position: " + hit.point);
 
                 if (hitCollider.CompareTag("MoleHole"))
                 {
@@ -116,7 +116,13 @@ public class GameBoard : MonoBehaviour
             }
 
             if (canSpawn && moleHoleCount <= maxMoleHoles)
-                SpawnHole(hit.point);
+            {
+                // Calculate the rotation based on the hit normal
+                Quaternion hitRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+                Debug.Log($"{hit.transform.name} hit rotation is: {hitRotation}");
+                SpawnHole(hit.point, hitRotation);
+
+            }
         }
         else
         {
@@ -131,10 +137,14 @@ public class GameBoard : MonoBehaviour
 
     }
 
-    private void SpawnHole(Vector3 targetPos) 
+    private void SpawnHole(Vector3 targetPos, Quaternion targetRot) 
     {
         var moleHole = Instantiate(moleHolePrefab, targetPos, transform.rotation);
+
+        Vector3 adjustment = new Vector3(0, moleHole.GetComponentInChildren<CapsuleCollider>().bounds.extents.y, 0);
+        moleHole.transform.position = new Vector3( targetPos.x + adjustment.x, targetPos.y, targetPos.z + adjustment.z) ;   
         moleHole.transform.parent = moleHolesParent;
+        
         moleHoles.Add(moleHole);    
         moleHoleCount++;
     }
