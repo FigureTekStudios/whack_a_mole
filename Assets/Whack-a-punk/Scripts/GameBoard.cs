@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
-using Unity.XR.CoreUtils.Collections;
 using UnityEngine;
 
 public class GameBoard : MonoBehaviour
@@ -9,48 +7,53 @@ public class GameBoard : MonoBehaviour
     [SerializeField] GameObject moleHolePrefab;
     private List<GameObject> moleHoles = new List<GameObject>(); 
 
-    [SerializeField] readonly int maxMoleHoles = 10; 
-    private int moleHoleCount = 0;    
+    [SerializeField] readonly int maxMoleHoles = 10;
+    [SerializeField] int moleHoleCount = 0;    
 
     public float areaSizeX = 0; 
     public float areaSizeZ = 0;
+
+    private List<Vector3> spawnLocs = new List<Vector3>();   
+
     [SerializeField] Transform rayOrigin; // Transform of the invisible object
 
     [SerializeField] bool areaDetectionEnabled = false;
 
    
-    void Start()
-    {
-        
-    }
-
-
     void Update()
     {
         if (areaDetectionEnabled)
-            AreaDetection();    
+            AreaDetection();
+
+        if (Input.GetKeyDown(KeyCode.D))
+            DeleteAllMoleHoles();
+
+        if (Input.GetKeyDown(KeyCode.S)) StartCoroutine(GenerateGameBoard());  
     }
 
     private void Init()
     {
-
+        StartCoroutine(GenerateGameBoard());
     }
 
     private IEnumerator GenerateGameBoard()
     {
         Debug.Log("Generating game board...");
+
         areaDetectionEnabled = true;    
-        return new WaitUntil(() => moleHoleCount == maxMoleHoles);
+        yield return new WaitUntil(() => spawnLocs.Count == maxMoleHoles);
         areaDetectionEnabled = false;
 
+       foreach (var loc in spawnLocs)
+            SpawnHole(loc);
 
-
+        Debug.Log("Game board generated!");
     }
 
     // Checks surface area of game board for empty places to spawn mole hole at.
     private void AreaDetection()
     {
-        // Check if yOriginTransform is assigned
+        // Check if rayOrigin object is assigned
         if (rayOrigin == null)
         {
             Debug.LogError("rayOrigin is not assigned.");
@@ -76,7 +79,7 @@ public class GameBoard : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.Log("Ray hit: " + hit.collider.name + " at position: " + hit.point);
+            //Debug.Log("Ray hit: " + hit.collider.name + " at position: " + hit.point);
             if (hit.transform.tag == "MoleHole")
             {
                 Debug.Log($"hitting moleHole: {hit.transform.name}");
@@ -84,6 +87,9 @@ public class GameBoard : MonoBehaviour
 
             else if (hit.transform.tag == "GameBoard")
             {
+                if (spawnLocs.Count <= maxMoleHoles)
+                    spawnLocs.Add(hit.point);
+
                 Debug.Log($"hitting gameboard!");
             }
         }
@@ -105,8 +111,15 @@ public class GameBoard : MonoBehaviour
 
     private void DeleteAllMoleHoles()
     {
+        if (moleHoleCount == 0 || moleHoles.Count == 0)
+        {
+            Debug.Log("Can't delete mole holes! no enabled mole holes to delete.");
+            return;
+        }
+
         foreach (var moleHole in moleHoles)
             Destroy(moleHole);
+
         moleHoles.Clear();
         moleHoleCount = 0;  
     }
