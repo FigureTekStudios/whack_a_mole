@@ -10,7 +10,7 @@ public class GameBoard : MonoBehaviour
     [SerializeField] int maxMoleHoles = 10;
     private int moleHoleCount = 0;    
 
-    // this should matcg the surface size of the game board mesh
+    // this should match the surface size of the game board mesh
     public float areaSizeX = 0; 
     public float areaSizeZ = 0;
 
