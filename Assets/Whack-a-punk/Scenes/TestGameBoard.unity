@@ -650,10 +650,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7936393818249197109, guid: ad741adca8f819c44a2d50b779fc56e6,
         type: 3}
-      propertyPath: moleHolePrefab
-      value: 
-      objectReference: {fileID: 6212603118149641102, guid: d1a023cf602fb44488ac47b37b8d2165,
-        type: 3}
+      propertyPath: sphereRadius
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8266305777335644805, guid: ad741adca8f819c44a2d50b779fc56e6,
         type: 3}
       propertyPath: m_Name
@@ -726,6 +725,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MoleHolePrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 6212603118149641102, guid: d1a023cf602fb44488ac47b37b8d2165,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

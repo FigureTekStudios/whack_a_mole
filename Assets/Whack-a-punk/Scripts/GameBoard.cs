@@ -13,13 +13,13 @@ public class GameBoard : MonoBehaviour
     public float areaSizeX = 0; 
     public float areaSizeZ = 0;
 
-    private List<Vector3> spawnLocs = new List<Vector3>();   
-
     [SerializeField] Transform rayOrigin; // Transform of the invisible object
 
     [SerializeField] bool areaDetectionEnabled = false;
+    public float sphereRadius = 1f;
+    private bool drawSphere = false;
+    private Vector3 lastSpherePosition;
 
-   
     void Update()
     {
         if (areaDetectionEnabled)
@@ -28,7 +28,8 @@ public class GameBoard : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.D))
             DeleteAllMoleHoles();
 
-        if (Input.GetKeyDown(KeyCode.S)) StartCoroutine(GenerateGameBoard());  
+        if (Input.GetKeyDown(KeyCode.S)) 
+            StartCoroutine(GenerateGameBoard());  
     }
 
     private void Init()
@@ -41,11 +42,8 @@ public class GameBoard : MonoBehaviour
         Debug.Log("Generating game board...");
 
         areaDetectionEnabled = true;    
-        yield return new WaitUntil(() => spawnLocs.Count == maxMoleHoles);
+        yield return new WaitUntil(() => moleHoleCount == maxMoleHoles);
         areaDetectionEnabled = false;
-
-       foreach (var loc in spawnLocs)
-            SpawnHole(loc);
 
         Debug.Log("Game board generated!");
     }
@@ -57,12 +55,14 @@ public class GameBoard : MonoBehaviour
         if (rayOrigin == null)
         {
             Debug.LogError("rayOrigin is not assigned.");
+            areaDetectionEnabled = false;
             return;
         }
 
         if (moleHoleCount == maxMoleHoles)
         {
             Debug.Log("moleHoleCount reached maxed count");
+            areaDetectionEnabled = false;
             return;
         }
 
@@ -80,22 +80,34 @@ public class GameBoard : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             //Debug.Log("Ray hit: " + hit.collider.name + " at position: " + hit.point);
-            if (hit.transform.tag == "MoleHole")
+            // Store the last sphere position for drawing
+            lastSpherePosition = hit.point;
+            drawSphere = true;
+
+            // Perform a sphere check at the hit point
+            Collider[] hitColliders = Physics.OverlapSphere(hit.point, sphereRadius);
+            bool canSpawn = true;
+
+            foreach (var hitCollider in hitColliders)
             {
-                Debug.Log($"hitting moleHole: {hit.transform.name}");
+                Debug.Log("Sphere hit: " + hitCollider.name + " at position: " + hit.point);
+
+                if (hitCollider.CompareTag("MoleHole"))
+                {
+                    Debug.Log($"hitting moleHole: {hitCollider.transform.name}");
+                    canSpawn = false;
+                    break;
+                }
             }
 
-            else if (hit.transform.tag == "GameBoard")
-            {
-                if (spawnLocs.Count <= maxMoleHoles)
-                    spawnLocs.Add(hit.point);
-
-                Debug.Log($"hitting gameboard!");
-            }
+            if (canSpawn && moleHoleCount <= maxMoleHoles)
+                SpawnHole(hit.point);
         }
         else
         {
+            // Log if the ray did not hit anything
             Debug.Log("Ray did not hit anything.");
+            drawSphere = false;
         }
 
         // Optional: Draw the ray in the scene view for debugging
@@ -122,5 +134,14 @@ public class GameBoard : MonoBehaviour
 
         moleHoles.Clear();
         moleHoleCount = 0;  
+    }
+
+    void OnDrawGizmos()
+    {
+        if (drawSphere)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(lastSpherePosition, sphereRadius);
+        }
     }
 }

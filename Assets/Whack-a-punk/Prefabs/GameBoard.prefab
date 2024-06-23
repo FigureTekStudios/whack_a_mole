@@ -150,8 +150,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a03580a1db9b8b747ac1ebe499682868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  molePrefab: {fileID: 0}
-  maxMoleHoles: 10
+  moleHolePrefab: {fileID: 6212603118149641102, guid: d1a023cf602fb44488ac47b37b8d2165,
+    type: 3}
+  moleHoleCount: 0
   areaSizeX: 3.5
   areaSizeZ: 1.75
   rayOrigin: {fileID: 8307788227185871330}
+  areaDetectionEnabled: 0
