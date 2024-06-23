@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8307788227185871330}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SurfaceCheckOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 5707916015278867413}
   - component: {fileID: 1136673656208628850}
   - component: {fileID: 7936393818249197109}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameBoard
   m_TagString: GameBoard
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 082bf51b54542964a91ce436582633d5, type: 2}
+  - {fileID: 2100000, guid: 1f3971dce59ba714fb0337958fe41c0d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -152,8 +152,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moleHolePrefab: {fileID: 6212603118149641102, guid: d1a023cf602fb44488ac47b37b8d2165,
     type: 3}
+  maxMoleHoles: 10
   moleHoleCount: 0
   areaSizeX: 3.5
   areaSizeZ: 1.75
   rayOrigin: {fileID: 8307788227185871330}
   areaDetectionEnabled: 0
+  sphereRadius: 0.25
