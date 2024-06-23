@@ -5,12 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/VR-Template/Scenes/1 Start Scene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/VR-Template/Scenes/2 Game Scene.unity
     guid: eccb2bc76074b2849b626b75e749890d
+  - enabled: 1
+    path: Assets/Whack-a-punk/Scenes/TestScenes/TestScenePaul.unity
+    guid: fd0c88d560dd66840bcc29e6733999e4
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 2238d457089b9494896515a25debf01c,
       type: 2}
