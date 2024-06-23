@@ -1,24 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using Unity.XR.CoreUtils.Collections;
 using UnityEngine;
 
 public class GameBoard : MonoBehaviour
 {
     [SerializeField] GameObject moleHolePrefab;
-    [SerializeField] List<GameObject> moleHoles = new List<GameObject>(); 
+    private List<GameObject> moleHoles = new List<GameObject>(); 
 
-    [SerializeField] int maxMoleHoles = 10; 
-    private int currentMoleHoles = 0;    
+    [SerializeField] readonly int maxMoleHoles = 10; 
+    private int moleHoleCount = 0;    
 
     public float areaSizeX = 0; 
     public float areaSizeZ = 0;
-    public Transform rayOrigin; // Transform of the invisible object
-
+    [SerializeField] Transform rayOrigin; // Transform of the invisible object
 
     [SerializeField] bool areaDetectionEnabled = false;
 
-    // Start is called before the first frame update
+   
     void Start()
     {
         
@@ -36,8 +36,14 @@ public class GameBoard : MonoBehaviour
 
     }
 
-    private void GenerateBoard()
+    private IEnumerator GenerateGameBoard()
     {
+        Debug.Log("Generating game board...");
+        areaDetectionEnabled = true;    
+        return new WaitUntil(() => moleHoleCount == maxMoleHoles);
+        areaDetectionEnabled = false;
+
+
 
     }
 
@@ -48,6 +54,12 @@ public class GameBoard : MonoBehaviour
         if (rayOrigin == null)
         {
             Debug.LogError("rayOrigin is not assigned.");
+            return;
+        }
+
+        if (moleHoleCount == maxMoleHoles)
+        {
+            Debug.Log("moleHoleCount reached maxed count");
             return;
         }
 
@@ -86,12 +98,16 @@ public class GameBoard : MonoBehaviour
 
     private void SpawnHole(Vector3 targetPos) 
     {
-        
+        var moleHole = Instantiate(moleHolePrefab, targetPos, transform.rotation);
+        moleHoles.Add(moleHole);    
+        moleHoleCount++;
     }
 
     private void DeleteAllMoleHoles()
     {
-
+        foreach (var moleHole in moleHoles)
+            Destroy(moleHole);
+        moleHoles.Clear();
+        moleHoleCount = 0;  
     }
-
 }
