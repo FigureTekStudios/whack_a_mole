@@ -8,19 +8,27 @@ public class GameBoard : MonoBehaviour
     private List<GameObject> moleHoles = new List<GameObject>(); 
 
     [SerializeField] int maxMoleHoles = 10;
-    [SerializeField] int moleHoleCount = 0;    
+    private int moleHoleCount = 0;    
 
     public float areaSizeX = 0; 
     public float areaSizeZ = 0;
 
-    [SerializeField] Transform rayOrigin; // Transform of the invisible object
+    private Transform rayOrigin; // Transform of the invisible object
 
-    [SerializeField] bool areaDetectionEnabled = false;
+    private bool areaDetectionEnabled = false;
     public float sphereRadius = 1f;
     private bool drawSphere = false;
     private Vector3 lastSpherePosition;
 
     private float edgeBuffer = .25f;
+
+    private Transform moleHolesParent;
+
+    private void Start()
+    {
+        moleHolesParent = GameObject.Find("MoleHolesParent").transform;    
+        rayOrigin = GameObject.Find("SurfaceCheckOrigin").transform;
+    }
 
     void Update()
     {
@@ -86,7 +94,6 @@ public class GameBoard : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            //Debug.Log("Ray hit: " + hit.collider.name + " at position: " + hit.point);
             // Store the last sphere position for drawing
             lastSpherePosition = hit.point;
             drawSphere = true;
@@ -112,7 +119,6 @@ public class GameBoard : MonoBehaviour
         }
         else
         {
-            // Log if the ray did not hit anything
             Debug.Log("Ray did not hit anything.");
             drawSphere = false;
         }
@@ -124,6 +130,7 @@ public class GameBoard : MonoBehaviour
     private void SpawnHole(Vector3 targetPos) 
     {
         var moleHole = Instantiate(moleHolePrefab, targetPos, transform.rotation);
+        moleHole.transform.parent = moleHolesParent;
         moleHoles.Add(moleHole);    
         moleHoleCount++;
     }
