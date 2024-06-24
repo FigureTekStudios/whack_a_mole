@@ -3,6 +3,17 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     private static AudioSource audioSource;
+    private static GameObject soundManager; 
+  
+    public static void Initialize()
+    {
+        if (soundManager == null)
+        {
+            soundManager = new GameObject("SoundManager");
+            audioSource = soundManager.AddComponent<AudioSource>();
+            Object.DontDestroyOnLoad(soundManager);
+        }
+    }
 
     /// <summary>
     /// Plays an audio clip.
@@ -22,7 +33,6 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
-     
         audioSource.PlayOneShot(clip);
     }
 }
