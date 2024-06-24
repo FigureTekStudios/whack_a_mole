@@ -32,12 +32,6 @@ public class MoleHole : MonoBehaviour
         StartCoroutine(RevealMole());
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.transform.tag == "Mallet")
-            Hit();
-    }
-
     private void StateManager(MoleState state)
     {
         switch (state)

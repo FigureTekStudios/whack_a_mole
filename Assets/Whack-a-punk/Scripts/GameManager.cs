@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //InitializeGame();
+        InitializeGame();
     }
 
     private void Update()
