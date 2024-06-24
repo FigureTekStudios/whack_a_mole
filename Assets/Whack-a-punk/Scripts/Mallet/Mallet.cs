@@ -12,22 +12,33 @@ public class Mallet : MonoBehaviour
     [SerializeField]
     private GameObject malletCenter;
     
-    private float _lastHighPosition ;
-    private float _lastHighPositionTime;
+    [SerializeField]
+    private Transform trackedTransform;
+    [SerializeField]
+    private Rigidbody rigidbody;
 
-    private void Start()
-    {
-        _lastHighPosition = malletCenter.transform.position.y;
-        _lastHighPositionTime = Time.time;
-    }
+    private bool _hasReachedSufficientHeight;
+    private float _lastTimeSufficientHeight;
     
     private void Update()
     {
-        if (malletCenter.transform.position.y > _lastHighPosition)
+        if (malletCenter.transform.position.y > necessaryHeight)
         {
-            _lastHighPosition = malletCenter.transform.position.y;
-            _lastHighPositionTime = Time.time;
+            _hasReachedSufficientHeight = true;
+            _lastTimeSufficientHeight = Time.time;
         }
+    }
+    
+    private void FixedUpdate()
+    {
+        rigidbody.velocity = (trackedTransform.position - transform.position) / Time.fixedDeltaTime;
+        
+        Quaternion rotationDifference = trackedTransform.rotation * Quaternion.Inverse(transform.rotation);
+        rotationDifference.ToAngleAxis(out float angleInDegree, out Vector3 rotationAxis);
+        
+        Vector3 rotationDifferenceInDegree = angleInDegree * rotationAxis;
+        
+        rigidbody.angularVelocity = rotationDifferenceInDegree * Mathf.Deg2Rad / Time.fixedDeltaTime;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -40,11 +51,9 @@ public class Mallet : MonoBehaviour
         
         Debug.Log("Found hittable " + other.name);
 
-        bool hitWithForce = _lastHighPosition < other.bounds.max.y + necessaryHeight
-                            || _lastHighPositionTime + necessarySpeed < Time.time;
+        bool hitWithForce = _hasReachedSufficientHeight && _lastTimeSufficientHeight + necessarySpeed >= Time.time;
             
-        _lastHighPosition = transform.position.y;
-        _lastHighPositionTime = Time.time;
+        _hasReachedSufficientHeight = false;
         
         if (hitWithForce)
         {

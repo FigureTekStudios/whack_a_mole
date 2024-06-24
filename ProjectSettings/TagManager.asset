@@ -40,10 +40,10 @@ TagManager:
   - 
   - 
   - 
-  - Pushable
+  - LeftMallet
   - Character Collider
   - Character Controller
-  - Teleport
+  - RightMallet
   m_SortingLayers:
   - name: Default
     uniqueID: 0
