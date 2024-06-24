@@ -188,7 +188,7 @@ MonoBehaviour:
   maxMoleHoles: 7
   areaSizeX: 3.5
   areaSizeZ: 1.75
-  sphereRadius: 0.4
+  sphereRadius: 0.5
 --- !u!1001 &4118102788338477553
 PrefabInstance:
   m_ObjectHideFlags: 0

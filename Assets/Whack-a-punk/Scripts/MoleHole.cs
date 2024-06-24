@@ -37,6 +37,7 @@ public class MoleHole : MonoBehaviour
     {
         //hitAnimClip.play();
         //hitAudioClip.isReadyToPlay();
+        SoundManager.PlaySound(hitAudioClip);
         hitParticle.Play(); 
         OnMoleHit?.Invoke(score);   
     }
