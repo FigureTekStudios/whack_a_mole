@@ -19,7 +19,8 @@ public class TestInputClicker : MonoBehaviour
                 {
                     // Log the name of the hit GameObject
                     Debug.Log("Clicked on: " + hit.collider.gameObject.name);
-                    hit.transform.GetComponentInParent<MoleHole>().Hit();
+                    //hit.transform.GetComponentInParent<MoleHole>().Hit();
+                    StartCoroutine(hit.transform.GetComponentInParent<MoleHole>().RevealMole());
                 }
             }
         }

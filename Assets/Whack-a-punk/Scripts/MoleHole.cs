@@ -21,7 +21,7 @@ public class MoleHole : MonoBehaviour
 
     public Action<int> OnMoleHit;
 
-    private void Init()
+    private void Awake()
     {
        animator = GetComponent<Animator>(); 
     }
@@ -62,14 +62,15 @@ public class MoleHole : MonoBehaviour
         }
     }
 
-    private IEnumerator RevealMole()
+    public IEnumerator RevealMole()
     {
+        Debug.Log("Step into revealmole()");
         animator.SetTrigger("Reveal");
         //StateManager(MoleState.revealing);
         yield return null;
     }
-    
-    private IEnumerator RetreatMole(bool hit = false)
+
+    public IEnumerator RetreatMole(bool hit = false)
     {
         animator.SetTrigger("Retreat");
         StateManager(MoleState.retreating);
