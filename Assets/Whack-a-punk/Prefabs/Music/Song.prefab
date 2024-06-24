@@ -47,4 +47,4 @@ MonoBehaviour:
   _audioStream: {fileID: 8300000, guid: 6f5a18a35555a6c43bdf147d85a8da32, type: 3}
   _bpm: 120
   _beatPerMeasure: 4
-  beatsBeforeStart: 8
+  beatsBeforeStart: 0

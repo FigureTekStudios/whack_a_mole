@@ -32,9 +32,15 @@ public class Mallet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        IHittable hittable = other.GetComponent<IHittable>();
+        IHittable hittable = other.GetComponentInParent<IHittable>(); // look at parent mole hole for this interface
+
+        if (hittable == null) { other.GetComponent<IHittable>(); } 
+        
+        Debug.Log("collided with " + other.name);
         
         if (hittable == null) return;
+        
+        Debug.Log("Found hittable " + other.name);
 
         bool hitWithForce = _lastHighPosition < other.bounds.max.y + necessaryHeight
                             || _lastHighPositionTime + necessarySpeed < Time.time;
@@ -44,6 +50,7 @@ public class Mallet : MonoBehaviour
         
         if (hitWithForce)
         {
+            Debug.Log("Not enough force to hit " + other.name);
             return;
         }
         
