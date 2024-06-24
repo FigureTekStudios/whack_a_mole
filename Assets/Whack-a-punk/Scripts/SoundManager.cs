@@ -2,16 +2,22 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    private static AudioSource audioSource;
-    private static GameObject soundManager; 
-  
-    public static void Initialize()
+    public static SoundManager Instance { get; private set; }
+
+    private AudioSource audioSource;
+
+    private void Awake()
     {
-        if (soundManager == null)
+        // Singleton pattern implementation
+        if (Instance == null)
         {
-            soundManager = new GameObject("SoundManager");
-            audioSource = soundManager.AddComponent<AudioSource>();
-            Object.DontDestroyOnLoad(soundManager);
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -19,20 +25,15 @@ public class SoundManager : MonoBehaviour
     /// Plays an audio clip.
     /// </summary>
     /// <param name="clip">The audio clip to play.</param>
-    public static void PlaySound(AudioClip clip)
+    public void PlaySound(AudioClip clip)
     {
-        if (audioSource == null)
-        {
-            Debug.LogWarning("audio source is null");
-            return;
-        }
-
         if (clip == null)
         {
             Debug.LogWarning("SoundManager: PlaySound called with null clip");
             return;
         }
 
-        audioSource.PlayOneShot(clip);
+        audioSource.clip = clip;
+        audioSource.Play();
     }
 }

@@ -251,7 +251,7 @@ MonoBehaviour:
   revealAnimClip: {fileID: 0}
   retreatAnimClip: {fileID: 0}
   idleAudioClip: {fileID: 0}
-  hitAudioClip: {fileID: 0}
+  hitAudioClip: {fileID: 8300000, guid: e93f32e08762875449bab34f5d822da5, type: 3}
   revealAudioClip: {fileID: 0}
   retreatAudioClip: {fileID: 0}
   hitParticle: {fileID: 0}

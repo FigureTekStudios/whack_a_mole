@@ -22,6 +22,11 @@ public class MoleHole : MonoBehaviour
 
     public Action<int> OnMoleHit;
 
+    private void Start()
+    {
+        Hit();
+    }
+
     private void Init()
     {
        animator = GetComponent<Animator>(); 
@@ -36,9 +41,8 @@ public class MoleHole : MonoBehaviour
     private void Hit()
     {
         //hitAnimClip.play();
-        //hitAudioClip.isReadyToPlay();
-        SoundManager.PlaySound(hitAudioClip);
-        hitParticle.Play(); 
+        SoundManager.Instance.PlaySound(hitAudioClip);
+        //hitParticle.Play(); 
         OnMoleHit?.Invoke(score);   
     }
 
