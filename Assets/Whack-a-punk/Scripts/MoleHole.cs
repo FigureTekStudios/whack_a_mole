@@ -24,7 +24,9 @@ public class MoleHole : MonoBehaviour
     private void Awake()
     {
        animator = GetComponentInChildren<Animator>(); 
+       OnMoleHit += GameManager.Instance.AddScore;
     }
+
     private void Start()
     {
         StartCoroutine(RevealMole());
@@ -82,5 +84,10 @@ public class MoleHole : MonoBehaviour
         StateManager(MoleState.retreating);
         state = MoleState.retreating;
         yield return null;
+    }
+
+    private void OnDestroy()
+    {
+        OnMoleHit -= GameManager.Instance.AddScore;
     }
 }
