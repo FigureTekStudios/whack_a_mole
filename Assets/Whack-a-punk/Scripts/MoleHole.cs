@@ -64,13 +64,16 @@ public class MoleHole : MonoBehaviour
 
     private IEnumerator RevealMole()
     {
-        StateManager(MoleState.revealing);
+        animator.SetTrigger("Reveal");
+        //StateManager(MoleState.revealing);
         yield return null;
     }
     
     private IEnumerator RetreatMole(bool hit = false)
     {
+        animator.SetTrigger("Retreat");
         StateManager(MoleState.retreating);
         yield return null;
+        animator.SetTrigger("Hide");
     }
 }

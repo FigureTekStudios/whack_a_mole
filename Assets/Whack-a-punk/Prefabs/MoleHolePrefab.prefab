@@ -210,6 +210,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7368974041709857538}
   - component: {fileID: 7888191964975112198}
+  - component: {fileID: 8772138968817239421}
   m_Layer: 0
   m_Name: MoleHolePrefab
   m_TagString: MoleHole
@@ -248,7 +249,7 @@ MonoBehaviour:
   score: 10
   idleAnimClip: {fileID: 0}
   hitAnimClip: {fileID: 0}
-  revealAnimClip: {fileID: 0}
+  revealAnimClip: {fileID: 7400000, guid: 504b743fe2464194e94b786dd97611cb, type: 2}
   retreatAnimClip: {fileID: 0}
   idleAudioClip: {fileID: 0}
   hitAudioClip: {fileID: 8300000, guid: e93f32e08762875449bab34f5d822da5, type: 3}
@@ -257,6 +258,27 @@ MonoBehaviour:
   hitParticle: {fileID: 0}
   revealParticle: {fileID: 0}
   retreatParticle: {fileID: 0}
+--- !u!95 &8772138968817239421
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4544799323523323318}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 924ebe0ecdf25c345ab1ba851711a9fe, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5241129281701421997
 GameObject:
   m_ObjectHideFlags: 0
