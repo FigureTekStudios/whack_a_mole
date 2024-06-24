@@ -9,7 +9,7 @@ public class MoleHole : MonoBehaviour
         idle, hit, revealing, retreating, hiding
     }
 
-    private MoleState moleState = MoleState.hiding;
+    private MoleState state = MoleState.hiding;
 
     // score that gets returned to game manager
     public int score = 10;
@@ -53,10 +53,13 @@ public class MoleHole : MonoBehaviour
 
     public void Hit()
     {
-        //hitAnimClip.play();
-        SoundManager.Instance.PlaySound(hitAudioClip);
-        OnMoleHit?.Invoke(score);
-        StateManager(MoleState.retreating);
+        if (state == MoleState.idle || state == MoleState.revealing)
+        {
+            //hitAnimClip.play();
+            SoundManager.Instance.PlaySound(hitAudioClip);
+            OnMoleHit?.Invoke(score);
+            StateManager(MoleState.retreating);
+        }
     }
 
     private IEnumerator RevealMole()
