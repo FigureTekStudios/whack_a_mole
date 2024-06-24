@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Serialization;
 using UnityEngine;
 
 public class MoleHole : MonoBehaviour
@@ -10,6 +8,7 @@ public class MoleHole : MonoBehaviour
     {
         idle, hit, revealing, retreating, hiding
     }
+
     private MoleState moleState = MoleState.hiding;
 
     // score that gets returned to game manager
@@ -33,22 +32,42 @@ public class MoleHole : MonoBehaviour
             Hit();
     }
 
+    private void StateManager(MoleState state)
+    {
+        switch (state)
+        {
+            case MoleState.idle:
+                break;
+            case MoleState.hit:
+                break; 
+            case MoleState.revealing:
+                break;
+            case MoleState.retreating:
+                break;
+            case MoleState.hiding:
+                break;
+            default:
+                break;
+        }
+    }
+
     public void Hit()
     {
         //hitAnimClip.play();
         SoundManager.Instance.PlaySound(hitAudioClip);
-        //hitParticle.Play(); 
-        OnMoleHit?.Invoke(score);   
+        OnMoleHit?.Invoke(score);
+        StateManager(MoleState.retreating);
     }
 
     private IEnumerator RevealMole()
-    { 
+    {
+        StateManager(MoleState.revealing);
         yield return null;
     }
     
-    private IEnumerator RetreatMole()
+    private IEnumerator RetreatMole(bool hit = false)
     {
+        StateManager(MoleState.retreating);
         yield return null;
     }
-
 }

@@ -21,10 +21,6 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Plays an audio clip.
-    /// </summary>
-    /// <param name="clip">The audio clip to play.</param>
     public void PlaySound(AudioClip clip)
     {
         if (clip == null)
