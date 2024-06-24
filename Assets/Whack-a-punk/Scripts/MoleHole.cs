@@ -3,7 +3,7 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class MoleHole : MonoBehaviour
+public class MoleHole : MonoBehaviour, IHittable
 {
     private enum MoleState
     {
@@ -32,11 +32,11 @@ public class MoleHole : MonoBehaviour
         StartCoroutine(RevealMole());
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.transform.tag == "Mallet")
-            Hit();
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.transform.tag == "Mallet")
+    //        Hit();
+    //}
 
     private void StateManager(MoleState state)
     {
