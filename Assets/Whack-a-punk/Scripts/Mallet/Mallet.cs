@@ -45,19 +45,14 @@ public class Mallet : MonoBehaviour
     {
         IHittable hittable = other.GetComponent<IHittable>();
         
-        Debug.Log("collided with " + other.name);
-        
         if (hittable == null) return;
         
-        Debug.Log("Found hittable " + other.name);
-
         bool hitWithForce = _hasReachedSufficientHeight && _lastTimeSufficientHeight + necessarySpeed >= Time.time;
             
         _hasReachedSufficientHeight = false;
         
-        if (hitWithForce)
+        if (!hitWithForce)
         {
-            Debug.Log("Not enough force to hit " + other.name);
             return;
         }
         

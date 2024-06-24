@@ -130,6 +130,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1136673656208628850, guid: ad741adca8f819c44a2d50b779fc56e6,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 1.2047799
+      objectReference: {fileID: 0}
+    - target: {fileID: 1136673656208628850, guid: ad741adca8f819c44a2d50b779fc56e6,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1136673656208628850, guid: ad741adca8f819c44a2d50b779fc56e6,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.10238939
+      objectReference: {fileID: 0}
     - target: {fileID: 7095870306087435119, guid: ad741adca8f819c44a2d50b779fc56e6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -185,7 +200,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameBoard
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1136673656208628850, guid: ad741adca8f819c44a2d50b779fc56e6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1150,6 +1166,37 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &1942153007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1942153008}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1942153008
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942153007}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.5, z: -0.31500006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1952980625 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3172533483926345880, guid: 68bbe7df7c228e246a3b2b4024a55869,
@@ -1176,3 +1223,4 @@ SceneRoots:
   - {fileID: 918089270}
   - {fileID: 1352015720}
   - {fileID: 1246895359}
+  - {fileID: 1942153008}
