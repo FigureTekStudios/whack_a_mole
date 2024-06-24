@@ -43,7 +43,9 @@ public class Mallet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        IHittable hittable = other.GetComponent<IHittable>();
+        IHittable hittable = other.GetComponentInParent<IHittable>(); // look at parent mole hole for this interface
+
+        if (hittable == null) { other.GetComponent<IHittable>(); } 
         
         if (hittable == null) return;
         

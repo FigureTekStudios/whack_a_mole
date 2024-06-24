@@ -99,7 +99,6 @@ GameObject:
   - component: {fileID: 1693852993622012294}
   - component: {fileID: 4631341384580416739}
   - component: {fileID: 7796584365842865744}
-  - component: {fileID: 789699175395703335}
   m_Layer: 0
   m_Name: Mole
   m_TagString: MoleHole
@@ -216,19 +215,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &789699175395703335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5241129281701421997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab39d2cb63904764db4e8cd7c85b4942, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moleHole: {fileID: 7888191964975112198}
 --- !u!1001 &5365441282760334000
 PrefabInstance:
   m_ObjectHideFlags: 0
