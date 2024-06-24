@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class TestInputClicker : MonoBehaviour
@@ -11,7 +10,7 @@ public class TestInputClicker : MonoBehaviour
             // Create a ray from the camera to the mouse position
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            Debug.Log("Clicked on: ");
+
             // Perform the raycast
             if (Physics.Raycast(ray, out hit))
             {
@@ -20,6 +19,7 @@ public class TestInputClicker : MonoBehaviour
                 {
                     // Log the name of the hit GameObject
                     Debug.Log("Clicked on: " + hit.collider.gameObject.name);
+                    hit.transform.GetComponentInParent<MoleHole>().Hit();
                 }
             }
         }
