@@ -21,7 +21,7 @@ public class GameBoard : MonoBehaviour
     private bool drawSphere = false;
     private Vector3 lastSpherePosition;
 
-    private float edgeBuffer = .25f;
+    private float edgeBuffer = .375f;
 
     private Transform moleHolesParent;
 

@@ -15,7 +15,6 @@ public class MoleHole : MonoBehaviour
     public int score = 10;
 
     private Animator animator;
-    public AnimationClip idleAnimClip, hitAnimClip, revealAnimClip, retreatAnimClip;
     public AudioClip idleAudioClip, hitAudioClip, revealAudioClip, retreatAudioClip;
     public ParticleSystem hitParticle, revealParticle, retreatParticle;
 
@@ -23,7 +22,7 @@ public class MoleHole : MonoBehaviour
 
     private void Awake()
     {
-       animator = GetComponent<Animator>(); 
+       animator = GetComponentInChildren<Animator>(); 
     }
 
     private void OnTriggerEnter(Collider other)
