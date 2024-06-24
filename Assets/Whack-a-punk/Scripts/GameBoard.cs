@@ -77,7 +77,7 @@ public class GameBoard : MonoBehaviour
             return;
         }
 
-
+       
         // Calculate the effective area size considering the edge buffer
         float effectiveAreaSizeX = areaSizeX - 2 * edgeBuffer;
         float effectiveAreaSizeZ = areaSizeZ - 2 * edgeBuffer;
@@ -118,10 +118,11 @@ public class GameBoard : MonoBehaviour
             if (canSpawn && moleHoleCount <= maxMoleHoles)
             {
                 // Calculate the rotation based on the hit normal
-                Quaternion hitRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
-                Debug.Log($"{hit.transform.name} hit rotation is: {hitRotation}");
-                SpawnHole(hit.point, hitRotation);
+                //Quaternion hitRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+                //Debug.Log($"{hit.transform.name} hit rotation is: {hitRotation}");
 
+                //SpawnHole(hit.point, hitRotation);
+                SpawnHole(hit.point);
             }
         }
         else
@@ -131,18 +132,25 @@ public class GameBoard : MonoBehaviour
         }
 
 #if UNITY_EDITOR
-        // Optional: Draw the ray in the scene view for debugging
         Debug.DrawRay(randomPosition, Vector3.down, Color.red, 1f);
 #endif
 
     }
+    private void SpawnHole(Vector3 targetPos)
+    {
+        var moleHole = Instantiate(moleHolePrefab, targetPos, transform.rotation);
+        moleHole.transform.parent = moleHolesParent;
+        moleHoles.Add(moleHole);
+        moleHoleCount++;
+    }
 
     private void SpawnHole(Vector3 targetPos, Quaternion targetRot) 
     {
-        var moleHole = Instantiate(moleHolePrefab, targetPos, transform.rotation);
+        var moleHole = Instantiate(moleHolePrefab, targetPos, targetRot);
 
         Vector3 adjustment = new Vector3(0, moleHole.GetComponentInChildren<CapsuleCollider>().bounds.extents.y, 0);
-        moleHole.transform.position = new Vector3( targetPos.x + adjustment.x, targetPos.y, targetPos.z + adjustment.z) ;   
+        //moleHole.transform.position = new Vector3( targetPos.x + adjustment.x, targetPos.y, targetPos.z + adjustment.z) ;   
+        moleHole.transform.position = targetPos + adjustment;   
         moleHole.transform.parent = moleHolesParent;
         
         moleHoles.Add(moleHole);    
