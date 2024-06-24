@@ -718,7 +718,7 @@ PrefabInstance:
     - target: {fileID: 4544799323523323318, guid: 5aa829adcbb4c7f4abc9251d471a8b1b,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7368974041709857538, guid: 5aa829adcbb4c7f4abc9251d471a8b1b,
         type: 3}
@@ -769,11 +769,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7888191964975112198, guid: 5aa829adcbb4c7f4abc9251d471a8b1b,
-        type: 3}
-      propertyPath: revealAnimClip
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
