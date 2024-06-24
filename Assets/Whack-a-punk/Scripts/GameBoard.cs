@@ -38,8 +38,8 @@ public class GameBoard : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.D))
             DeleteAllMoleHoles();
 
-        if (Input.GetKeyDown(KeyCode.S)) 
-            StartCoroutine(GenerateGameBoard());  
+        //if (Input.GetKeyDown(KeyCode.S)) 
+        //    StartCoroutine(GenerateGameBoard());  
     }
 
     private void Init()
@@ -48,7 +48,7 @@ public class GameBoard : MonoBehaviour
         rayOrigin = GameObject.Find("SurfaceCheckOrigin").transform;
     }
 
-    private IEnumerator GenerateGameBoard()
+    public IEnumerator GenerateGameBoard()
     {
         Debug.Log("Generating game board...");
 

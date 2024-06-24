@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     private float countdownTimer;
     private bool gameEnded;
 
+    private GameBoard board; // this should probably another singleton
+
     private void Awake()
     {
         // Singleton pattern implementation
@@ -26,19 +28,27 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        board = GameObject.Find("GameBoard").GetComponent<GameBoard>();
     }
 
     private void Start()
     {
-        InitializeGame();
+        //InitializeGame();
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            InitializeGame();
+        }
+
         if (!gameEnded)
         {
             UpdateCountdown();
         }
+
     }
 
     public void AddScore(int amount)
@@ -55,6 +65,8 @@ public class GameManager : MonoBehaviour
         score = 0;
         countdownTimer = initialCountdownTime;
         gameEnded = false;
+        StartCoroutine(board.GenerateGameBoard());
+
         UpdateScoreText();
         UpdateCountdownText();
     }
