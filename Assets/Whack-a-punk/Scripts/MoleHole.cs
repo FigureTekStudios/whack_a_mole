@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class MoleHole : MonoBehaviour
@@ -23,6 +24,10 @@ public class MoleHole : MonoBehaviour
     private void Awake()
     {
        animator = GetComponentInChildren<Animator>(); 
+    }
+    private void Start()
+    {
+        StartCoroutine(RevealMole());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -52,12 +57,13 @@ public class MoleHole : MonoBehaviour
 
     public void Hit()
     {
+        Debug.Log("hitting");
         if (state == MoleState.idle || state == MoleState.revealing)
         {
-            //hitAnimClip.play();
+            //animator.SetTrigger("Hit"); // create anim for this
             SoundManager.Instance.PlaySound(hitAudioClip);
             OnMoleHit?.Invoke(score);
-            StateManager(MoleState.retreating);
+            StartCoroutine(RetreatMole(true));
         }
     }
 
@@ -65,6 +71,7 @@ public class MoleHole : MonoBehaviour
     {
         Debug.Log("Step into revealmole()");
         animator.SetTrigger("Reveal");
+        state = MoleState.revealing;
         //StateManager(MoleState.revealing);
         yield return null;
     }
@@ -73,7 +80,7 @@ public class MoleHole : MonoBehaviour
     {
         animator.SetTrigger("Retreat");
         StateManager(MoleState.retreating);
+        state = MoleState.retreating;
         yield return null;
-        animator.SetTrigger("Hide");
     }
 }
