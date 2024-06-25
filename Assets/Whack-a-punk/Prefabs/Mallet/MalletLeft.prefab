@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   necessarySpeed: 0.4
-  necessaryHeight: 4.5
+  necessaryHeight: 5.5
   malletCenter: {fileID: 1549112799084118789}
   trackedTransform: {fileID: 0}
   rigidbody: {fileID: 5648196453561856343}

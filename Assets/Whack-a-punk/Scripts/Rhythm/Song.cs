@@ -10,15 +10,10 @@ public class Song : MonoBehaviour
     private int _bpm = 120;
     public int bpm => _bpm;
 
-    private double _spb;
-    public double spb => _spb;
+    public double spb => (60 / (double)_bpm);
 
     [SerializeField]
     private int _beatPerMeasure = 4;
     public int beatPerMeasure => _beatPerMeasure;
 
-    private void Start()
-    {
-        _spb = 60 / (double)_bpm;
-    }
 }

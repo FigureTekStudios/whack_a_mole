@@ -27,7 +27,7 @@ public class Conductor : MonoBehaviour
     }
 
     private int _currentMeasure = 0;
-    private int _currentBeatInMeasure = 0;
+    private int _currentBeatInMeasure = 1;
     private int _currentBeatInSong = 0;
 
     public int currentMeasure => _currentMeasure;
@@ -77,7 +77,6 @@ public class Conductor : MonoBehaviour
             UpdateAudioTime?.Invoke(songPosition, _songPositionDelta);
 
             int positionInBeats = (int)Math.Floor(_songPosition / song.spb);
-            Debug.Log("positionInBeats: " + positionInBeats);
                 
             if (!_invokedHalfBeat && ((_songPosition % song.spb) > song.spb / 2))
             {
@@ -108,7 +107,7 @@ public class Conductor : MonoBehaviour
         audioSource.Stop();
         _playing = false;
         _currentMeasure = 0;
-        _currentBeatInMeasure = 0;
+        _currentBeatInMeasure = 1;
         _currentBeatInSong = 0;
         _songPosition = 0;
         _songPositionDelta = 0;
@@ -122,8 +121,6 @@ public class Conductor : MonoBehaviour
 
     private void OnBeatHandler()
 	{
-        Debug.Log("OnBeatHandler beat: " + currentBeatInSong + " beat in measure: " + currentBeatInMeasure + " measure: " + currentMeasure);
-        
 		_currentBeatInMeasure++;
         _currentBeatInSong++;
         _invokedHalfBeat = false;
@@ -142,7 +139,7 @@ public class Conductor : MonoBehaviour
 	private void CalculateSongPosition()
 	{
         double newSongPosition = audioSource.timeSamples / (double)audioSource.clip.frequency;
-
+        
         if (_songPosition > newSongPosition)
         {
             newSongPosition = _songPosition;

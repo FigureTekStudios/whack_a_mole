@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class MoleHole : MonoBehaviour, IHittable
+public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFinished, IMoleRevealAnimationEventFinished
 {
     private enum MoleState
     {
@@ -15,7 +15,8 @@ public class MoleHole : MonoBehaviour, IHittable
     // Likeliness in percent that the mole will reveal itself each beat
     public int revealLikelinessInPercent = 20;
     
-    public int revealTimeInBeats = 4;
+    public int revealTimeInBeats = 16;
+    private int currentTimeRevealedInBeats = 0;
     
     // speed multiplier for mole reveal time
     public int speed = 1; 
@@ -70,9 +71,14 @@ public class MoleHole : MonoBehaviour, IHittable
             StartCoroutine(RevealMole());
         }
 
-        if (state == MoleState.idle)
+        if (state == MoleState.idle || state == MoleState.revealing)
         {
-            
+            currentTimeRevealedInBeats++;
+
+            if (currentTimeRevealedInBeats >= revealTimeInBeats / speed)
+            {
+                StartCoroutine(RetreatMole());
+            }
         }
         
         
@@ -93,6 +99,7 @@ public class MoleHole : MonoBehaviour, IHittable
 
     public IEnumerator RevealMole()
     {
+        currentTimeRevealedInBeats = 0;
         Debug.Log("Step into revealmole()");
         animator.SetTrigger("Reveal");
         state = MoleState.revealing;
@@ -107,10 +114,34 @@ public class MoleHole : MonoBehaviour, IHittable
         state = MoleState.retreating;
         yield return null;
     }
+    
+    public IEnumerator Hide()
+    {
+        StateManager(MoleState.hiding);
+        state = MoleState.hiding;
+        yield return null;
+    }
+    
+    public IEnumerator Idle()
+    {
+        StateManager(MoleState.idle);
+        state = MoleState.idle;
+        yield return null;
+    }
 
     private void OnDestroy()
     {
         OnMoleHit -= GameManager.Instance.AddScore;
         Conductor.Instance.OnBeat -= OnBeat;
+    }
+
+    public void RetreatFinished(string label)
+    {
+        StartCoroutine(Hide());
+    }
+    
+    public void RevealFinished(string label)
+    {
+        StartCoroutine(Idle());
     }
 }
