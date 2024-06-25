@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1753809947847184355}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.764, z: 0.5}
+  m_LocalPosition: {x: -0.079999864, y: 2.764, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -186,8 +186,8 @@ MonoBehaviour:
   moleHolePrefab: {fileID: 4544799323523323318, guid: 5aa829adcbb4c7f4abc9251d471a8b1b,
     type: 3}
   maxMoleHoles: 7
-  areaSizeX: 3.5
-  areaSizeZ: 1.75
+  areaSizeX: 2
+  areaSizeZ: 4
   sphereRadius: 0.5
 --- !u!1001 &4118102788338477553
 PrefabInstance:
@@ -384,5 +384,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 160.77232, y: 0, z: 63.461193}
-  m_Center: {x: 26.18289, y: 0.000001742035, z: -1.7724737}
+  m_Size: {x: 183.08331, y: 0, z: 86.257454}
+  m_Center: {x: 25.58354, y: 0.0000064531023, z: 0.07546836}
