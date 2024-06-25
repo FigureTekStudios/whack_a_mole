@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Conductor : MonoBehaviour
 {
+    public static Conductor Instance { get; private set; }
     
     public delegate void UpdateAudioTimeEventHandler(double audioTime, double audioTimeDelta);
     public event UpdateAudioTimeEventHandler UpdateAudioTime;
@@ -28,65 +29,42 @@ public class Conductor : MonoBehaviour
     private int _currentMeasure = 0;
     private int _currentBeatInMeasure = 1;
     private int _currentBeatInSong = 0;
-    
-    private int _beatUntilStart = 0;
 
     public int currentMeasure => _currentMeasure;
     public int currentBeatInMeasure => _currentBeatInMeasure;
     public int currentBeatInSong => _currentBeatInSong;
-    
-    public int beatUntilStart => _beatUntilStart;
 
     private double _songPosition;
     private double _songPositionDelta;
     public double songPosition => _songPosition;
-
-    private bool _timerBeforePlaying;
-    private double _timer;
 
     private bool _playing;
     public bool playing => _playing;
 
     private bool _invokedHalfBeat;
     
+    private void Awake()
+    {
+        // Singleton pattern implementation
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     
-    // Start is called before the first frame update
     private void Start()
     {
-        PlaySong(song);
-        
+        if (song != null) PlaySong(song);
     }
 
-    // Update is called once per frame
     private void Update()
     {
-        _timer += Time.deltaTime;
-
-        if (_beatUntilStart > 0)
-        {
-            int positionInBeats = (int)Math.Floor(_timer / song.spb);
-
-            if (!_invokedHalfBeat && ((_timer % song.spb) > song.spb / 2))
-            {
-                _invokedHalfBeat = true;
-                OnHalfBeat?.Invoke(-beatUntilStart, -1, -1);
-            }
-
-            if (positionInBeats > song.beatsBeforeStart - _beatUntilStart)
-            {
-                _invokedHalfBeat = false;
-                _beatUntilStart--;
-                OnBeat?.Invoke(-beatUntilStart, -1, -1);
-
-                if (_beatUntilStart == 0)
-                {
-                    _timer = 0;
-                    _playing = true;
-                    audioSource.Play();
-                }
-            }
-        }
-        else if (_playing)
+        if (_playing)
         {
             if (!audioSource.isPlaying)
             {
@@ -105,7 +83,7 @@ public class Conductor : MonoBehaviour
                 OnHalfBeatHandler();
             }
 
-            if (positionInBeats > _currentBeatInSong - song.beatsBeforeStart)
+            if (positionInBeats > _currentBeatInSong)
             {
                 OnBeatHandler();
             }
@@ -119,16 +97,9 @@ public class Conductor : MonoBehaviour
         _song = song;
         audioSource.clip = song.audioStream;
         
-        if (song.beatsBeforeStart > 0)
-        {
-            _timerBeforePlaying = true;
-            _beatUntilStart = song.beatsBeforeStart;
-            
-        } else
-        {
-            audioSource.Play();
-            _playing = true;
-        }
+        audioSource.Play();
+        _playing = true;
+        
     }
 
     public void StopSong()
@@ -140,8 +111,6 @@ public class Conductor : MonoBehaviour
         _currentBeatInSong = 0;
         _songPosition = 0;
         _songPositionDelta = 0;
-        _timer = 0;
-        _beatUntilStart = 0;
     }
     
     private void OnHalfBeatHandler()
@@ -152,6 +121,7 @@ public class Conductor : MonoBehaviour
 
     private void OnBeatHandler()
 	{
+        Debug.Log("OnBeatHandler beat: " + currentBeatInSong + " beat in measure: " + currentBeatInMeasure + " measure: " + currentMeasure);
         
 		_currentBeatInMeasure++;
         _currentBeatInSong++;

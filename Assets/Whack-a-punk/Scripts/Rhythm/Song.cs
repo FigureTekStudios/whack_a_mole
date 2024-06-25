@@ -17,8 +17,6 @@ public class Song : MonoBehaviour
     private int _beatPerMeasure = 4;
     public int beatPerMeasure => _beatPerMeasure;
 
-    public int beatsBeforeStart;
-
     private void Start()
     {
         _spb = 60 / (double)_bpm;

@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using System.Runtime.CompilerServices;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class MoleHole : MonoBehaviour, IHittable
 {
@@ -11,9 +11,18 @@ public class MoleHole : MonoBehaviour, IHittable
     }
 
     private MoleState state = MoleState.hiding;
-
+    
+    // Likeliness in percent that the mole will reveal itself each beat
+    public int revealLikelinessInPercent = 20;
+    
+    public int revealTimeInBeats = 4;
+    
+    // speed multiplier for mole reveal time
+    public int speed = 1; 
     // score that gets returned to game manager
     public int score = 10;
+    
+    private int _multiplier = 1;
 
     private Animator animator;
     public AudioClip idleAudioClip, hitAudioClip, revealAudioClip, retreatAudioClip;
@@ -25,18 +34,13 @@ public class MoleHole : MonoBehaviour, IHittable
     {
        animator = GetComponentInChildren<Animator>(); 
        OnMoleHit += GameManager.Instance.AddScore;
+       Conductor.Instance.OnBeat += OnBeat;
     }
 
     private void Start()
     {
-        StartCoroutine(RevealMole());
+        // StartCoroutine(RevealMole());
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.transform.tag == "Mallet")
-    //        Hit();
-    //}
 
     private void StateManager(MoleState state)
     {
@@ -55,6 +59,24 @@ public class MoleHole : MonoBehaviour, IHittable
             default:
                 break;
         }
+    }
+
+    private void OnBeat(int currentBeatInSong, int currentBeatInMeasure, int currentMeasure)
+    {
+        if (state == MoleState.hiding)
+        {
+            if (Random.Range(0, 100) > revealLikelinessInPercent) return;
+            
+            StartCoroutine(RevealMole());
+        }
+
+        if (state == MoleState.idle)
+        {
+            
+        }
+        
+        
+        
     }
 
     public void Hit()
@@ -89,5 +111,6 @@ public class MoleHole : MonoBehaviour, IHittable
     private void OnDestroy()
     {
         OnMoleHit -= GameManager.Instance.AddScore;
+        Conductor.Instance.OnBeat -= OnBeat;
     }
 }
