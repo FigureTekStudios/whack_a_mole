@@ -30,6 +30,9 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     public ParticleSystem hitParticle, revealParticle, retreatParticle;
 
     public Action<int> OnMoleHit;
+    
+    [SerializeField]
+    private CircleTimer _circleTimer;
 
     private void Awake()
     {
@@ -99,7 +102,10 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
     public IEnumerator RevealMole()
     {
+        _circleTimer.SetTimeInBeats(revealTimeInBeats);
+        
         currentTimeRevealedInBeats = 0;
+        
         Debug.Log("Step into revealmole()");
         animator.SetTrigger("Reveal");
         state = MoleState.revealing;
