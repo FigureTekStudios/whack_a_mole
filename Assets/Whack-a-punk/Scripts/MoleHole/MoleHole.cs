@@ -67,13 +67,6 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
     private void OnBeat(int currentBeatInSong, int currentBeatInMeasure, int currentMeasure)
     {
-        if (state == MoleState.hiding)
-        {
-            if (Random.Range(0, 100) > revealLikelinessInPercent) return;
-            
-            StartCoroutine(RevealMole());
-        }
-
         if (state == MoleState.idle || state == MoleState.revealing)
         {
             currentTimeRevealedInBeats++;
@@ -84,8 +77,12 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
             }
         }
         
-        
-        
+        if (state == MoleState.hiding)
+        {
+            if (Random.Range(0, 100) > revealLikelinessInPercent) return;
+            
+            StartCoroutine(RevealMole());
+        }
     }
 
     public void Hit()
@@ -96,6 +93,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
             //animator.SetTrigger("Hit"); // create anim for this
             SoundManager.Instance.PlaySound(hitAudioClip);
             OnMoleHit?.Invoke(score);
+            _circleTimer.StopTimer();
             StartCoroutine(RetreatMole(true));
         }
     }
@@ -118,6 +116,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         animator.SetTrigger("Retreat");
         StateManager(MoleState.retreating);
         state = MoleState.retreating;
+        _circleTimer.StopTimer();
         yield return null;
     }
     

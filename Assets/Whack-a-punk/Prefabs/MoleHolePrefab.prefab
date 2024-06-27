@@ -340,7 +340,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxRadius: 0.41
-  minRadius: 0.14
+  minRadius: 0.146
+  hideRadius: 0.14
   yellowTimeInBeats: 4
   greenTimeInBeats: 2
 --- !u!1001 &5365441282760334000

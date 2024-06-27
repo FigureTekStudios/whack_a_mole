@@ -8,6 +8,8 @@ public class CircleTimer : MonoBehaviour
     private float maxRadius = 0.41f;
     [SerializeField] 
     private float minRadius = 0.14f;
+    [SerializeField] 
+    private float hideRadius = 0.14f;
     
     [SerializeField] 
     private float yellowTimeInBeats = 4;
@@ -31,7 +33,7 @@ public class CircleTimer : MonoBehaviour
     {
         Conductor.Instance.UpdateAudioTime += UpdateAudioTime;
         _material = GetComponent<MeshRenderer>().material;
-        _material.SetFloat("_radius", minRadius);
+        _material.SetFloat("_radius", hideRadius);
         
         yellowTimeInSeconds = (float)(yellowTimeInBeats * Conductor.Instance.song.spb);
         greenTimeInSeconds = (float)(greenTimeInBeats * Conductor.Instance.song.spb);
@@ -66,6 +68,7 @@ public class CircleTimer : MonoBehaviour
         
         if (_timer <= 0)
         {
+            _material.SetFloat("_radius", hideRadius);
             _enabled = false;
         }
     }
@@ -76,7 +79,16 @@ public class CircleTimer : MonoBehaviour
         _timeInSeconds = (float)(timeInBeats * Conductor.Instance.song.spb);
         _timer = _timeInSeconds;
         _enabled = true;
-        _material.SetFloat("_radius", maxRadius);
         _material.SetColor("_color", Color.red);
+        _material.SetFloat("_radius", maxRadius);
+    }
+    
+    public void StopTimer()
+    {
+        _timeInSeconds = 0;
+        _timer = 0;
+        _timeInBeats = 0;
+        _enabled = false;
+        _material.SetFloat("_radius", hideRadius);
     }
 }
