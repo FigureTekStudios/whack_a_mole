@@ -38,7 +38,8 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     {
        animator = GetComponentInChildren<Animator>(); 
        OnMoleHit += GameManager.Instance.AddScore;
-       Conductor.Instance.OnBeat += OnBeat;
+       if (Conductor.Instance)
+            Conductor.Instance.OnBeat += OnBeat;
     }
 
     private void Start()
@@ -137,7 +138,8 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     private void OnDestroy()
     {
         OnMoleHit -= GameManager.Instance.AddScore;
-        Conductor.Instance.OnBeat -= OnBeat;
+        if (Conductor.Instance)
+            Conductor.Instance.OnBeat -= OnBeat;
     }
 
     public void RetreatFinished(string label)
