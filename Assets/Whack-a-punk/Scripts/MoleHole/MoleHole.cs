@@ -30,6 +30,14 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     public ParticleSystem hitParticle, revealParticle, retreatParticle;
 
     public Action<int> OnMoleHit;
+    
+    [SerializeField]
+    private CircleTimer _circleTimer;
+
+    [SerializeField] 
+    private float perfectTimeInBeats;
+    [SerializeField]
+    private float okTimeInBeats;
 
     private void Awake()
     {
@@ -41,7 +49,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
     private void Start()
     {
-        StartCoroutine(RevealMole());
+        // StartCoroutine(RevealMole());
     }
 
     private void StateManager(MoleState state)
@@ -65,13 +73,6 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
     private void OnBeat(int currentBeatInSong, int currentBeatInMeasure, int currentMeasure)
     {
-        if (state == MoleState.hiding)
-        {
-            if (Random.Range(0, 100) > revealLikelinessInPercent) return;
-            
-            StartCoroutine(RevealMole());
-        }
-
         if (state == MoleState.idle || state == MoleState.revealing)
         {
             currentTimeRevealedInBeats++;
@@ -80,6 +81,13 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
             {
                 StartCoroutine(RetreatMole());
             }
+        }
+        
+        if (state == MoleState.hiding)
+        {
+            if (Random.Range(0, 100) > revealLikelinessInPercent) return;
+            
+            StartCoroutine(RevealMole());
         }
     }
 
@@ -91,13 +99,20 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
             //animator.SetTrigger("Hit"); // create anim for this
             SoundManager.Instance.PlaySound(hitAudioClip);
             OnMoleHit?.Invoke(score);
+            _circleTimer.StopTimer();
+            
+            _multiplier = currentTimeRevealedInBeats >= perfectTimeInBeats ? 3 : currentTimeRevealedInBeats >= okTimeInBeats ? 2 : 1;
+            
             StartCoroutine(RetreatMole(true));
         }
     }
 
     public IEnumerator RevealMole()
     {
+        _circleTimer.SetTimeInBeats(revealTimeInBeats);
+        
         currentTimeRevealedInBeats = 0;
+        
         Debug.Log("Step into revealmole()");
         animator.SetTrigger("Reveal");
         state = MoleState.revealing;
@@ -110,6 +125,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         animator.SetTrigger("Retreat");
         StateManager(MoleState.retreating);
         state = MoleState.retreating;
+        _circleTimer.StopTimer();
         yield return null;
     }
     

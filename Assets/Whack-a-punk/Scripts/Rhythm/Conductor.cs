@@ -5,7 +5,7 @@ public class Conductor : MonoBehaviour
 {
     public static Conductor Instance { get; private set; }
     
-    public delegate void UpdateAudioTimeEventHandler(double audioTime, double audioTimeDelta);
+    public delegate void UpdateAudioTimeEventHandler(float audioTime, float audioTimeDelta);
     public event UpdateAudioTimeEventHandler UpdateAudioTime;
     
     public delegate void OnBeatEventHandler(int currentBeatInSong, int currentBeatInMeasure, int currentMeasure);
@@ -34,9 +34,9 @@ public class Conductor : MonoBehaviour
     public int currentBeatInMeasure => _currentBeatInMeasure;
     public int currentBeatInSong => _currentBeatInSong;
 
-    private double _songPosition;
-    private double _songPositionDelta;
-    public double songPosition => _songPosition;
+    private float _songPosition;
+    private float _songPositionDelta;
+    public float songPosition => _songPosition;
 
     private bool _playing;
     public bool playing => _playing;
@@ -138,7 +138,7 @@ public class Conductor : MonoBehaviour
 
 	private void CalculateSongPosition()
 	{
-        double newSongPosition = audioSource.timeSamples / (double)audioSource.clip.frequency;
+        float newSongPosition = (float)(audioSource.timeSamples / (double)audioSource.clip.frequency);
         
         if (_songPosition > newSongPosition)
         {
