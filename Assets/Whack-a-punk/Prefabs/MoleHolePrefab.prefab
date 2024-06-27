@@ -215,6 +215,8 @@ MonoBehaviour:
   revealParticle: {fileID: 0}
   retreatParticle: {fileID: 0}
   _circleTimer: {fileID: 4271711125202701882}
+  perfectTimeInBeats: 4
+  okTimeInBeats: 2
 --- !u!1 &5241129281701421997
 GameObject:
   m_ObjectHideFlags: 0

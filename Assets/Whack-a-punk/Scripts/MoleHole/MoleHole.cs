@@ -34,6 +34,11 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     [SerializeField]
     private CircleTimer _circleTimer;
 
+    [SerializeField] 
+    private float perfectTimeInBeats;
+    [SerializeField]
+    private float okTimeInBeats;
+
     private void Awake()
     {
        animator = GetComponentInChildren<Animator>(); 
@@ -95,6 +100,9 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
             SoundManager.Instance.PlaySound(hitAudioClip);
             OnMoleHit?.Invoke(score);
             _circleTimer.StopTimer();
+            
+            _multiplier = currentTimeRevealedInBeats >= perfectTimeInBeats ? 3 : currentTimeRevealedInBeats >= okTimeInBeats ? 2 : 1;
+            
             StartCoroutine(RetreatMole(true));
         }
     }
