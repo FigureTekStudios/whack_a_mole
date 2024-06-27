@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
         gameEnded = false;
         StartCoroutine(board.GenerateGameBoard());
 
-        UpdateScoreText();
+        UpdateTotalScoreText();
         UpdatePreGameCountdownText(preGameTimer);
     }
 
@@ -89,11 +89,11 @@ public class GameManager : MonoBehaviour
         if (gameStarted && !gameEnded)
         {
             score += amount;
-            UpdateScoreText();
+            UpdateTotalScoreText();
         }
     }
 
-    private void UpdateScoreText()
+    private void UpdateTotalScoreText()
     {
         if (scoreText != null)
             scoreText.text = $"{score}";
