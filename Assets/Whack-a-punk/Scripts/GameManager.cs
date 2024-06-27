@@ -72,19 +72,21 @@ public class GameManager : MonoBehaviour
     {
         gameStarted = true;
         preGameCountdownText.gameObject.SetActive(false); // Hide the pre-game countdown text
+        countdownText.gameObject.SetActive(true);
+        scoreText.gameObject.SetActive(true);
         UpdateGameCountdownText(gameTimer);
     }
 
     private void EndGame()
     {
         gameEnded = true;
-        Debug.Log("Game Over! Final Score: " + score);
+        Debug.Log($"Game Over! Final Score: {score}");
         // Implement additional game over logic here (e.g., show game over screen)
     }
 
     public void AddScore(int amount)
     {
-        if (!gameEnded)
+        if (gameStarted && !gameEnded)
         {
             score += amount;
             UpdateScoreText();
@@ -94,7 +96,7 @@ public class GameManager : MonoBehaviour
     private void UpdateScoreText()
     {
         if (scoreText != null)
-            scoreText.text = "Score: " + score;
+            scoreText.text = $"{score}";
     }
 
     private void UpdatePreGameCountdown()
@@ -111,7 +113,7 @@ public class GameManager : MonoBehaviour
     private void UpdatePreGameCountdownText(float timer)
     {
         if (preGameCountdownText != null)
-            preGameCountdownText.text = "Game starts in: " + Mathf.CeilToInt(timer);
+            preGameCountdownText.text = $"{Mathf.CeilToInt(timer)}";
     }
 
     private void UpdateGameCountdown()
@@ -128,6 +130,12 @@ public class GameManager : MonoBehaviour
     private void UpdateGameCountdownText(float timer)
     {
         if (countdownText != null)
-            countdownText.text = "Time: " + Mathf.CeilToInt(timer);
+        {
+            int minutes = Mathf.FloorToInt(timer / 60);
+            int seconds = Mathf.FloorToInt(timer % 60);
+            int milliseconds = Mathf.FloorToInt((timer % 1) * 100);
+
+            countdownText.text = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, milliseconds);
+        }
     }
 }
