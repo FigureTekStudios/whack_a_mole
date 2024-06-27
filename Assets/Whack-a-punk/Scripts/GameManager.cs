@@ -45,32 +45,15 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.S))
-        {
             InitializeGame();
-        }
 
         if (!gameStarted)
-        {
             UpdatePreGameCountdown();
-        }
+
         else if (!gameEnded)
-        {
             UpdateGameCountdown();
-        }
+
     }
-
-
-    private void UpdatePreGameCountdown()
-    {
-        preGameTimer -= Time.deltaTime;
-        if (preGameTimer <= 0)
-        {
-            preGameTimer = 0;
-            StartGame();
-        }
-        UpdatePreGameCountdownText(preGameTimer);
-    }
-
 
     private void InitializeGame()
     {
@@ -82,7 +65,6 @@ public class GameManager : MonoBehaviour
         StartCoroutine(board.GenerateGameBoard());
 
         UpdateScoreText();
-
         UpdatePreGameCountdownText(preGameTimer);
     }
 
@@ -100,7 +82,6 @@ public class GameManager : MonoBehaviour
         // Implement additional game over logic here (e.g., show game over screen)
     }
 
-
     public void AddScore(int amount)
     {
         if (!gameEnded)
@@ -113,17 +94,24 @@ public class GameManager : MonoBehaviour
     private void UpdateScoreText()
     {
         if (scoreText != null)
-        {
             scoreText.text = "Score: " + score;
+    }
+
+    private void UpdatePreGameCountdown()
+    {
+        preGameTimer -= Time.deltaTime;
+        if (preGameTimer <= 0)
+        {
+            preGameTimer = 0;
+            StartGame();
         }
+        UpdatePreGameCountdownText(preGameTimer);
     }
 
     private void UpdatePreGameCountdownText(float timer)
     {
         if (preGameCountdownText != null)
-        {
             preGameCountdownText.text = "Game starts in: " + Mathf.CeilToInt(timer);
-        }
     }
 
     private void UpdateGameCountdown()
@@ -140,8 +128,6 @@ public class GameManager : MonoBehaviour
     private void UpdateGameCountdownText(float timer)
     {
         if (countdownText != null)
-        {
             countdownText.text = "Time: " + Mathf.CeilToInt(timer);
-        }
     }
 }
