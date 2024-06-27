@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_FogMode: 3
-  m_FogDensity: 0.01
+  m_Fog: 1
+  m_FogColor: {r: 0.29357967, g: 0.15403117, b: 0.5983828, a: 1}
+  m_FogMode: 2
+  m_FogDensity: 0.06
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -303,7 +303,7 @@ PrefabInstance:
     - target: {fileID: 913325214735670913, guid: 68bbe7df7c228e246a3b2b4024a55869,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.77
+      value: -0.01999998
       objectReference: {fileID: 0}
     - target: {fileID: 913325214735670913, guid: 68bbe7df7c228e246a3b2b4024a55869,
         type: 3}
