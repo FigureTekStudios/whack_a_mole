@@ -9,15 +9,22 @@ public class GameManager : MonoBehaviour
 
     public int preGameCountdownTime = 3; // pre-game countdown time in seconds
     public int initialGameTime = 60; // this should be determined by song length
+    public int scoreToUnlockPowerUp = 100; // Score needed to unlock a power-up
+
     public TextMeshProUGUI preGameCountdownText;
     public TextMeshProUGUI countdownText; 
-    public TextMeshProUGUI scoreText; 
+    public TextMeshProUGUI scoreText;
+
+    public Image powerUpMeter; // UI Image to display the power-up meter
+    public Image[] powerUpIcons; // UI Images to display power-up icons
 
     private int score;
     private float gameTimer;
     private float preGameTimer;
     private bool gameStarted;
     private bool gameEnded;
+    private int powerUpCount;
+    private float powerUpProgress;
 
     private GameBoard board; // this should probably another singleton
 
@@ -90,6 +97,7 @@ public class GameManager : MonoBehaviour
         {
             score += amount;
             UpdateTotalScoreText();
+            UpdatePowerUpProgress(amount);
         }
     }
 
@@ -136,6 +144,42 @@ public class GameManager : MonoBehaviour
             int milliseconds = Mathf.FloorToInt((timer % 1) * 100);
 
             countdownText.text = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, milliseconds);
+        }
+    }
+
+    private void UpdatePowerUpProgress(int amount)
+    {
+        if (powerUpCount < 3)
+        {
+            powerUpProgress += amount;
+
+            if (powerUpProgress >= scoreToUnlockPowerUp)
+            {
+                powerUpProgress = 0;
+                powerUpCount++;
+                UpdatePowerUpIcons();
+            }
+
+            UpdatePowerUpMeter();
+        }
+    }
+
+    private void UpdatePowerUpMeter()
+    {
+        if (powerUpMeter != null)
+        {
+            powerUpMeter.fillAmount = powerUpProgress / scoreToUnlockPowerUp;
+        }
+    }
+
+    private void UpdatePowerUpIcons()
+    {
+        for (int i = 0; i < powerUpIcons.Length; i++)
+        {
+            if (powerUpIcons[i] != null)
+            {
+                powerUpIcons[i].enabled = i < powerUpCount;
+            }
         }
     }
 }
