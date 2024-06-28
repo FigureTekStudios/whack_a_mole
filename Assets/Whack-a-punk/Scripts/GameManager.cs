@@ -64,15 +64,20 @@ public class GameManager : MonoBehaviour
 
     private void InitializeGame()
     {
+        StartCoroutine(board.GenerateGameBoard());
+
         score = 0;
         gameTimer = initialGameTime;
         preGameTimer = preGameCountdownTime;
         gameStarted = false;
         gameEnded = false;
-        StartCoroutine(board.GenerateGameBoard());
+        powerUpCount = 0;
+        powerUpProgress = 0;
 
         UpdateTotalScoreText();
         UpdatePreGameCountdownText(preGameTimer);
+        UpdatePowerUpMeter();
+        UpdatePowerUpIcons();
     }
 
     private void StartGame()
