@@ -31,13 +31,14 @@ public class CircleTimer : MonoBehaviour
     private void Awake()
     {
         if (Conductor.Instance)
+        {
             Conductor.Instance.UpdateAudioTime += UpdateAudioTime;
+            yellowTimeInSeconds = (float)(yellowTimeInBeats * Conductor.Instance.song.spb);
+            greenTimeInSeconds = (float)(greenTimeInBeats * Conductor.Instance.song.spb);
+        }
 
         _material = GetComponent<MeshRenderer>().material;
         _material.SetFloat("_radius", hideRadius);
-        
-        yellowTimeInSeconds = (float)(yellowTimeInBeats * Conductor.Instance.song.spb);
-        greenTimeInSeconds = (float)(greenTimeInBeats * Conductor.Instance.song.spb);
     }
     
     private void OnDestroy()
