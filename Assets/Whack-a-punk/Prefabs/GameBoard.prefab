@@ -343,6 +343,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasMonitorHUD
       objectReference: {fileID: 0}
+    - target: {fileID: 1249646475179584533, guid: 029aa154598531d4b90300488e477cd8,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.036
+      objectReference: {fileID: 0}
+    - target: {fileID: 1249646475179584533, guid: 029aa154598531d4b90300488e477cd8,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.394
+      objectReference: {fileID: 0}
+    - target: {fileID: 1249646475179584533, guid: 029aa154598531d4b90300488e477cd8,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.856
+      objectReference: {fileID: 0}
     - target: {fileID: 4174105954212707878, guid: 029aa154598531d4b90300488e477cd8,
         type: 3}
       propertyPath: m_Pivot.x
@@ -441,6 +456,11 @@ PrefabInstance:
     - target: {fileID: 4174105954212707878, guid: 029aa154598531d4b90300488e477cd8,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7162881228481957789, guid: 029aa154598531d4b90300488e477cd8,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
