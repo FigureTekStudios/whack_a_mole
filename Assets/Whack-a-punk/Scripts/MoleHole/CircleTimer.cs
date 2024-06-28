@@ -27,11 +27,12 @@ public class CircleTimer : MonoBehaviour
     private float _timer;
     private float _radius;
     
-    
-    
+
     private void Awake()
     {
-        Conductor.Instance.UpdateAudioTime += UpdateAudioTime;
+        if (Conductor.Instance)
+            Conductor.Instance.UpdateAudioTime += UpdateAudioTime;
+
         _material = GetComponent<MeshRenderer>().material;
         _material.SetFloat("_radius", hideRadius);
         
@@ -41,7 +42,8 @@ public class CircleTimer : MonoBehaviour
     
     private void OnDestroy()
     {
-        Conductor.Instance.UpdateAudioTime -= UpdateAudioTime;
+        if (Conductor.Instance)
+            Conductor.Instance.UpdateAudioTime -= UpdateAudioTime;
     }
 
 
