@@ -125,14 +125,30 @@ public class GameManager : MonoBehaviour
     {
         if (currentScoreText != null)
         {
+            Color color = Color.white;
             if (multiplier > 1)
             {
+                switch (multiplier)
+                {
+                    case 2:
+                        color = Color.yellow;
+                        break;
+
+                    case 3:
+                        color = Color.red;
+                        break;
+                    default:
+                        break;
+                }
+
                 currentScoreText.text = $"{score} x {multiplier}";
             }
             else
             {
-                currentScoreText.text = $"{score}!";
+                currentScoreText.text = $"{score}";
             }
+
+            currentScoreText.color = color;
             SetCurrentScoreTextAlpha(1); // Reset alpha to 100%
             currentScoreDisplayTime = currentScoreVisibleDuration; // Reset the display timer
 
