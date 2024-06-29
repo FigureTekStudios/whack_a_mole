@@ -14,11 +14,12 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI preGameCountdownText;
     public TextMeshProUGUI countdownText; 
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI totalScoreText;
 
-    public Image powerUpMeter; // UI Image to display the power-up meter
     public Image[] powerUpIcons; // UI Images to display power-up icons
 
-    private int score;
+    private int currentScore;
+    private int totalScore;
     private float gameTimer;
     private float preGameTimer;
     private bool gameStarted;
@@ -26,7 +27,7 @@ public class GameManager : MonoBehaviour
     private int powerUpCount;
     private float powerUpProgress;
 
-    private GameBoard board; // this should probably another singleton
+    private GameBoard board; // this should probably be another singleton
 
     private void Awake()
     {
@@ -66,7 +67,8 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(board.GenerateGameBoard());
 
-        score = 0;
+        totalScore = 0;
+        currentScore = 0;
         gameTimer = initialGameTime;
         preGameTimer = preGameCountdownTime;
         gameStarted = false;
@@ -84,31 +86,32 @@ public class GameManager : MonoBehaviour
         gameStarted = true;
         preGameCountdownText.gameObject.SetActive(false); // Hide the pre-game countdown text
         countdownText.gameObject.SetActive(true);
-        scoreText.gameObject.SetActive(true);
+        totalScoreText.gameObject.SetActive(true);
         UpdateGameCountdownText(gameTimer);
     }
 
     private void EndGame()
     {
         gameEnded = true;
-        Debug.Log($"Game Over! Final Score: {score}");
+        Debug.Log($"Game Over! Final Score: {totalScore}");
         // Implement additional game over logic here (e.g., show game over screen)
     }
 
-    public void AddScore(int amount)
+    public void AddScore(int amount, int multiplier = 0)
     {
         if (gameStarted && !gameEnded)
         {
-            score += amount;
+            totalScore += amount;
             UpdateTotalScoreText();
             UpdatePowerUpProgress(amount);
         }
     }
 
+
     private void UpdateTotalScoreText()
     {
-        if (scoreText != null)
-            scoreText.text = $"{score}";
+        if (totalScoreText != null)
+            totalScoreText.text = $"{totalScore}";
     }
 
     private void UpdatePreGameCountdown()
