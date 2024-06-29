@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI preGameCountdownText;
     public TextMeshProUGUI countdownText; 
-    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI currentScoreText;
     public TextMeshProUGUI totalScoreText;
 
     public Image[] powerUpIcons; // UI Images to display power-up icons
@@ -97,13 +97,31 @@ public class GameManager : MonoBehaviour
         // Implement additional game over logic here (e.g., show game over screen)
     }
 
-    public void AddScore(int amount, int multiplier = 0)
+    public void AddScore(int amount, int multiplier = 1)
     {
         if (gameStarted && !gameEnded)
         {
-            totalScore += amount;
+            int addedScore = amount * multiplier;
+            totalScore += addedScore;
+            currentScore = addedScore;
             UpdateTotalScoreText();
-            UpdatePowerUpProgress(amount);
+            UpdateCurrentScoreText(amount, multiplier);
+            UpdatePowerUpProgress(addedScore);
+        }
+    }
+
+    private void UpdateCurrentScoreText(int score, int multiplier)
+    {
+        if (currentScoreText != null)
+        {
+            if (multiplier > 1)
+            {
+                currentScoreText.text = $"{score} x {multiplier}";
+            }
+            else
+            {
+                currentScoreText.text = $"{score}!";
+            }
         }
     }
 
