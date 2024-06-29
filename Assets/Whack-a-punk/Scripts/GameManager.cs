@@ -76,7 +76,6 @@ public class GameManager : MonoBehaviour
 
         UpdateTotalScoreText();
         UpdatePreGameCountdownText(preGameTimer);
-        UpdatePowerUpMeter();
         UpdatePowerUpIcons();
     }
 
@@ -160,20 +159,11 @@ public class GameManager : MonoBehaviour
 
             if (powerUpProgress >= scoreToUnlockPowerUp)
             {
-                powerUpProgress = 0;
+                powerUpProgress -= scoreToUnlockPowerUp;
                 powerUpCount++;
-                UpdatePowerUpIcons();
             }
 
-            UpdatePowerUpMeter();
-        }
-    }
-
-    private void UpdatePowerUpMeter()
-    {
-        if (powerUpMeter != null)
-        {
-            powerUpMeter.fillAmount = powerUpProgress / scoreToUnlockPowerUp;
+            UpdatePowerUpIcons();
         }
     }
 
@@ -183,7 +173,12 @@ public class GameManager : MonoBehaviour
         {
             if (powerUpIcons[i] != null)
             {
-                powerUpIcons[i].enabled = i < powerUpCount;
+                if (i < powerUpCount)
+                    powerUpIcons[i].fillAmount = 1.0f; // Fully filled
+                else if (i == powerUpCount)
+                    powerUpIcons[i].fillAmount = powerUpProgress / scoreToUnlockPowerUp; // Fill based on progress
+                else
+                    powerUpIcons[i].fillAmount = 0; // Not filled
             }
         }
     }
