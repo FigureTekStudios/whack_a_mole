@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     public Image[] powerUpIcons; // UI Images to display power-up icons
 
+    private GameBoard board; // this should probably be another singleton
+
     private int currentScore;
     private int totalScore;
     private float gameTimer;
@@ -26,8 +29,10 @@ public class GameManager : MonoBehaviour
     private bool gameEnded;
     private int powerUpCount;
     private float powerUpProgress;
-
-    private GameBoard board; // this should probably be another singleton
+    
+    private float currentScoreDisplayTime;
+    private float currentScoreFadeDuration = 1;
+    private float currentScoreVisibleDuration = 1f;
 
     private void Awake()
     {
@@ -57,10 +62,11 @@ public class GameManager : MonoBehaviour
 
         if (!gameStarted)
             UpdatePreGameCountdown();
-
         else if (!gameEnded)
+        {
             UpdateGameCountdown();
-
+            HandleCurrentScoreTextFade();
+        }
     }
 
     private void InitializeGame()
@@ -122,9 +128,46 @@ public class GameManager : MonoBehaviour
             {
                 currentScoreText.text = $"{score}!";
             }
+            SetCurrentScoreTextAlpha(1); // Reset alpha to 100%
+            currentScoreDisplayTime = currentScoreVisibleDuration; // Reset the display timer
+        }
+    }
+    private void HandleCurrentScoreTextFade()
+    {
+        if (currentScoreDisplayTime > 0)
+        {
+            currentScoreDisplayTime -= Time.deltaTime;
+            if (currentScoreDisplayTime <= 0)
+            {
+                currentScoreDisplayTime = 0;
+                StartCoroutine(FadeOutCurrentScoreText());
+            }
         }
     }
 
+    private IEnumerator FadeOutCurrentScoreText()
+    {
+        float elapsedTime = 0;
+        Color originalColor = currentScoreText.color;
+        while (elapsedTime < currentScoreFadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float alpha = Mathf.Lerp(1, 0, elapsedTime / currentScoreFadeDuration);
+            SetCurrentScoreTextAlpha(alpha);
+            yield return null;
+        }
+        SetCurrentScoreTextAlpha(0); // Ensure it is fully transparent at the end
+    }
+
+    private void SetCurrentScoreTextAlpha(float alpha)
+    {
+        if (currentScoreText != null)
+        {
+            Color color = currentScoreText.color;
+            color.a = alpha;
+            currentScoreText.color = color;
+        }
+    }
 
     private void UpdateTotalScoreText()
     {
