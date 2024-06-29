@@ -5,11 +5,6 @@ using Random = UnityEngine.Random;
 
 public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFinished, IMoleRevealAnimationEventFinished
 {
-    private enum MoleState
-    {
-        idle, hit, revealing, retreating, hiding
-    }
-
     private MoleState state = MoleState.hiding;
     
     // Likeliness in percent that the mole will reveal itself each beat
@@ -160,4 +155,10 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     {
         StartCoroutine(Idle());
     }
+}
+
+
+public enum MoleState
+{
+    idle, hit, revealing, retreating, hiding
 }

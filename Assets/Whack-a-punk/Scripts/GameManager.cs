@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.S))
-            InitializeGame();
+            UsePowerUp();
 
         if (!gameStarted)
             UpdatePreGameCountdown();
@@ -148,6 +148,17 @@ public class GameManager : MonoBehaviour
             int milliseconds = Mathf.FloorToInt((timer % 1) * 100);
 
             countdownText.text = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, milliseconds);
+        }
+    }
+
+    public void UsePowerUp()
+    {
+        if (powerUpCount > 0)
+        {
+            powerUpCount--;
+            UpdatePowerUpIcons();
+
+            var moles = board.MoleHoles;
         }
     }
 
