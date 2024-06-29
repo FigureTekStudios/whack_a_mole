@@ -1,5 +1,5 @@
 # Whack-a-Punk: Neon Beatdown
-Game made for the VR-Jam 2 - 2024  
+Game made for the VR-Jam 2 - 2024.  
 
 
 
