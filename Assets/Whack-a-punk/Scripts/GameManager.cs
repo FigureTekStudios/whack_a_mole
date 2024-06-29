@@ -30,9 +30,12 @@ public class GameManager : MonoBehaviour
     private int powerUpCount;
     private float powerUpProgress;
     
+    
+    private Coroutine fadeCoroutine;
     private float currentScoreDisplayTime;
     private float currentScoreFadeDuration = 1;
     private float currentScoreVisibleDuration = 1f;
+
 
     private void Awake()
     {
@@ -83,6 +86,8 @@ public class GameManager : MonoBehaviour
         powerUpProgress = 0;
 
         UpdateTotalScoreText();
+        SetCurrentScoreTextAlpha(0); // Start with current score text hiddenUpdateCurrentScoreText(0, 1);
+
         UpdatePreGameCountdownText(preGameTimer);
         UpdatePowerUpIcons();
     }
@@ -130,8 +135,14 @@ public class GameManager : MonoBehaviour
             }
             SetCurrentScoreTextAlpha(1); // Reset alpha to 100%
             currentScoreDisplayTime = currentScoreVisibleDuration; // Reset the display timer
+
+            if (fadeCoroutine != null)
+            {
+                StopCoroutine(fadeCoroutine); // Stop any active fade coroutine
+            }
         }
     }
+
     private void HandleCurrentScoreTextFade()
     {
         if (currentScoreDisplayTime > 0)
@@ -140,7 +151,7 @@ public class GameManager : MonoBehaviour
             if (currentScoreDisplayTime <= 0)
             {
                 currentScoreDisplayTime = 0;
-                StartCoroutine(FadeOutCurrentScoreText());
+                fadeCoroutine = StartCoroutine(FadeOutCurrentScoreText());
             }
         }
     }
