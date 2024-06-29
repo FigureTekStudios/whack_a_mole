@@ -24,7 +24,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     public AudioClip idleAudioClip, hitAudioClip, revealAudioClip, retreatAudioClip;
     public ParticleSystem hitParticle, revealParticle, retreatParticle;
 
-    public Action<int> OnMoleHit;
+    public Action<int, int> OnMoleHit;
     
     [SerializeField]
     private CircleTimer _circleTimer;
@@ -92,13 +92,13 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         Debug.Log("hitting");
         if (state == MoleState.idle || state == MoleState.revealing)
         {
-            //animator.SetTrigger("Hit"); // create anim for this
-            SoundManager.Instance.PlaySound(hitAudioClip);
-            OnMoleHit?.Invoke(score);
             _circleTimer.StopTimer();
             
             _multiplier = currentTimeRevealedInBeats >= perfectTimeInBeats ? 3 : currentTimeRevealedInBeats >= okTimeInBeats ? 2 : 1;
-            
+            SoundManager.Instance.PlaySound(hitAudioClip);
+            OnMoleHit?.Invoke(score, _multiplier);
+            //animator.SetTrigger("Hit"); // create anim for this
+
             StartCoroutine(RetreatMole(true));
         }
     }
