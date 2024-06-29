@@ -516,6 +516,11 @@ PrefabInstance:
       objectReference: {fileID: 491498634}
     - target: {fileID: 6116317718236462409, guid: 8d8fff466898f154c985a148c088b958,
         type: 3}
+      propertyPath: currentScoreText
+      value: 
+      objectReference: {fileID: 829069512}
+    - target: {fileID: 6116317718236462409, guid: 8d8fff466898f154c985a148c088b958,
+        type: 3}
       propertyPath: preGameCountdownText
       value: 
       objectReference: {fileID: 1874697341}

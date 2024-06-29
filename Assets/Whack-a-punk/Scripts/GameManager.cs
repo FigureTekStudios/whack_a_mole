@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,10 +15,12 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI preGameCountdownText;
     public TextMeshProUGUI countdownText; 
-    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI currentScoreText;
     public TextMeshProUGUI totalScoreText;
 
     public Image[] powerUpIcons; // UI Images to display power-up icons
+
+    private GameBoard board; // this should probably be another singleton
 
     private int currentScore;
     private int totalScore;
@@ -26,8 +30,13 @@ public class GameManager : MonoBehaviour
     private bool gameEnded;
     private int powerUpCount;
     private float powerUpProgress;
+    
+    
+    private Coroutine fadeCoroutine;
+    private float currentScoreDisplayTime;
+    private float currentScoreFadeDuration = 1;
+    private float currentScoreVisibleDuration = 1f;
 
-    private GameBoard board; // this should probably be another singleton
 
     private void Awake()
     {
@@ -57,10 +66,11 @@ public class GameManager : MonoBehaviour
 
         if (!gameStarted)
             UpdatePreGameCountdown();
-
         else if (!gameEnded)
+        {
             UpdateGameCountdown();
-
+            HandleCurrentScoreTextFade();
+        }
     }
 
     private void InitializeGame()
@@ -77,12 +87,15 @@ public class GameManager : MonoBehaviour
         powerUpProgress = 0;
 
         UpdateTotalScoreText();
+        SetCurrentScoreTextAlpha(0); // Start with current score text hiddenUpdateCurrentScoreText(0, 1);
+
         UpdatePreGameCountdownText(preGameTimer);
         UpdatePowerUpIcons();
     }
 
-    private void StartGame()
+    private IEnumerator StartGame()
     {
+        yield return new WaitForSeconds(1f);
         gameStarted = true;
         preGameCountdownText.gameObject.SetActive(false); // Hide the pre-game countdown text
         countdownText.gameObject.SetActive(true);
@@ -97,16 +110,93 @@ public class GameManager : MonoBehaviour
         // Implement additional game over logic here (e.g., show game over screen)
     }
 
-    public void AddScore(int amount, int multiplier = 0)
+    public void AddScore(int amount, int multiplier = 1)
     {
         if (gameStarted && !gameEnded)
         {
-            totalScore += amount;
+            int addedScore = amount * multiplier;
+            totalScore += addedScore;
+            currentScore = addedScore;
             UpdateTotalScoreText();
-            UpdatePowerUpProgress(amount);
+            UpdateCurrentScoreText(amount, multiplier);
+            UpdatePowerUpProgress(addedScore);
         }
     }
 
+    private void UpdateCurrentScoreText(int score, int multiplier)
+    {
+        if (currentScoreText != null)
+        {
+            Color color = Color.white;
+            if (multiplier > 1)
+            {
+                switch (multiplier)
+                {
+                    case 2:
+                        color = Color.yellow;
+                        break;
+
+                    case 3:
+                        color = Color.red;
+                        break;
+                    default:
+                        break;
+                }
+
+                currentScoreText.text = $"{score} x {multiplier}";
+            }
+            else
+            {
+                currentScoreText.text = $"{score}";
+            }
+
+            currentScoreText.color = color;
+            SetCurrentScoreTextAlpha(1); // Reset alpha to 100%
+            currentScoreDisplayTime = currentScoreVisibleDuration; // Reset the display timer
+
+            if (fadeCoroutine != null)
+            {
+                StopCoroutine(fadeCoroutine); // Stop any active fade coroutine
+            }
+        }
+    }
+
+    private void HandleCurrentScoreTextFade()
+    {
+        if (currentScoreDisplayTime > 0)
+        {
+            currentScoreDisplayTime -= Time.deltaTime;
+            if (currentScoreDisplayTime <= 0)
+            {
+                currentScoreDisplayTime = 0;
+                fadeCoroutine = StartCoroutine(FadeOutCurrentScoreText());
+            }
+        }
+    }
+
+    private IEnumerator FadeOutCurrentScoreText()
+    {
+        float elapsedTime = 0;
+        Color originalColor = currentScoreText.color;
+        while (elapsedTime < currentScoreFadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float alpha = Mathf.Lerp(1, 0, elapsedTime / currentScoreFadeDuration);
+            SetCurrentScoreTextAlpha(alpha);
+            yield return null;
+        }
+        SetCurrentScoreTextAlpha(0); // Ensure it is fully transparent at the end
+    }
+
+    private void SetCurrentScoreTextAlpha(float alpha)
+    {
+        if (currentScoreText != null)
+        {
+            Color color = currentScoreText.color;
+            color.a = alpha;
+            currentScoreText.color = color;
+        }
+    }
 
     private void UpdateTotalScoreText()
     {
@@ -120,7 +210,7 @@ public class GameManager : MonoBehaviour
         if (preGameTimer <= 0)
         {
             preGameTimer = 0;
-            StartGame();
+            StartCoroutine(StartGame());
         }
         UpdatePreGameCountdownText(preGameTimer);
     }
@@ -128,7 +218,13 @@ public class GameManager : MonoBehaviour
     private void UpdatePreGameCountdownText(float timer)
     {
         if (preGameCountdownText != null)
-            preGameCountdownText.text = $"{Mathf.CeilToInt(timer)}";
+        {
+            if (timer == 0)
+                preGameCountdownText.text = "Begin!";
+            else
+                preGameCountdownText.text = $"{Mathf.CeilToInt(timer)}";
+
+        }
     }
 
     private void UpdateGameCountdown()
