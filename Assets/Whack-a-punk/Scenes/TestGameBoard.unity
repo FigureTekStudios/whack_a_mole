@@ -534,7 +534,7 @@ Transform:
   m_GameObject: {fileID: 669493401}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.033033308, y: 0.92, z: 2.587}
+  m_LocalPosition: {x: -1.89, y: 0.92, z: 2.587}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1096,6 +1096,11 @@ PrefabInstance:
         type: 3}
       propertyPath: TrailModule.textureScale.y
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615047072862542133, guid: ad741adca8f819c44a2d50b779fc56e6,
+        type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
       objectReference: {fileID: 0}
     - target: {fileID: 1615047072862542133, guid: ad741adca8f819c44a2d50b779fc56e6,
         type: 3}
