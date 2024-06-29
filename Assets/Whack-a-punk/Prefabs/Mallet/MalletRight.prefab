@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   necessarySpeed: 0.4
-  necessaryHeight: 5.5
+  necessaryHeight: 1.75
   malletCenter: {fileID: 1549112799084118789}
   trackedTransform: {fileID: 0}
   rigidbody: {fileID: 5648196453561856343}
@@ -163,8 +163,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.16456896, y: 0.19327614, z: 0.13932973}
-  m_Center: {x: 0, y: 0, z: 0.440515}
+  m_Size: {x: 0.15549745, y: 0.18911314, z: 0.13776638}
+  m_Center: {x: 0, y: 0, z: 0.43973306}
 --- !u!1 &5500076498355338099
 GameObject:
   m_ObjectHideFlags: 0
