@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -92,8 +93,9 @@ public class GameManager : MonoBehaviour
         UpdatePowerUpIcons();
     }
 
-    private void StartGame()
+    private IEnumerator StartGame()
     {
+        yield return new WaitForSeconds(1f);
         gameStarted = true;
         preGameCountdownText.gameObject.SetActive(false); // Hide the pre-game countdown text
         countdownText.gameObject.SetActive(true);
@@ -208,7 +210,7 @@ public class GameManager : MonoBehaviour
         if (preGameTimer <= 0)
         {
             preGameTimer = 0;
-            StartGame();
+            StartCoroutine(StartGame());
         }
         UpdatePreGameCountdownText(preGameTimer);
     }
@@ -216,7 +218,13 @@ public class GameManager : MonoBehaviour
     private void UpdatePreGameCountdownText(float timer)
     {
         if (preGameCountdownText != null)
-            preGameCountdownText.text = $"{Mathf.CeilToInt(timer)}";
+        {
+            if (timer == 0)
+                preGameCountdownText.text = "Begin!";
+            else
+                preGameCountdownText.text = $"{Mathf.CeilToInt(timer)}";
+
+        }
     }
 
     private void UpdateGameCountdown()
