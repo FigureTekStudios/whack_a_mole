@@ -25,6 +25,8 @@ public class GameBoard : MonoBehaviour
 
     private Transform moleHolesParent;
 
+    public List<GameObject> MoleHoles { get => moleHoles; }
+
     private void Start()
     {
         Init();

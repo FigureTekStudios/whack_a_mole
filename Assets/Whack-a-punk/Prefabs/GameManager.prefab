@@ -44,6 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0440139ab0b9fbf4fb522b65a4aebd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialCountdownTime: 60
+  preGameCountdownTime: 3
+  initialGameTime: 60
+  scoreToUnlockPowerUp: 100
+  preGameCountdownText: {fileID: 0}
   countdownText: {fileID: 0}
   scoreText: {fileID: 0}
+  powerUpMeter: {fileID: 0}
+  powerUpIcons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
