@@ -20,6 +20,14 @@ public class GameManager : MonoBehaviour
 
     public Image[] powerUpIcons; // UI Images to display power-up icons
 
+    // these are references to objects in the second monitor
+    public TextMeshProUGUI preGameCountdownText1;
+    public TextMeshProUGUI countdownText1;
+    public TextMeshProUGUI currentScoreText1;
+    public TextMeshProUGUI totalScoreText1;
+
+    public Image[] powerUpIcons1; // UI Images to display power-up icons
+
     private GameBoard board; // this should probably be another singleton
 
     private int currentScore;
@@ -98,8 +106,13 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         gameStarted = true;
         preGameCountdownText.gameObject.SetActive(false); // Hide the pre-game countdown text
+        preGameCountdownText1.gameObject.SetActive(false); // Hide the pre-game countdown text
+        
         countdownText.gameObject.SetActive(true);
+        countdownText1.gameObject.SetActive(true);
+        
         totalScoreText.gameObject.SetActive(true);
+        totalScoreText1.gameObject.SetActive(true);
         UpdateGameCountdownText(gameTimer);
     }
 
@@ -154,10 +167,18 @@ public class GameManager : MonoBehaviour
             SetCurrentScoreTextAlpha(1); // Reset alpha to 100%
             currentScoreDisplayTime = currentScoreVisibleDuration; // Reset the display timer
 
+
+            if (currentScoreText1 != null)
+            {
+                currentScoreText1.text = currentScoreText.text;
+                currentScoreText1.color = currentScoreText.color;
+            }
+
             if (fadeCoroutine != null)
             {
                 StopCoroutine(fadeCoroutine); // Stop any active fade coroutine
             }
+
         }
     }
 
@@ -195,6 +216,7 @@ public class GameManager : MonoBehaviour
             Color color = currentScoreText.color;
             color.a = alpha;
             currentScoreText.color = color;
+            currentScoreText1.color = color;
         }
     }
 
@@ -202,6 +224,9 @@ public class GameManager : MonoBehaviour
     {
         if (totalScoreText != null)
             totalScoreText.text = $"{totalScore}";
+
+        if (totalScoreText1 != null)
+            totalScoreText1.text = $"{totalScore}";
     }
 
     private void UpdatePreGameCountdown()
@@ -225,6 +250,9 @@ public class GameManager : MonoBehaviour
                 preGameCountdownText.text = $"{Mathf.CeilToInt(timer)}";
 
         }
+
+        if (preGameCountdownText1 != null)
+            preGameCountdownText1.text = preGameCountdownText.text;
     }
 
     private void UpdateGameCountdown()
@@ -247,6 +275,7 @@ public class GameManager : MonoBehaviour
             int milliseconds = Mathf.FloorToInt((timer % 1) * 100);
 
             countdownText.text = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, milliseconds);
+            countdownText1.text = countdownText.text;
         }
     }
 
@@ -290,6 +319,9 @@ public class GameManager : MonoBehaviour
                 else
                     powerUpIcons[i].fillAmount = 0; // Not filled
             }
+
+            if (powerUpIcons1[i] != null)
+                powerUpIcons1[i].fillAmount = powerUpIcons[i].fillAmount;
         }
     }
 }
