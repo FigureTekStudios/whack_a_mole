@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public bool IsPaused { get => isPaused; }
+    public bool GameStarted { get => gameStarted; }
+    public bool GameEnded { get => gameEnded; }
 
     public int preGameCountdownTime = 3; // pre-game countdown time in seconds
     public int initialGameTime = 60; // this should be determined by song length
@@ -77,7 +79,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.S))
-            UsePowerUp();
+            StartCoroutine(StartGame());
 
         if (Input.GetKeyDown(KeyCode.P) && gameStarted)
         {
@@ -85,7 +87,11 @@ public class GameManager : MonoBehaviour
         }
 
         if (!gameStarted)
-            UpdatePreGameCountdown();
+        {
+            if (!gameEnded && !isPaused && hudPanel.activeInHierarchy)
+                UpdatePreGameCountdown();
+
+        }
         else if (!gameEnded && !isPaused)
         {
             UpdateGameCountdown();
@@ -110,15 +116,18 @@ public class GameManager : MonoBehaviour
         SetCurrentScoreTextAlpha(0); // Start with current score text hiddenUpdateCurrentScoreText(0, 1);
 
         UpdatePowerUpIcons();
-        //startGameMenuPanel.SetActive(false); 
-        hudPanel.SetActive(true); 
+ 
+        hudPanel.SetActive(false); 
         pauseMenuPanel.SetActive(false); 
+        startGameMenuPanel.SetActive(true);    
 
         UpdatePreGameCountdownText(preGameTimer); // starts the game basically
     }
 
     private IEnumerator StartGame()
     {
+        startGameMenuPanel.SetActive(false);
+        hudPanel.SetActive(true);
         yield return new WaitForSeconds(1f);
         gameStarted = true;
         preGameCountdownText.gameObject.SetActive(false); // Hide the pre-game countdown text

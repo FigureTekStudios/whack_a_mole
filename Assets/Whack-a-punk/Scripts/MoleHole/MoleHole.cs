@@ -44,7 +44,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
     private void Start()
     {
-        StartCoroutine(RevealMole());
+        StartCoroutine(RetreatMole());
     }
 
 
@@ -69,6 +69,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
     private void OnBeat(int currentBeatInSong, int currentBeatInMeasure, int currentMeasure)
     {
+        if (!GameManager.Instance.GameStarted || GameManager.Instance.GameEnded) return;  
         if (state == MoleState.idle || state == MoleState.revealing)
         {
             currentTimeRevealedInBeats++;
