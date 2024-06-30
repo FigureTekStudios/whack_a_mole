@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8489257363622915243}
   - component: {fileID: 1697686207304621024}
   m_Layer: 0
-  m_Name: Song
+  m_Name: Youve_Got_Big_Hands
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eed0e61557e5384da3e3cbfad9ded69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioStream: {fileID: 8300000, guid: 6f5a18a35555a6c43bdf147d85a8da32, type: 3}
-  _bpm: 120
+  _audioStream: {fileID: 8300000, guid: 3b64111938abe9f43ab88024d2642b21, type: 3}
+  _bpm: 133
   _beatPerMeasure: 4
-  beatsBeforeStart: 0
