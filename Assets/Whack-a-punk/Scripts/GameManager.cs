@@ -4,6 +4,7 @@ using TMPro;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -82,6 +83,8 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S))
             StartGame();
+        if (Input.GetKeyDown(KeyCode.R) )
+            RestartGame();
 
         if (Input.GetKeyDown(KeyCode.P) && gameStarted)
         {
@@ -387,5 +390,16 @@ public class GameManager : MonoBehaviour
         Time.timeScale = isPaused ? 0 : 1;
         hudPanel.SetActive(!isPaused);
         pauseMenuPanel.SetActive(isPaused);
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        InitializeGame();
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
