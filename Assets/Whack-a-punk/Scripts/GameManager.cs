@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.S))
-            StartCoroutine(StartGame());
+            StartGame();
 
         if (Input.GetKeyDown(KeyCode.P) && gameStarted)
         {
@@ -88,9 +88,10 @@ public class GameManager : MonoBehaviour
 
         if (!gameStarted)
         {
-            if (!gameEnded && !isPaused)
-                UpdatePreGameCountdown();
-
+            if (gameEnded || isPaused)
+            {
+                return;
+            }
         }
         else if (!gameEnded && !isPaused)
         {
@@ -111,9 +112,11 @@ public class GameManager : MonoBehaviour
         gameEnded = false;
         powerUpCount = 0;
         powerUpProgress = 0;
-
+        currentScoreDisplayTime = 0;
+        //UpdateCurrentScoreText(0, 1);
         UpdateTotalScoreText();
         SetCurrentScoreTextAlpha(0); // Start with current score text hiddenUpdateCurrentScoreText(0, 1);
+        UpdatePreGameCountdownText(preGameTimer); // starts the game basically
 
         UpdatePowerUpIcons();
  
@@ -121,25 +124,45 @@ public class GameManager : MonoBehaviour
         pauseMenuPanel.SetActive(false); 
         startGameMenuPanel.SetActive(true);    
 
-        UpdatePreGameCountdownText(preGameTimer); // starts the game basically
     }
 
-    private IEnumerator StartGame()
+    private void StartGame()
     {
         startGameMenuPanel.SetActive(false);
         hudPanel.SetActive(true);
-        yield return new WaitForSeconds(1f);
+        //yield return new WaitForSeconds(1f);
+        gameStarted = false;
+        preGameCountdownText.gameObject.SetActive(true); // Hide the pre-game countdown text
+        preGameCountdownText1.gameObject.SetActive(true); // Hide the pre-game countdown text
+        
+        StartCoroutine(PreGameCountdownCoroutine());
+    }
+
+    private IEnumerator PreGameCountdownCoroutine()
+    {
+        while (preGameTimer >= 0)
+        {
+            UpdatePreGameCountdownText(preGameTimer);
+            yield return new WaitForSeconds(1f);
+            preGameTimer--;
+        }
+
+        StartActualGame();
+    }
+
+    private void StartActualGame()
+    {
         gameStarted = true;
+        Conductor.Instance.PlaySong();
+
         preGameCountdownText.gameObject.SetActive(false); // Hide the pre-game countdown text
         preGameCountdownText1.gameObject.SetActive(false); // Hide the pre-game countdown text
-        
+
         countdownText.gameObject.SetActive(true);
         countdownText1.gameObject.SetActive(true);
-        
+
         totalScoreText.gameObject.SetActive(true);
         totalScoreText1.gameObject.SetActive(true);
-
-        Conductor.Instance.PlaySong();
         UpdateGameCountdownText(gameTimer);
     }
 
@@ -262,7 +285,7 @@ public class GameManager : MonoBehaviour
         if (preGameTimer <= 0)
         {
             preGameTimer = 0;
-            StartCoroutine(StartGame());
+            StartGame();
         }
         UpdatePreGameCountdownText(preGameTimer);
     }
