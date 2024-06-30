@@ -13,6 +13,11 @@ public class GameManager : MonoBehaviour
     public int initialGameTime = 60; // this should be determined by song length
     public int scoreToUnlockPowerUp = 100; // Score needed to unlock a power-up
 
+    public GameObject hudPanel;
+    public GameObject startGameMenuPanel;
+    public GameObject endGameMenuPanel;
+    public GameObject pauseMenuPanel;
+
     public TextMeshProUGUI preGameCountdownText;
     public TextMeshProUGUI countdownText; 
     public TextMeshProUGUI currentScoreText;
@@ -72,9 +77,9 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
             UsePowerUp();
 
-        if (!gameStarted)
+        if (!gameStarted && hudPanel.activeInHierarchy)
             UpdatePreGameCountdown();
-        else if (!gameEnded)
+        else if (!gameEnded && hudPanel.activeInHierarchy)
         {
             UpdateGameCountdown();
             HandleCurrentScoreTextFade();
@@ -97,8 +102,11 @@ public class GameManager : MonoBehaviour
         UpdateTotalScoreText();
         SetCurrentScoreTextAlpha(0); // Start with current score text hiddenUpdateCurrentScoreText(0, 1);
 
-        UpdatePreGameCountdownText(preGameTimer);
         UpdatePowerUpIcons();
+        startGameMenuPanel.SetActive(false); 
+        hudPanel.SetActive(false); 
+
+        //UpdatePreGameCountdownText(preGameTimer); // starts the game basically
     }
 
     private IEnumerator StartGame()
