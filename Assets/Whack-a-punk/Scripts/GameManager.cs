@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public bool IsPaused { get => isPaused; }
 
     public int preGameCountdownTime = 3; // pre-game countdown time in seconds
     public int initialGameTime = 60; // this should be determined by song length
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
     private float preGameTimer;
     private bool gameStarted;
     private bool gameEnded;
+    private bool isPaused;
     private int powerUpCount;
     private float powerUpProgress;
     
@@ -77,9 +79,14 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
             UsePowerUp();
 
-        if (!gameStarted && hudPanel.activeInHierarchy)
+        if (Input.GetKeyDown(KeyCode.P) && gameStarted)
+        {
+            TogglePause();
+        }
+
+        if (!gameStarted)
             UpdatePreGameCountdown();
-        else if (!gameEnded && hudPanel.activeInHierarchy)
+        else if (!gameEnded && !isPaused)
         {
             UpdateGameCountdown();
             HandleCurrentScoreTextFade();
@@ -103,10 +110,11 @@ public class GameManager : MonoBehaviour
         SetCurrentScoreTextAlpha(0); // Start with current score text hiddenUpdateCurrentScoreText(0, 1);
 
         UpdatePowerUpIcons();
-        startGameMenuPanel.SetActive(false); 
-        hudPanel.SetActive(false); 
+        //startGameMenuPanel.SetActive(false); 
+        hudPanel.SetActive(true); 
+        pauseMenuPanel.SetActive(false); 
 
-        //UpdatePreGameCountdownText(preGameTimer); // starts the game basically
+        UpdatePreGameCountdownText(preGameTimer); // starts the game basically
     }
 
     private IEnumerator StartGame()
@@ -331,5 +339,13 @@ public class GameManager : MonoBehaviour
             if (powerUpIcons1[i] != null)
                 powerUpIcons1[i].fillAmount = powerUpIcons[i].fillAmount;
         }
+    }
+
+    public void TogglePause()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = isPaused ? 0 : 1;
+        hudPanel.SetActive(!isPaused);
+        pauseMenuPanel.SetActive(isPaused);
     }
 }

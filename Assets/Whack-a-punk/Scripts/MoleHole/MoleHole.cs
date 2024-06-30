@@ -90,6 +90,8 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     public void Hit()
     {
         Debug.Log("hitting");
+        if (GameManager.Instance.IsPaused)
+            return;
         if (state == MoleState.idle || state == MoleState.revealing)
         {
             _circleTimer.StopTimer();

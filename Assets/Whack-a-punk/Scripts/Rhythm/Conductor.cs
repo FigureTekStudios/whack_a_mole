@@ -66,6 +66,9 @@ public class Conductor : MonoBehaviour
     {
         if (_playing)
         {
+            if (GameManager.Instance.IsPaused)
+                return;
+
             if (!audioSource.isPlaying)
             {
                 StopSong();
