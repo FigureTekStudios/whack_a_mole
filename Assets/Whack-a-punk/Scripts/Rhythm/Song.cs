@@ -15,5 +15,6 @@ public class Song : MonoBehaviour
     [SerializeField]
     private int _beatPerMeasure = 4;
     public int beatPerMeasure => _beatPerMeasure;
-
+    
+    public double songLength => _audioStream.length;
 }
