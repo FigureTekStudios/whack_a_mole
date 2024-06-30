@@ -1744,7 +1744,7 @@ GameObject:
   - component: {fileID: 7531836041928629671}
   - component: {fileID: 2533960851794165750}
   m_Layer: 5
-  m_Name: GameIntsructionsText
+  m_Name: ControlsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1797,7 +1797,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Slam Red Button to Begin Game
+  m_text: '<u>Controls:</u>
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8faf3324e8267694d85e52c4b185191b, type: 2}
   m_sharedMaterial: {fileID: 1012557253319655839, guid: 8faf3324e8267694d85e52c4b185191b,
@@ -1861,7 +1863,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0.8901087, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
