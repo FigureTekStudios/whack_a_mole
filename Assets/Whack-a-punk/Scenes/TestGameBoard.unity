@@ -612,6 +612,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &784396023 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6070032555307332135, guid: ad741adca8f819c44a2d50b779fc56e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 231062481979862933}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &931387538 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7243108120853562833, guid: ad741adca8f819c44a2d50b779fc56e6,
@@ -987,6 +999,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 231062481979862933}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2025283618 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 772175690029245971, guid: ad741adca8f819c44a2d50b779fc56e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 231062481979862933}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &231062481979862933
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1451,6 +1475,11 @@ PrefabInstance:
       objectReference: {fileID: 479981180}
     - target: {fileID: 6116317718236462409, guid: 8d8fff466898f154c985a148c088b958,
         type: 3}
+      propertyPath: finalScoreText
+      value: 
+      objectReference: {fileID: 2025283618}
+    - target: {fileID: 6116317718236462409, guid: 8d8fff466898f154c985a148c088b958,
+        type: 3}
       propertyPath: pauseMenuPanel
       value: 
       objectReference: {fileID: 1630275573}
@@ -1459,6 +1488,11 @@ PrefabInstance:
       propertyPath: totalScoreText
       value: 
       objectReference: {fileID: 931387538}
+    - target: {fileID: 6116317718236462409, guid: 8d8fff466898f154c985a148c088b958,
+        type: 3}
+      propertyPath: finalScoreText1
+      value: 
+      objectReference: {fileID: 784396023}
     - target: {fileID: 6116317718236462409, guid: 8d8fff466898f154c985a148c088b958,
         type: 3}
       propertyPath: totalScoreText1

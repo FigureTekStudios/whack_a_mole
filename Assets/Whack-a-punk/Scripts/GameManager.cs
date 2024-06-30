@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI countdownText; 
     public TextMeshProUGUI currentScoreText;
     public TextMeshProUGUI totalScoreText;
+    public TextMeshProUGUI finalScoreText;
 
     public Image[] powerUpIcons; // UI Images to display power-up icons
 
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI countdownText1;
     public TextMeshProUGUI currentScoreText1;
     public TextMeshProUGUI totalScoreText1;
+    public TextMeshProUGUI finalScoreText1;
 
     public Image[] powerUpIcons1; // UI Images to display power-up icons
 
@@ -170,6 +172,10 @@ public class GameManager : MonoBehaviour
     {
         gameEnded = true;
         Debug.Log($"Game Over! Final Score: {totalScore}");
+        hudPanel.gameObject.SetActive(false);   
+        endGameMenuPanel.gameObject.SetActive(true);
+        finalScoreText.text = totalScore.ToString();
+        finalScoreText1.text = finalScoreText.text;
         // Implement additional game over logic here (e.g., show game over screen)
     }
 
