@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
 
         if (!gameStarted)
         {
-            if (!gameEnded && !isPaused && hudPanel.activeInHierarchy)
+            if (!gameEnded && !isPaused)
                 UpdatePreGameCountdown();
 
         }
