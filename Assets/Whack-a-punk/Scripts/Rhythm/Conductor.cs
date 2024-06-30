@@ -57,10 +57,10 @@ public class Conductor : MonoBehaviour
         }
     }
     
-    private void Start()
-    {
-        if (song != null) PlaySong(song);
-    }
+    //private void Start()
+    //{
+    //    if (song != null) PlaySong(song);
+    //}
 
     private void Update()
     {
@@ -92,8 +92,12 @@ public class Conductor : MonoBehaviour
             }
         }
     }
+    public void PlaySong()
+    {
+        if (song != null) PlaySong(song);
+    }
 
-    public void PlaySong(Song song)
+    private void PlaySong(Song song)
 	{
         StopSong();
         

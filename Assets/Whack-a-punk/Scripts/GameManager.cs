@@ -138,6 +138,8 @@ public class GameManager : MonoBehaviour
         
         totalScoreText.gameObject.SetActive(true);
         totalScoreText1.gameObject.SetActive(true);
+
+        Conductor.Instance.PlaySong();
         UpdateGameCountdownText(gameTimer);
     }
 
