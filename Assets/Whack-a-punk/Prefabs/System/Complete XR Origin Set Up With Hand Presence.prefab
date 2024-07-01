@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 2142829584036428274}
   - component: {fileID: 6841133806542628653}
   - component: {fileID: 307670919859640193}
+  - component: {fileID: 5103538368495479414}
   m_Layer: 0
   m_Name: RightHand (Teleport Locomotion)
   m_TagString: Untagged
@@ -364,6 +365,20 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   m_StartingInteractionOverridesMap: []
+--- !u!114 &5103538368495479414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581204680843396511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d945d65d2083a7a44aed60910a46d2bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputReferenceA: {fileID: 6044549421200237453, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
 --- !u!1 &1724552937521725661
 GameObject:
   m_ObjectHideFlags: 0
@@ -1755,7 +1770,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c58fea3ce1aaa4d438ea980406e95cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 8833835312828829376}
+  inputReferenceX: {fileID: -5522906082684613131, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
+  inputReferenceUI: {fileID: -6395602842196007441, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
 --- !u!1 &7065270671669105625
 GameObject:
   m_ObjectHideFlags: 0

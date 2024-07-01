@@ -1,37 +1,36 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.XR.Interaction.Toolkit;
 
 public class LeftInput : MonoBehaviour
 {
-    [SerializeField]
-    private ActionBasedController controller;
+    [SerializeField] private InputActionReference inputReferenceX;
+    [SerializeField] private InputActionReference inputReferenceUI;
     
     private void Start()
     {
-        controller.uiPressAction.action.performed += OnUIPressed;
+        inputReferenceX.action.performed += OnXPressed;
+        inputReferenceUI.action.performed += OnUIPressed;
     }
 
     private void OnDestroy()
     {
-        controller.uiPressAction.action.performed -= OnUIPressed;
+        inputReferenceX.action.performed -= OnXPressed;
+        inputReferenceUI.action.performed -= OnUIPressed;
     }
 
     private void OnUIPressed(InputAction.CallbackContext context)
     {
         Debug.Log("UI Pressed");
-        GameManager.Instance?.Pause();
+        GameManager.Instance?.TogglePause();
     }
 
-    private void OnXPressed()
+    private void OnXPressed(InputAction.CallbackContext context)
     {
+        Debug.Log("X Pressed");
         
-    }
-    
-    private void OnAPressed()
-    {
+        // if (GameManager.Instance == null || !(GameManager.Instance.IsPaused || GameManager.Instance.GameEnded)) return;
         
+        GameManager.Instance?.RestartGame();
     }
     
 }
