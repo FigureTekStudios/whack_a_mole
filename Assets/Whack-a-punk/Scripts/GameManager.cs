@@ -123,17 +123,17 @@ public class GameManager : MonoBehaviour
         powerUpCount = 0;
         powerUpProgress = 0;
         currentScoreDisplayTime = 0;
-        //UpdateCurrentScoreText(0, 1);
+        UpdateCurrentScoreText(0, 1);
         UpdateTotalScoreText();
         SetCurrentScoreTextAlpha(0); // Start with current score text hiddenUpdateCurrentScoreText(0, 1);
         UpdatePreGameCountdownText(preGameTimer); // starts the game basically
 
         UpdatePowerUpIcons();
  
+        endGameMenuPanel.SetActive(false);
         hudPanel.SetActive(false); 
         pauseMenuPanel.SetActive(false); 
         startGameMenuPanel.SetActive(true);    
-
     }
 
     public void StartGame()
@@ -400,6 +400,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
+        Conductor.Instance.StopSong();
         StopAllCoroutines();
         board.DeleteAllMoleHoles();
         InitializeGame();
