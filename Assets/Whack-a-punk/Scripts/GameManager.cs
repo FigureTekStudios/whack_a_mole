@@ -186,6 +186,7 @@ public class GameManager : MonoBehaviour
         finalScoreText1.text = finalScoreText.text;
         // Implement additional game over logic here (e.g., show game over screen)
         Conductor.Instance.StopSong();
+        board.RetreatAllMoleHoles();
     }
 
     public void AddScore(int amount, int multiplier = 1)
