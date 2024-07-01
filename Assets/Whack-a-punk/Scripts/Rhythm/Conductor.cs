@@ -57,15 +57,18 @@ public class Conductor : MonoBehaviour
         }
     }
     
-    private void Start()
-    {
-        if (song != null) PlaySong(song);
-    }
+    //private void Start()
+    //{
+    //    if (song != null) PlaySong(song);
+    //}
 
     private void Update()
     {
         if (_playing)
         {
+            if (GameManager.Instance.IsPaused)
+                return;
+
             if (!audioSource.isPlaying)
             {
                 StopSong();
@@ -89,8 +92,12 @@ public class Conductor : MonoBehaviour
             }
         }
     }
+    public void PlaySong()
+    {
+        if (song != null) PlaySong(song);
+    }
 
-    public void PlaySong(Song song)
+    private void PlaySong(Song song)
 	{
         StopSong();
         
@@ -111,6 +118,18 @@ public class Conductor : MonoBehaviour
         _currentBeatInSong = 0;
         _songPosition = 0;
         _songPositionDelta = 0;
+    }
+    
+    public void PauseSong()
+    {
+        audioSource.Pause();
+        _playing = false;
+    }
+    
+    public void ResumeSong()
+    {
+        audioSource.UnPause();
+        _playing = true;
     }
     
     private void OnHalfBeatHandler()

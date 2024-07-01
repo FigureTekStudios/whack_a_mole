@@ -45,13 +45,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preGameCountdownTime: 3
-  initialGameTime: 60
+  initialGameTime: 102
   scoreToUnlockPowerUp: 100
+  hudPanel: {fileID: 0}
+  startGameMenuPanel: {fileID: 0}
+  endGameMenuPanel: {fileID: 0}
+  pauseMenuPanel: {fileID: 0}
   preGameCountdownText: {fileID: 0}
   countdownText: {fileID: 0}
-  scoreText: {fileID: 0}
-  powerUpMeter: {fileID: 0}
+  currentScoreText: {fileID: 0}
+  totalScoreText: {fileID: 0}
+  finalScoreText: {fileID: 0}
   powerUpIcons:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  preGameCountdownText1: {fileID: 0}
+  countdownText1: {fileID: 0}
+  currentScoreText1: {fileID: 0}
+  totalScoreText1: {fileID: 0}
+  finalScoreText1: {fileID: 0}
+  powerUpIcons1: []

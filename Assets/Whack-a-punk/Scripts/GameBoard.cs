@@ -159,7 +159,7 @@ public class GameBoard : MonoBehaviour
         moleHoleCount++;
     }
 
-    private void DeleteAllMoleHoles()
+    public void DeleteAllMoleHoles()
     {
         if (moleHoleCount == 0 || moleHoles.Count == 0)
         {
@@ -172,6 +172,15 @@ public class GameBoard : MonoBehaviour
 
         moleHoles.Clear();
         moleHoleCount = 0;  
+    }
+
+    public void RetreatAllMoleHoles()
+    {
+        foreach (var moleHole in moleHoles)
+        {
+            MoleHole moleHoleScript = moleHole.GetComponent<MoleHole>();
+            StartCoroutine(moleHoleScript?.RetreatMole(true));
+        }
     }
 
 #if UNITY_EDITOR

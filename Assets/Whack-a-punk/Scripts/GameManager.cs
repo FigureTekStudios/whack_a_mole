@@ -1,22 +1,32 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public bool IsPaused { get => isPaused; }
+    public bool GameStarted { get => gameStarted; }
+    public bool GameEnded { get => gameEnded; }
+    
+    public int PowerUpCount { get => powerUpCount; }
 
     public int preGameCountdownTime = 3; // pre-game countdown time in seconds
-    public int initialGameTime = 60; // this should be determined by song length
+    public int initialGameTime = 103; // this should be determined by song length
     public int scoreToUnlockPowerUp = 100; // Score needed to unlock a power-up
+
+    public GameObject hudPanel;
+    public GameObject startGameMenuPanel;
+    public GameObject endGameMenuPanel;
+    public GameObject pauseMenuPanel;
 
     public TextMeshProUGUI preGameCountdownText;
     public TextMeshProUGUI countdownText; 
     public TextMeshProUGUI currentScoreText;
     public TextMeshProUGUI totalScoreText;
+    public TextMeshProUGUI finalScoreText;
 
     public Image[] powerUpIcons; // UI Images to display power-up icons
 
@@ -25,6 +35,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI countdownText1;
     public TextMeshProUGUI currentScoreText1;
     public TextMeshProUGUI totalScoreText1;
+    public TextMeshProUGUI finalScoreText1;
 
     public Image[] powerUpIcons1; // UI Images to display power-up icons
 
@@ -36,6 +47,7 @@ public class GameManager : MonoBehaviour
     private float preGameTimer;
     private bool gameStarted;
     private bool gameEnded;
+    private bool isPaused;
     private int powerUpCount;
     private float powerUpProgress;
     
@@ -65,16 +77,33 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         InitializeGame();
+
+        if (Conductor.Instance != null)
+        {
+            initialGameTime = (int) Math.Ceiling(Conductor.Instance.song.songLength); ;
+        }
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.S))
-            UsePowerUp();
+            StartGame();
+        if (Input.GetKeyDown(KeyCode.R) )
+            RestartGame();
+
+        if (Input.GetKeyDown(KeyCode.P) && gameStarted)
+        {
+            TogglePause();
+        }
 
         if (!gameStarted)
-            UpdatePreGameCountdown();
-        else if (!gameEnded)
+        {
+            if (gameEnded || isPaused)
+            {
+                return;
+            }
+        }
+        else if (!gameEnded && !isPaused)
         {
             UpdateGameCountdown();
             HandleCurrentScoreTextFade();
@@ -93,24 +122,55 @@ public class GameManager : MonoBehaviour
         gameEnded = false;
         powerUpCount = 0;
         powerUpProgress = 0;
-
+        currentScoreDisplayTime = 0;
+        UpdateCurrentScoreText(0, 1);
         UpdateTotalScoreText();
         SetCurrentScoreTextAlpha(0); // Start with current score text hiddenUpdateCurrentScoreText(0, 1);
+        UpdatePreGameCountdownText(preGameTimer); // starts the game basically
 
-        UpdatePreGameCountdownText(preGameTimer);
         UpdatePowerUpIcons();
+ 
+        endGameMenuPanel.SetActive(false);
+        hudPanel.SetActive(false); 
+        pauseMenuPanel.SetActive(false); 
+        startGameMenuPanel.SetActive(true);    
     }
 
-    private IEnumerator StartGame()
+    public void StartGame()
     {
-        yield return new WaitForSeconds(1f);
+        startGameMenuPanel.SetActive(false);
+        hudPanel.SetActive(true);
+        //yield return new WaitForSeconds(1f);
+        gameStarted = false;
+        preGameCountdownText.gameObject.SetActive(true); // Hide the pre-game countdown text
+        preGameCountdownText1.gameObject.SetActive(true); // Hide the pre-game countdown text
+        
+        StartCoroutine(PreGameCountdownCoroutine());
+    }
+
+    private IEnumerator PreGameCountdownCoroutine()
+    {
+        while (preGameTimer >= 0)
+        {
+            UpdatePreGameCountdownText(preGameTimer);
+            yield return new WaitForSeconds(1f);
+            preGameTimer--;
+        }
+
+        StartActualGame();
+    }
+
+    private void StartActualGame()
+    {
         gameStarted = true;
+        Conductor.Instance.PlaySong();
+
         preGameCountdownText.gameObject.SetActive(false); // Hide the pre-game countdown text
         preGameCountdownText1.gameObject.SetActive(false); // Hide the pre-game countdown text
-        
+
         countdownText.gameObject.SetActive(true);
         countdownText1.gameObject.SetActive(true);
-        
+
         totalScoreText.gameObject.SetActive(true);
         totalScoreText1.gameObject.SetActive(true);
         UpdateGameCountdownText(gameTimer);
@@ -120,7 +180,13 @@ public class GameManager : MonoBehaviour
     {
         gameEnded = true;
         Debug.Log($"Game Over! Final Score: {totalScore}");
+        hudPanel.gameObject.SetActive(false);   
+        endGameMenuPanel.gameObject.SetActive(true);
+        finalScoreText.text = totalScore.ToString();
+        finalScoreText1.text = finalScoreText.text;
         // Implement additional game over logic here (e.g., show game over screen)
+        Conductor.Instance.StopSong();
+        board.RetreatAllMoleHoles();
     }
 
     public void AddScore(int amount, int multiplier = 1)
@@ -235,7 +301,7 @@ public class GameManager : MonoBehaviour
         if (preGameTimer <= 0)
         {
             preGameTimer = 0;
-            StartCoroutine(StartGame());
+            StartGame();
         }
         UpdatePreGameCountdownText(preGameTimer);
     }
@@ -323,5 +389,35 @@ public class GameManager : MonoBehaviour
             if (powerUpIcons1[i] != null)
                 powerUpIcons1[i].fillAmount = powerUpIcons[i].fillAmount;
         }
+    }
+
+    public void TogglePause()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = isPaused ? 0 : 1;
+        hudPanel.SetActive(!isPaused);
+        pauseMenuPanel.SetActive(isPaused);
+        
+        if (isPaused)
+        {
+            Conductor.Instance.PauseSong();
+        }
+        else
+        {
+            Conductor.Instance.ResumeSong();
+        }
+    }
+
+    public void RestartGame()
+    {
+        Conductor.Instance.StopSong();
+        StopAllCoroutines();
+        board.DeleteAllMoleHoles();
+        InitializeGame();
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

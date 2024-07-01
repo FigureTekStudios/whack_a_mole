@@ -203,8 +203,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59eb893032c861844bf0d28881aa4fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  revealLikelinessInPercent: 20
-  revealTimeInBeats: 6
+  revealLikelinessInPercent: 10
+  revealTimeInBeats: 8
   speed: 1
   score: 10
   idleAudioClip: {fileID: 0}
