@@ -159,7 +159,7 @@ public class GameBoard : MonoBehaviour
         moleHoleCount++;
     }
 
-    private void DeleteAllMoleHoles()
+    public void DeleteAllMoleHoles()
     {
         if (moleHoleCount == 0 || moleHoles.Count == 0)
         {
