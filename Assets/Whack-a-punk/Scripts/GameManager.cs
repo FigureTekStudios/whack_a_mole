@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public bool IsPaused { get => isPaused; }
     public bool GameStarted { get => gameStarted; }
     public bool GameEnded { get => gameEnded; }
+    
+    public int PowerUpCount { get => powerUpCount; }
 
     public int preGameCountdownTime = 3; // pre-game countdown time in seconds
     public int initialGameTime = 60; // this should be determined by song length
@@ -131,7 +133,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void StartGame()
+    public void StartGame()
     {
         startGameMenuPanel.SetActive(false);
         hudPanel.SetActive(true);
