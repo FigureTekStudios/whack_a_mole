@@ -396,6 +396,15 @@ public class GameManager : MonoBehaviour
         Time.timeScale = isPaused ? 0 : 1;
         hudPanel.SetActive(!isPaused);
         pauseMenuPanel.SetActive(isPaused);
+        
+        if (isPaused)
+        {
+            Conductor.Instance.PauseSong();
+        }
+        else
+        {
+            Conductor.Instance.ResumeSong();
+        }
     }
 
     public void RestartGame()

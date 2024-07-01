@@ -120,6 +120,18 @@ public class Conductor : MonoBehaviour
         _songPositionDelta = 0;
     }
     
+    public void PauseSong()
+    {
+        audioSource.Pause();
+        _playing = false;
+    }
+    
+    public void ResumeSong()
+    {
+        audioSource.UnPause();
+        _playing = true;
+    }
+    
     private void OnHalfBeatHandler()
     {
         _invokedHalfBeat = true;
