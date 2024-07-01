@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public int PowerUpCount { get => powerUpCount; }
 
     public int preGameCountdownTime = 3; // pre-game countdown time in seconds
-    public int initialGameTime = 60; // this should be determined by song length
+    public int initialGameTime = 103; // this should be determined by song length
     public int scoreToUnlockPowerUp = 100; // Score needed to unlock a power-up
 
     public GameObject hudPanel;
