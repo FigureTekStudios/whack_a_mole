@@ -1,10 +1,8 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -79,6 +77,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         InitializeGame();
+
+        if (Conductor.Instance != null)
+        {
+            initialGameTime = (int) Math.Ceiling(Conductor.Instance.song.songLength); ;
+        }
     }
 
     private void Update()
@@ -182,6 +185,7 @@ public class GameManager : MonoBehaviour
         finalScoreText.text = totalScore.ToString();
         finalScoreText1.text = finalScoreText.text;
         // Implement additional game over logic here (e.g., show game over screen)
+        Conductor.Instance.StopSong();
     }
 
     public void AddScore(int amount, int multiplier = 1)

@@ -21,6 +21,8 @@ public class LeftInput : MonoBehaviour
     private void OnUIPressed(InputAction.CallbackContext context)
     {
         Debug.Log("UI Pressed");
+        if (GameManager.Instance == null || GameManager.Instance.GameEnded || !GameManager.Instance.GameStarted) return;
+        
         GameManager.Instance?.TogglePause();
     }
 
