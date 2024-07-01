@@ -1772,7 +1772,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputReferenceX: {fileID: -5522906082684613131, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
-  inputReferenceUI: {fileID: -6395602842196007441, guid: c348712bda248c246b8c49b3db54643f,
+  inputReferenceUI: {fileID: 3499106747207942486, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
 --- !u!1 &7065270671669105625
 GameObject:
