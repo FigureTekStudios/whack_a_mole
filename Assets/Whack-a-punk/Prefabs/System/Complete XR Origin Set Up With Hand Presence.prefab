@@ -1436,6 +1436,7 @@ GameObject:
   - component: {fileID: 4670307343196281046}
   - component: {fileID: 8833835312828829376}
   - component: {fileID: 1439490680589236708}
+  - component: {fileID: 7022595418030268610}
   m_Layer: 0
   m_Name: LeftHand (Smooth locomotion)
   m_TagString: Untagged
@@ -1742,6 +1743,19 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   m_StartingInteractionOverridesMap: []
+--- !u!114 &7022595418030268610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6554128766552582220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c58fea3ce1aaa4d438ea980406e95cb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 8833835312828829376}
 --- !u!1 &7065270671669105625
 GameObject:
   m_ObjectHideFlags: 0
