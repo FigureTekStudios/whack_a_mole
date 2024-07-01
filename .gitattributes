@@ -1,3 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 JR3*.fbx filter=lfs diff=lfs merge=lfs -text
+*.anim filter=lfs diff=lfs merge=lfs -text
