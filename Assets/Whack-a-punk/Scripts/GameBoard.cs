@@ -174,6 +174,15 @@ public class GameBoard : MonoBehaviour
         moleHoleCount = 0;  
     }
 
+    public void RetreatAllMoleHoles()
+    {
+        foreach (var moleHole in moleHoles)
+        {
+            MoleHole moleHoleScript = moleHole.GetComponent<MoleHole>();
+            StartCoroutine(moleHoleScript?.RetreatMole(true));
+        }
+    }
+
 #if UNITY_EDITOR
     void OnDrawGizmos()
     {

@@ -1,10 +1,8 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,9 +10,11 @@ public class GameManager : MonoBehaviour
     public bool IsPaused { get => isPaused; }
     public bool GameStarted { get => gameStarted; }
     public bool GameEnded { get => gameEnded; }
+    
+    public int PowerUpCount { get => powerUpCount; }
 
     public int preGameCountdownTime = 3; // pre-game countdown time in seconds
-    public int initialGameTime = 60; // this should be determined by song length
+    public int initialGameTime = 103; // this should be determined by song length
     public int scoreToUnlockPowerUp = 100; // Score needed to unlock a power-up
 
     public GameObject hudPanel;
@@ -77,6 +77,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         InitializeGame();
+
+        if (Conductor.Instance != null)
+        {
+            initialGameTime = (int) Math.Ceiling(Conductor.Instance.song.songLength); ;
+        }
     }
 
     private void Update()
@@ -118,20 +123,20 @@ public class GameManager : MonoBehaviour
         powerUpCount = 0;
         powerUpProgress = 0;
         currentScoreDisplayTime = 0;
-        //UpdateCurrentScoreText(0, 1);
+        UpdateCurrentScoreText(0, 1);
         UpdateTotalScoreText();
         SetCurrentScoreTextAlpha(0); // Start with current score text hiddenUpdateCurrentScoreText(0, 1);
         UpdatePreGameCountdownText(preGameTimer); // starts the game basically
 
         UpdatePowerUpIcons();
  
+        endGameMenuPanel.SetActive(false);
         hudPanel.SetActive(false); 
         pauseMenuPanel.SetActive(false); 
         startGameMenuPanel.SetActive(true);    
-
     }
 
-    private void StartGame()
+    public void StartGame()
     {
         startGameMenuPanel.SetActive(false);
         hudPanel.SetActive(true);
@@ -180,6 +185,8 @@ public class GameManager : MonoBehaviour
         finalScoreText.text = totalScore.ToString();
         finalScoreText1.text = finalScoreText.text;
         // Implement additional game over logic here (e.g., show game over screen)
+        Conductor.Instance.StopSong();
+        board.RetreatAllMoleHoles();
     }
 
     public void AddScore(int amount, int multiplier = 1)
@@ -390,10 +397,20 @@ public class GameManager : MonoBehaviour
         Time.timeScale = isPaused ? 0 : 1;
         hudPanel.SetActive(!isPaused);
         pauseMenuPanel.SetActive(isPaused);
+        
+        if (isPaused)
+        {
+            Conductor.Instance.PauseSong();
+        }
+        else
+        {
+            Conductor.Instance.ResumeSong();
+        }
     }
 
     public void RestartGame()
     {
+        Conductor.Instance.StopSong();
         StopAllCoroutines();
         board.DeleteAllMoleHoles();
         InitializeGame();
