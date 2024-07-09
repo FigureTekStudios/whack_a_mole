@@ -240,6 +240,7 @@ MonoBehaviour:
   revealTimeInBeats: 8
   speed: 1
   score: 10
+  animator: {fileID: 5712160024934541195}
   idleAudioClip: {fileID: 0}
   hitAudioClip: {fileID: 8300000, guid: e93f32e08762875449bab34f5d822da5, type: 3}
   revealAudioClip: {fileID: 0}
@@ -300,7 +301,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5241129281701421997}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -460,6 +461,12 @@ PrefabInstance:
 --- !u!4 &1848032290875457009 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a62126f460c584c47aa5a4ec7c0acec8,
+    type: 3}
+  m_PrefabInstance: {fileID: 2175026340081195546}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5712160024934541195 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: a62126f460c584c47aa5a4ec7c0acec8,
     type: 3}
   m_PrefabInstance: {fileID: 2175026340081195546}
   m_PrefabAsset: {fileID: 0}

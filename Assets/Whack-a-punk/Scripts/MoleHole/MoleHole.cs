@@ -20,7 +20,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     
     private int _multiplier = 1;
 
-    private Animator animator;
+    [SerializeField] Animator animator;
     public AudioClip idleAudioClip, hitAudioClip, revealAudioClip, retreatAudioClip;
     public ParticleSystem hitParticle, revealParticle, retreatParticle;
 
@@ -36,7 +36,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
     private void Awake()
     {
-       animator = GetComponentInChildren<Animator>(); 
+       //animator = GetComponentInChildren<Animator>(); 
        OnMoleHit += GameManager.Instance.AddScore;
        if (Conductor.Instance)
             Conductor.Instance.OnBeat += OnBeat;
@@ -115,13 +115,13 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         Debug.Log("Step into revealmole()");
         animator.SetTrigger("Reveal");
         state = MoleState.revealing;
-        //StateManager(MoleState.revealing);
+        //StateMa   nager(MoleState.revealing);
         yield return null;
     }
 
     public IEnumerator RetreatMole(bool hit = false)
     {
-        animator.SetTrigger("Retreat");
+        animator.SetTrigger("Retreat_0");
         StateManager(MoleState.retreating);
         state = MoleState.retreating;
         _circleTimer.StopTimer();
