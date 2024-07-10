@@ -68,8 +68,8 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     }
 
     private void OnBeat(int currentBeatInSong, int currentBeatInMeasure, int currentMeasure)
-    {
-        if (!GameManager.Instance.GameStarted || GameManager.Instance.GameEnded) return;  
+    {   
+        if (!GameManager.Instance.GameStarted || GameManager.Instance.GameEnded) return;
         if (state == MoleState.idle || state == MoleState.revealing)
         {
             currentTimeRevealedInBeats++;
@@ -116,6 +116,8 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         animator.SetTrigger("Reveal");
         state = MoleState.revealing;
         //StateMa   nager(MoleState.revealing);
+        //yield return new WaitUntil(() => this.animator.GetCurrentAnimatorStateInfo(0).IsName("Reveal"));
+
         yield return null;
     }
 
@@ -125,11 +127,14 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         StateManager(MoleState.retreating);
         state = MoleState.retreating;
         _circleTimer.StopTimer();
-        yield return null;
+        yield return new WaitUntil(() => this.animator.GetCurrentAnimatorStateInfo(0).IsName("Retreat_0"));
+        StartCoroutine(Hide());
+        //yield return null;
     }
     
     public IEnumerator Hide()
     {
+        animator.SetTrigger("Hide");
         StateManager(MoleState.hiding);
         state = MoleState.hiding;
         yield return null;
