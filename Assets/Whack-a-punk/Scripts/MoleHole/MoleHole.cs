@@ -123,7 +123,10 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
     public IEnumerator RetreatMole(bool hit = false)
     {
-        animator.SetTrigger("Retreat_0");
+        if (hit)
+            animator.SetTrigger("Retreat_Damaged");
+        else
+            animator.SetTrigger("Retreat_0");
         StateManager(MoleState.retreating);
         state = MoleState.retreating;
         _circleTimer.StopTimer();
