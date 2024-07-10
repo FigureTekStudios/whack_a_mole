@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFinished, IMoleRevealAnimationEventFinished
 {
-    private MoleState state = MoleState.hiding;
+    [SerializeField] MoleState state = MoleState.hiding;
     
     // Likeliness in percent that the mole will reveal itself each beat
     public int revealLikelinessInPercent = 20;
