@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -23,6 +25,10 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     [SerializeField] Animator animator;
     public AudioClip idleAudioClip, hitAudioClip, revealAudioClip, retreatAudioClip;
     public ParticleSystem hitParticle, revealParticle, retreatParticle;
+    private string currentAnimTriggerName = string.Empty;
+    private List<string> idleAnimTriggerNames = new List<string>();
+    private List<string> tauntAnimTriggerNames = new List<string>();
+    private List<string> retreatAnimTriggerNames = new List<string>();
 
     public Action<int, int> OnMoleHit;
     
@@ -34,11 +40,22 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     [SerializeField]
     private float okTimeInBeats;
 
+    //public string CurrentAnimTriggerName { get => currentAnimTriggerName; }
+
     private void Awake()
     {
-       //animator = GetComponentInChildren<Animator>(); 
-       OnMoleHit += GameManager.Instance.AddScore;
-       if (Conductor.Instance)
+        //animator = GetComponentInChildren<Animator>(); 
+        idleAnimTriggerNames.Add("Idle_0");
+        idleAnimTriggerNames.Add("Idle_1");
+
+        tauntAnimTriggerNames.Add("Taunt_0");
+        tauntAnimTriggerNames.Add("Taunt_1");
+
+        retreatAnimTriggerNames.Add("Retreat_0");
+        retreatAnimTriggerNames.Add("Retreat_1");
+
+        OnMoleHit += GameManager.Instance.AddScore;
+        if (Conductor.Instance)
             Conductor.Instance.OnBeat += OnBeat;
     }
 
@@ -87,26 +104,60 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         }
     }
 
-    private string GetRandomAnimation(MoleState state)
+    private string GetRandomAnimation(MoleState targetState)
     {
         string animName = "";
-        switch (state)
+        List<string> triggerAnimNames = new List<string>();
+
+        switch (targetState)
         {
             case MoleState.idle:
-                break;
-            case MoleState.hit:
-                break;
-            case MoleState.revealing:
+                triggerAnimNames = idleAnimTriggerNames;
                 break;
             case MoleState.retreating:
+                triggerAnimNames = retreatAnimTriggerNames;
                 break;
             case MoleState.hiding:
+                triggerAnimNames = retreatAnimTriggerNames;
                 break;
             default:
                 break;
         }
+        if (triggerAnimNames == null || triggerAnimNames.Count == 0)
+        {
+            return null; // or handle this case as needed
+        }
+        Dictionary<string, int> animationWeights = triggerAnimNames.ToDictionary(anim => anim, anim => 1);
+        
+        var moleHoles = GameManager.Instance.MoleHoles;
+        // Increase weights for animations that aren't currently playing
+        foreach (GameObject moleHole in moleHoles)
+        {
+            if (moleHole.GetComponent<MoleHole>().state == targetState)
+            {
+                if (animationWeights.ContainsKey(moleHole.GetComponent<MoleHole>().currentAnimTriggerName))
+                {
+                    animationWeights[moleHole.GetComponent<MoleHole>().currentAnimTriggerName]++;
+                }
+            }
+        }
 
-        return animName;
+        // Normalize weights (higher weight means lower probability)
+        int totalWeight = animationWeights.Values.Sum();
+        List<string> weightedList = new List<string>();
+        foreach (var kvp in animationWeights)
+        {
+            int weight = totalWeight - kvp.Value + 1; // Add 1 to avoid zero probability
+            for (int i = 0; i < weight; i++)
+            {
+                weightedList.Add(kvp.Key);
+            }
+        }
+
+        // Select a random animation from the weighted list
+        int randomIndex = Random.Range(0, weightedList.Count);
+        
+        return animName = weightedList[randomIndex];
     }
 
     public void Hit()
@@ -147,7 +198,11 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         if (hit)
             animator.SetTrigger("Retreat_Damaged");
         else
+        {
+
             animator.SetTrigger("Retreat_0");
+
+        }
         StateManager(MoleState.retreating);
         state = MoleState.retreating;
         _circleTimer.StopTimer();

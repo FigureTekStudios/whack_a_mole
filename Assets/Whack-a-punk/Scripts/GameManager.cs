@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class GameManager : MonoBehaviour
     public Image[] powerUpIcons1; // UI Images to display power-up icons
 
     private GameBoard board; // this should probably be another singleton
+    private List<GameObject> moleHoles;
+    public List<GameObject> MoleHoles { get => moleHoles; }
 
     private int currentScore;
     private int totalScore;
@@ -113,6 +116,7 @@ public class GameManager : MonoBehaviour
     private void InitializeGame()
     {
         StartCoroutine(board.GenerateGameBoard());
+        moleHoles = board.MoleHoles;
 
         totalScore = 0;
         currentScore = 0;
@@ -352,7 +356,7 @@ public class GameManager : MonoBehaviour
             powerUpCount--;
             UpdatePowerUpIcons();
 
-            var moles = board.MoleHoles;
+            //var moles = moleHoles;
         }
     }
 
