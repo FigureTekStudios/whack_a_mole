@@ -47,7 +47,6 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         StartCoroutine(RetreatMole());
     }
 
-
     private void StateManager(MoleState state)
     {
         switch (state)
@@ -86,6 +85,28 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
             
             StartCoroutine(RevealMole());
         }
+    }
+
+    private string GetRandomAnimation(MoleState state)
+    {
+        string animName = "";
+        switch (state)
+        {
+            case MoleState.idle:
+                break;
+            case MoleState.hit:
+                break;
+            case MoleState.revealing:
+                break;
+            case MoleState.retreating:
+                break;
+            case MoleState.hiding:
+                break;
+            default:
+                break;
+        }
+
+        return animName;
     }
 
     public void Hit()
