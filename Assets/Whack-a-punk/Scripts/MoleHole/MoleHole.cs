@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFinished, IMoleRevealAnimationEventFinished
 {
     [SerializeField] MoleState state = MoleState.hiding;
-    
+    private bool hit = false;
     // Likeliness in percent that the mole will reveal itself each beat
     public int revealLikelinessInPercent = 20;
     
@@ -167,6 +167,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
             return;
         if (state == MoleState.idle || state == MoleState.revealing)
         {
+            hit = true; 
             _circleTimer.StopTimer();
             
             _multiplier = currentTimeRevealedInBeats >= perfectTimeInBeats ? 3 : currentTimeRevealedInBeats >= okTimeInBeats ? 2 : 1;
@@ -181,12 +182,11 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     public IEnumerator RevealMole()
     {
         Debug.Log("Step into revealmole()");
-
         //StateManager(MoleState.revealing);
         state = MoleState.revealing;
         currentAnimTriggerName = "Reveal"; 
         animator.SetTrigger(currentAnimTriggerName);
-
+        hit = false;
         _circleTimer.SetTimeInBeats(revealTimeInBeats);
         
         currentTimeRevealedInBeats = 0;
@@ -243,11 +243,15 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
     public IEnumerator Shock()
     {
+        MoleState prevState = state;
         //StateManager(MoleState.shocked);
         state = MoleState.shocked;
         currentAnimTriggerName = "Shock";
         animator.SetTrigger(currentAnimTriggerName);
         // Sound.Play();
+        if (!hit)
+            StateManager(prevState);
+
         yield return null;
     }
 
