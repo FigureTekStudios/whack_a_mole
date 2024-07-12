@@ -9,6 +9,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 {
     [SerializeField] MoleState state = MoleState.hiding;
     private bool _hit = false;
+    private int shockDuration = 3;
     // Likeliness in percent that the mole will reveal itself each beat
     public int revealLikelinessInPercent = 20;
     
@@ -168,24 +169,27 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
     public IEnumerator Taunt()
     {
-        //StateManager(MoleState.taunt);
         state = MoleState.taunt;
         currentAnimTriggerName = GetRandomAnimation(state);
         animator.SetTrigger(currentAnimTriggerName);
+        yield return new WaitUntil(() => this.animator.GetCurrentAnimatorStateInfo(0).IsName(currentAnimTriggerName));
+
+        // TODO: this should be changes so its only a 50% chance
+        // to change to idle or retreat state.
+        StateManager(MoleState.idle); 
         yield return null;
     }
 
     public IEnumerator Shock()
     {
         MoleState prevState = state;
-        //StateManager(MoleState.shocked);
         state = MoleState.shocked;
         currentAnimTriggerName = "Shock";
         animator.SetTrigger(currentAnimTriggerName);
         // Sound.Play();
         yield return new WaitUntil(() => this.animator.GetCurrentAnimatorStateInfo(0).IsName(currentAnimTriggerName));
         
-        // if not hit, continue previous state.
+        // if not hit, return mole to previous state.
         if (!_hit)
             StateManager(prevState);
     }
