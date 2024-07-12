@@ -178,10 +178,10 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         animator.SetTrigger(currentAnimTriggerName);
         // Sound.Play();
         yield return new WaitUntil(() => this.animator.GetCurrentAnimatorStateInfo(0).IsName(currentAnimTriggerName));
+        
+        // if not hit, continue previous state.
         if (!_hit)
             StateManager(prevState);
-
-        yield return null;
     }
 
     private void OnBeat(int currentBeatInSong, int currentBeatInMeasure, int currentMeasure)
@@ -263,12 +263,12 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
     public void RetreatFinished(string label)
     {
-        StartCoroutine(Hide());
+        StateManager(MoleState.hiding);
     }
 
     public void RevealFinished(string label)
     {
-        StartCoroutine(Idle());
+        StateManager(MoleState.idle);
     }
 
     private void OnDestroy()
