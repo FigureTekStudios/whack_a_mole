@@ -61,7 +61,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
     private void Start()
     {
-        StartCoroutine(RetreatMole());
+        StateManager(MoleState.hiding);
     }
 
     private void StateManager(MoleState state)
