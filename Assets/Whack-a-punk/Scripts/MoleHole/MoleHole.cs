@@ -83,6 +83,12 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
             case MoleState.hiding:
                 StartCoroutine(Hide());
                 break;
+            case MoleState.taunt:
+                StartCoroutine(Taunt());
+                break;
+            case MoleState.shocked:
+                StartCoroutine(Shock());
+                break;
             default:
                 break;
         }
