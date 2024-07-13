@@ -15,8 +15,9 @@ public class SoundManager : MonoBehaviour
     [SerializeField] List<AudioClip> tauntAudioClips;
 
     [Header("Game Announcer VO Audio Clips")]
-    [SerializeField] List<AudioClip> shockAudioClips;
-    [SerializeField] List<AudioClip> onGetPointsAudioClips;
+    [SerializeField] List<AudioClip> onAddScoreAudioClips;
+    [SerializeField] List<AudioClip> onUsePowerUpAudioClips;
+    [SerializeField] List<AudioClip> onObtainedPowerUpAudioClips;
 
     private void Awake()
     {
@@ -43,6 +44,7 @@ public class SoundManager : MonoBehaviour
         audioSource.clip = clip;
         audioSource.Play();
     }
+
     public void PlayZombieIdleSFX()
     {
 
