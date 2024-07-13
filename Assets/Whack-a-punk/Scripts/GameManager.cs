@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -91,8 +92,12 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S))
             StartGame();
-        if (Input.GetKeyDown(KeyCode.R) )
+        if (Input.GetKeyDown(KeyCode.R))
             RestartGame();
+
+        if (Input.GetKeyDown(KeyCode.E))
+            UsePowerUp();
+
 
         if (Input.GetKeyDown(KeyCode.P) && gameStarted)
         {
@@ -356,7 +361,15 @@ public class GameManager : MonoBehaviour
             powerUpCount--;
             UpdatePowerUpIcons();
 
-            //var moles = moleHoles;
+            var moles = moleHoles
+            .Select(moleHoleObj => moleHoleObj.GetComponent<MoleHole>())
+            .Where(moleHole => moleHole != null &&
+                               moleHole.State != MoleState.hiding &&
+                               moleHole.State != MoleState.shocked &&
+                               moleHole.State != MoleState.hit)
+            .ToList();
+
+            foreach (var mole in moles) { StartCoroutine(mole.Shock()); }
         }
     }
 

@@ -12,8 +12,8 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     private int shockDuration = 3;
     public float minTimeToTaunt = 5f; // Minimum time before a mole can taunt
     public float maxTimeToTaunt = 15f; // Maximum time before a mole can taunt
-    public int maxMolesInTauntState = 3; // Maximum number of moles allowed to taunt at the same time
-    private int currentTauntingMoles = 0;
+    public static int maxMolesInTauntState = 3; // Maximum number of moles allowed to taunt at the same time
+    private static int currentTauntingMoles = 0;
     private Coroutine tauntCoroutine;
 
 
@@ -47,6 +47,8 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     private float perfectTimeInBeats;
     [SerializeField]
     private float okTimeInBeats;
+
+    public MoleState State { get => state; }
 
     //public string CurrentAnimTriggerName { get => currentAnimTriggerName; }
 
@@ -146,8 +148,8 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         currentAnimTriggerName = "Reveal"; 
         animator.SetTrigger(currentAnimTriggerName);
         _hit = false;
+
         _circleTimer.SetTimeInBeats(revealTimeInBeats);
-        
         currentTimeRevealedInBeats = 0;
 
         //yield return new WaitUntil(() => this.animator.GetCurrentAnimatorStateInfo(0).IsName("Reveal"));
