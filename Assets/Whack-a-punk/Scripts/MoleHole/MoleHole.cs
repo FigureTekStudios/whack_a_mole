@@ -10,6 +10,13 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     [SerializeField] MoleState state = MoleState.hiding;
     private bool _hit = false;
     private int shockDuration = 3;
+    public float minTimeToTaunt = 5f; // Minimum time before a mole can taunt
+    public float maxTimeToTaunt = 15f; // Maximum time before a mole can taunt
+    public int maxMolesInTauntState = 3; // Maximum number of moles allowed to taunt at the same time
+    private int currentTauntingMoles = 0;
+    private Coroutine tauntCoroutine;
+
+
     // Likeliness in percent that the mole will reveal itself each beat
     public int revealLikelinessInPercent = 20;
     
@@ -100,6 +107,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         state = MoleState.idle;
         currentAnimTriggerName = GetRandomAnimation(state);
         animator.SetTrigger(currentAnimTriggerName);
+        ScheduleTaunt();
         yield return null;
     }
 
@@ -169,10 +177,15 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
     public IEnumerator Taunt()
     {
+        Debug.Log("Enterng Taunt State!");
         state = MoleState.taunt;
         currentAnimTriggerName = GetRandomAnimation(state);
         animator.SetTrigger(currentAnimTriggerName);
-        yield return new WaitUntil(() => this.animator.GetCurrentAnimatorStateInfo(0).IsName(currentAnimTriggerName));
+
+        _circleTimer.SetTimeInBeats(revealTimeInBeats);
+        currentTimeRevealedInBeats = 0;
+
+        currentTauntingMoles--;
 
         // TODO: this should be changes so its only a 50% chance
         // to change to idle or retreat state.
@@ -192,6 +205,22 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         // if not hit, return mole to previous state.
         if (!_hit)
             StateManager(prevState);
+    }
+
+    private void ScheduleTaunt()
+    {
+        float timeToTaunt = Random.Range(minTimeToTaunt, maxTimeToTaunt);
+        tauntCoroutine = StartCoroutine(TauntAfterDelay(timeToTaunt));
+    }
+
+    private IEnumerator TauntAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (currentTauntingMoles < maxMolesInTauntState)
+            StateManager(MoleState.taunt);
+        else
+            ScheduleTaunt(); // Reschedule taunt if conditions aren't met
     }
 
     private void OnBeat(int currentBeatInSong, int currentBeatInMeasure, int currentMeasure)
@@ -228,8 +257,8 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
             case MoleState.retreating:
                 triggerAnimNames = retreatAnimTriggerNames;
                 break;
-            case MoleState.hiding:
-                triggerAnimNames = retreatAnimTriggerNames;
+            case MoleState.taunt:
+                triggerAnimNames = tauntAnimTriggerNames;
                 break;
             default:
                 break;
