@@ -358,7 +358,8 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator UsePowerUp()
     {
-        powerUpEnabled = true;  
+        powerUpEnabled = true;
+        SoundManager.Instance.PlayOnUsePowerUpSFX();
         if (powerUpCount > 0)
         {
             powerUpCount--;
@@ -387,6 +388,7 @@ public class GameManager : MonoBehaviour
             if (powerUpProgress >= scoreToUnlockPowerUp)
             {
                 powerUpProgress -= scoreToUnlockPowerUp;
+                SoundManager.Instance.PlayOnObtainedPowerUpSFX();
                 powerUpCount++;
             }
 

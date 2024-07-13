@@ -80,11 +80,14 @@ public class SoundManager : MonoBehaviour
 
     public void PlayOnUsePowerUpSFX()
     {
+        int randIndex = Random.Range(0, onUsePowerUpAudioClips.Count);
+        PlaySound(onUsePowerUpAudioClips[randIndex]);
 
     }
 
     public void PlayOnObtainedPowerUpSFX()
     {
-
+        int randIndex = Random.Range(0, onObtainedPowerUpAudioClips.Count);
+        PlaySound(onUsePowerUpAudioClips[randIndex]);
     }
 }
