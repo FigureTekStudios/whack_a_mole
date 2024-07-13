@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -6,9 +7,19 @@ public class SoundManager : MonoBehaviour
 
     private AudioSource audioSource;
 
+    [Header("Zombie Punk VO Audio Clips")]
+    [SerializeField] List<AudioClip> idleAudioClips;
+    [SerializeField] List<AudioClip> hitAudioClips;
+    [SerializeField] List<AudioClip> revealAudioClips;
+    [SerializeField] List<AudioClip> retreatAudioClips;
+    [SerializeField] List<AudioClip> tauntAudioClips;
+
+    [Header("Game Announcer VO Audio Clips")]
+    [SerializeField] List<AudioClip> shockAudioClips;
+    [SerializeField] List<AudioClip> onGetPointsAudioClips;
+
     private void Awake()
     {
-        // Singleton pattern implementation
         if (Instance == null)
         {
             Instance = this;
@@ -31,5 +42,29 @@ public class SoundManager : MonoBehaviour
 
         audioSource.clip = clip;
         audioSource.Play();
+    }
+    public void PlayZombieIdleSFX()
+    {
+
+    }
+
+    public void PlayZombieHitSFX()
+    {
+
+    }
+
+    public void PlayZombieRevealSFX()
+    {
+
+    }
+
+    public void PlayZombieRetreatSFX()
+    {
+
+    }
+
+    public void PlayZombieTauntSFX()
+    {
+
     }
 }
