@@ -85,7 +85,8 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
                 Hit();
                 break; 
             case MoleState.revealing:
-                StartCoroutine(RevealMole());
+                if (!GameManager.Instance.PowerUpEnabled)
+                    StartCoroutine(RevealMole());
                 break;
             case MoleState.retreating:
                 StartCoroutine(RetreatMole(_hit));
@@ -94,7 +95,8 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
                 StartCoroutine(Hide());
                 break;
             case MoleState.taunt:
-                StartCoroutine(Taunt());
+                if (!GameManager.Instance.PowerUpEnabled)
+                    StartCoroutine(Taunt());
                 break;
             case MoleState.shocked:
                 StartCoroutine(Shock());
@@ -227,9 +229,6 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     private void OnBeat(int currentBeatInSong, int currentBeatInMeasure, int currentMeasure)
     {
         if (!GameManager.Instance.GameStarted || GameManager.Instance.GameEnded) return;
-
-        if (state == MoleState.shocked)
-            return;
 
         if (state == MoleState.idle || state == MoleState.revealing)
         {
