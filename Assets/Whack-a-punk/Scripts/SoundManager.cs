@@ -45,29 +45,84 @@ public class SoundManager : MonoBehaviour
         audioSource.Play();
     }
 
-    public void PlayZombieIdleSFX()
+    public void PlayZombieIdleSFX(AudioSource source)
     {
+        AudioClip clip = null;
+        int randIndex = Random.Range(0, idleAudioClips.Count);
+        clip = idleAudioClips[randIndex];
 
+        if (clip == null)
+        {
+            Debug.LogWarning("SoundManager: PlaySound called with null clip");
+            return;
+        }
+
+        source.clip = clip;
+        source.Play();
     }
 
-    public void PlayZombieHitSFX()
+    public void PlayZombieHitSFX(AudioSource source)
     {
+        AudioClip clip = null;
+        int randIndex = Random.Range(0, hitAudioClips.Count);
+        clip = hitAudioClips[randIndex];
 
+        if (clip == null)
+        {
+            Debug.LogWarning("SoundManager: PlaySound called with null clip");
+            return;
+        }
+
+        source.clip = clip;
+        source.Play();
     }
 
-    public void PlayZombieRevealSFX()
+    public void PlayZombieRevealSFX(AudioSource source)
     {
+        AudioClip clip = null;
+        int randIndex = Random.Range(0, revealAudioClips.Count);
+        clip = revealAudioClips[randIndex];
 
+        if (clip == null)
+        {
+            Debug.LogWarning("SoundManager: PlaySound called with null clip");
+            return;
+        }
+
+        source.clip = clip;
+        source.Play();
     }
 
-    public void PlayZombieRetreatSFX()
+    public void PlayZombieRetreatSFX(AudioSource source)
     {
+        AudioClip clip = null;
+        int randIndex = Random.Range(0, retreatAudioClips.Count);
+        clip = retreatAudioClips[randIndex];
 
+        if (clip == null)
+        {
+            Debug.LogWarning("SoundManager: PlaySound called with null clip");
+            return;
+        }
+
+        source.clip = clip;
+        source.Play();
     }
 
-    public void PlayZombieTauntSFX()
+    public void PlayZombieTauntSFX(AudioSource source)
     {
+        AudioClip clip = null;
+        int randIndex = Random.Range(0, tauntAudioClips.Count);
+        clip = tauntAudioClips[randIndex];
 
+        if (clip == null)
+        {
+            Debug.LogWarning("SoundManager: PlaySound called with null clip");
+            return;
+        }
+
+        source.clip = clip;
+        source.Play();
     }
 
     public void PlayOnAddScoreSFX(int multiplier = 1)
