@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI totalScoreText;
     public TextMeshProUGUI finalScoreText;
 
+    private bool powerUpEnabled = false;
     public Image[] powerUpIcons; // UI Images to display power-up icons
 
     // these are references to objects in the second monitor
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
     private GameBoard board; // this should probably be another singleton
     private List<GameObject> moleHoles;
     public List<GameObject> MoleHoles { get => moleHoles; }
+    public bool PowerUpEnabled { get => powerUpEnabled; }
 
     private int currentScore;
     private int totalScore;
@@ -96,7 +98,7 @@ public class GameManager : MonoBehaviour
             RestartGame();
 
         if (Input.GetKeyDown(KeyCode.E))
-            UsePowerUp();
+            StartCoroutine(UsePowerUp());
 
 
         if (Input.GetKeyDown(KeyCode.P) && gameStarted)
@@ -354,8 +356,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void UsePowerUp()
+    public IEnumerator UsePowerUp()
     {
+        powerUpEnabled = true;  
         if (powerUpCount > 0)
         {
             powerUpCount--;
@@ -371,6 +374,8 @@ public class GameManager : MonoBehaviour
 
             foreach (var mole in moles) { StartCoroutine(mole.Shock()); }
         }
+        yield return new WaitForSeconds(3f);  
+        powerUpEnabled = false; 
     }
 
     private void UpdatePowerUpProgress(int amount)

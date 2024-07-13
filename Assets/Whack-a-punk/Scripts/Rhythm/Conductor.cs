@@ -80,16 +80,19 @@ public class Conductor : MonoBehaviour
             UpdateAudioTime?.Invoke(songPosition, _songPositionDelta);
 
             int positionInBeats = (int)Math.Floor(_songPosition / song.spb);
-                
-            if (!_invokedHalfBeat && ((_songPosition % song.spb) > song.spb / 2))
-            {
-                OnHalfBeatHandler();
-            }
 
-            if (positionInBeats > _currentBeatInSong)
+            if (!GameManager.Instance.PowerUpEnabled)
             {
-                OnBeatHandler();
-            }
+                if (!_invokedHalfBeat && ((_songPosition % song.spb) > song.spb / 2))
+                {
+                    OnHalfBeatHandler();
+                }
+
+                if (positionInBeats > _currentBeatInSong)
+                {
+                    OnBeatHandler();
+                }
+            }    
         }
     }
     public void PlaySong()

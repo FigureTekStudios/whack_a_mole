@@ -127,7 +127,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         Debug.Log("hitting");
         if (GameManager.Instance.IsPaused)
             return;
-        if (state == MoleState.idle || state == MoleState.revealing)
+        if (state == MoleState.idle || state == MoleState.revealing || state == MoleState.taunt || state == MoleState.shocked)
         {
             _hit = true; 
             _circleTimer.StopTimer();
@@ -172,9 +172,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         _circleTimer.StopTimer();
         yield return new WaitUntil(() => this.animator.GetCurrentAnimatorStateInfo(0).IsName(currentAnimTriggerName));
         
-        // set mole to idol.
         StateManager(MoleState.hiding);
-        //yield return null;
     }
 
     public IEnumerator Taunt()
@@ -197,16 +195,17 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
     public IEnumerator Shock()
     {
-        MoleState prevState = state;
+        StopAllCoroutines();
+        _hit = false; // just in case a hit is already detected for some reason
         state = MoleState.shocked;
         currentAnimTriggerName = "Shock";
         animator.SetTrigger(currentAnimTriggerName);
+        _circleTimer.StopTimer();
         // Sound.Play();
-        yield return new WaitUntil(() => this.animator.GetCurrentAnimatorStateInfo(0).IsName(currentAnimTriggerName));
-        
-        // if not hit, return mole to previous state.
-        if (!_hit)
-            StateManager(prevState);
+        yield return new WaitUntil(() => GameManager.Instance.PowerUpEnabled == false);
+
+        StateManager(MoleState.retreating);
+
     }
 
     private void ScheduleTaunt()
@@ -228,6 +227,10 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     private void OnBeat(int currentBeatInSong, int currentBeatInMeasure, int currentMeasure)
     {
         if (!GameManager.Instance.GameStarted || GameManager.Instance.GameEnded) return;
+
+        if (state == MoleState.shocked)
+            return;
+
         if (state == MoleState.idle || state == MoleState.revealing)
         {
             currentTimeRevealedInBeats++;
@@ -238,7 +241,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
             }
         }
 
-        if (state == MoleState.hiding)
+        if (state == MoleState.hiding && GameManager.Instance.PowerUpEnabled == false)
         {
             if (Random.Range(0, 100) > revealLikelinessInPercent) return;
 
