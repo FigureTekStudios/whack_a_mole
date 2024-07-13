@@ -136,6 +136,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
             
             _multiplier = currentTimeRevealedInBeats >= perfectTimeInBeats ? 3 : currentTimeRevealedInBeats >= okTimeInBeats ? 2 : 1;
             SoundManager.Instance.PlaySound(hitAudioClip);
+            SoundManager.Instance.PlayOnAddScoreSFX(_multiplier);
             OnMoleHit?.Invoke(score, _multiplier);
             //animator.SetTrigger("Hit"); // create anim for this
 

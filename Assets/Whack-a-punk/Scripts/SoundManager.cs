@@ -69,4 +69,22 @@ public class SoundManager : MonoBehaviour
     {
 
     }
+
+    public void PlayOnAddScoreSFX(int multiplier = 1)
+    {
+        if (multiplier == 2)
+            PlaySound(onAddScoreAudioClips[0]);
+        else if (multiplier == 3)
+            PlaySound(onAddScoreAudioClips[1]);
+    }
+
+    public void PlayOnUsePowerUpSFX()
+    {
+
+    }
+
+    public void PlayOnObtainedPowerUpSFX()
+    {
+
+    }
 }

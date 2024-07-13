@@ -50,7 +50,6 @@ MonoBehaviour:
   retreatAudioClips: []
   tauntAudioClips: []
   onAddScoreAudioClips:
-  - {fileID: 8300000, guid: 5f82204bfd553a5449264e40fe2c5f31, type: 3}
   - {fileID: 8300000, guid: 11203e8b1b9744c4e8187920590489e4, type: 3}
   - {fileID: 8300000, guid: decd179f391348a4d889b9aac2ba4c15, type: 3}
   onUsePowerUpAudioClips:
@@ -68,7 +67,6 @@ MonoBehaviour:
   onObtainedPowerUpAudioClips:
   - {fileID: 8300000, guid: ec82c3a415737e54d9bad627c54f962f, type: 3}
   - {fileID: 8300000, guid: 6f9f7e1353c950f4e9a4d75e54552121, type: 3}
-  - {fileID: 8300000, guid: 1ad5b39751fefa9408a73d1ae466ea9d, type: 3}
   - {fileID: 8300000, guid: e34479bcf768c2241a6b4bd07a92a4b2, type: 3}
   - {fileID: 8300000, guid: af0822327aa3fca44ab3f1ce20c6a873, type: 3}
   - {fileID: 8300000, guid: 229bd3802bf64c14fb23d8df422303bf, type: 3}
