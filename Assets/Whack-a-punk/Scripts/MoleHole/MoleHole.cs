@@ -31,12 +31,14 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     private int _multiplier = 1;
 
     [SerializeField] Animator animator;
-    public AudioClip idleAudioClip, hitAudioClip, revealAudioClip, retreatAudioClip;
-    public ParticleSystem hitParticle, revealParticle, retreatParticle;
     private string currentAnimTriggerName = string.Empty;
     private List<string> idleAnimTriggerNames = new List<string>();
     private List<string> tauntAnimTriggerNames = new List<string>();
     private List<string> retreatAnimTriggerNames = new List<string>();
+
+    [SerializeField] AudioSource audioSource;
+    private AudioClip idleAudioClip, hitAudioClip, revealAudioClip, retreatAudioClip;
+    public ParticleSystem hitParticle, revealParticle, retreatParticle;
 
     public Action<int, int> OnMoleHit;
     
