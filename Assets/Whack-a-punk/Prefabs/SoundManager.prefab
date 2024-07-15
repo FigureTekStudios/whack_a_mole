@@ -206,11 +206,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3ee57410b080e8449c5e8dca4f047e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleAudioClips: []
-  hitAudioClips: []
-  revealAudioClips: []
-  retreatAudioClips: []
-  tauntAudioClips: []
+  idleAudioClips:
+  - {fileID: 8300000, guid: 266eefe5d52460f43938fa2b208c0b3f, type: 3}
+  - {fileID: 8300000, guid: f7c521109661065499bd8d545f3935f1, type: 3}
+  - {fileID: 8300000, guid: 30565f317b04fe749aa45a9a5f5d8ad7, type: 3}
+  - {fileID: 8300000, guid: bd2ba0a797e55fc4593b902cb116cbb6, type: 3}
+  - {fileID: 8300000, guid: 23d7dcdb9824bd446975b885ae88b4c0, type: 3}
+  - {fileID: 8300000, guid: 6319fa6d481ecce4ebb871cfa4fb2d6b, type: 3}
+  - {fileID: 8300000, guid: e3cd2cff62670d349a41661db07e52b0, type: 3}
+  - {fileID: 8300000, guid: ab835b8486da4254882022b44fbf5f27, type: 3}
+  - {fileID: 8300000, guid: fd96bef1c216a014484566ae9408c720, type: 3}
+  - {fileID: 8300000, guid: 5ca22de97e04bac4e8097d12742e830b, type: 3}
+  - {fileID: 8300000, guid: 476b4eb46cd7270459d67e9d97419489, type: 3}
+  - {fileID: 8300000, guid: a1b63ad9b22d7c64597f5fad555408b0, type: 3}
+  hitAudioClips:
+  - {fileID: 8300000, guid: d51808d57055c5d4fb7bd444774769cc, type: 3}
+  - {fileID: 8300000, guid: d1311431b6897584b9895a4b966abc9b, type: 3}
+  - {fileID: 8300000, guid: 627c8243cc5887541b29327f42ff7ea4, type: 3}
+  - {fileID: 8300000, guid: b578647ab972ec54aa7b4fdb4a3c93da, type: 3}
+  - {fileID: 8300000, guid: db81247bd6cafb14688445a38ca8b295, type: 3}
+  - {fileID: 8300000, guid: 188c33d1b344adf48aa1cf5a22bf317a, type: 3}
+  revealAudioClips:
+  - {fileID: 8300000, guid: ee1a367532300564da2d895327bb4ea8, type: 3}
+  - {fileID: 8300000, guid: a82cce42eb10b234b81710c507aeb0e6, type: 3}
+  - {fileID: 8300000, guid: e842e2aff75b1664c97221ac7f7bd275, type: 3}
+  - {fileID: 8300000, guid: 4c934d4525c2cba43a52bbc619dfd9b4, type: 3}
+  - {fileID: 8300000, guid: efeb28588c693634c96bccf1e1af64d4, type: 3}
+  - {fileID: 8300000, guid: 2f81d1c3e0417cc45af7282679e99cc5, type: 3}
+  - {fileID: 8300000, guid: f51046d0293f2604096051cbe916c433, type: 3}
+  - {fileID: 8300000, guid: 34572c8bcf727c24e8497b7e71d5b787, type: 3}
+  - {fileID: 8300000, guid: 8f6571ebda0a08c47af2cf888a835b55, type: 3}
+  - {fileID: 8300000, guid: 96ee1d52718d64942805e4b03dd233be, type: 3}
+  - {fileID: 8300000, guid: 901df245b239878439c87c94ad66a451, type: 3}
+  - {fileID: 8300000, guid: 229c1fd894d7a28478ff4f11aa9c6f13, type: 3}
+  - {fileID: 8300000, guid: e8ee363361ed07d4d8336fb62f0c0bd2, type: 3}
+  - {fileID: 8300000, guid: 59953d37603bd6048af7fee49dad8745, type: 3}
+  - {fileID: 8300000, guid: a54a44f542c0fc1449df2be38b70f9cc, type: 3}
+  - {fileID: 8300000, guid: 65d08aab038b78c4d80c2d3ed79bceb6, type: 3}
+  - {fileID: 8300000, guid: f9f9825de3e1c9846ad7dfea2c675889, type: 3}
+  - {fileID: 8300000, guid: a973c0422b7560b43ada25894cde6031, type: 3}
+  - {fileID: 8300000, guid: 86a5c974f995b7f4bb6a90b7374a6aaf, type: 3}
+  - {fileID: 8300000, guid: 7155deee2b4726549a9a5951ce83b2e4, type: 3}
+  - {fileID: 8300000, guid: fa3c47fc0feb7474c843f526b76a96d5, type: 3}
+  retreatAudioClips:
+  - {fileID: 8300000, guid: 612390a7ad911354eae492699bb14311, type: 3}
+  - {fileID: 8300000, guid: b0fe561f85f2a674a93cd978788f2a39, type: 3}
+  - {fileID: 8300000, guid: 623b1702572bac04b8ca703a51a14d95, type: 3}
+  retreatDamagedAudioClips:
+  - {fileID: 8300000, guid: 8c220febdab12024a8b11e8b628dce80, type: 3}
+  - {fileID: 8300000, guid: 8e749ee147a184d4499f1d2f25af9307, type: 3}
+  - {fileID: 8300000, guid: 52cdae0377ee3a345a717a97451c097c, type: 3}
+  - {fileID: 8300000, guid: 9ecb9d869fc015049896c21c4c8b6edf, type: 3}
+  - {fileID: 8300000, guid: 9c3f59ddfa5bf8d48a70c8c8a96ac26b, type: 3}
+  - {fileID: 8300000, guid: e8982b9a031ffdf48abeb04e8ec601bf, type: 3}
+  - {fileID: 8300000, guid: 9a42b2f1d3c6c324a9b3d4a80fc9ef2d, type: 3}
+  - {fileID: 8300000, guid: 5f1d3bc8458af294ba90f6e7d4e0b818, type: 3}
+  - {fileID: 8300000, guid: cf9c0e1fbdcddd14c876a7f1c72c5b38, type: 3}
+  - {fileID: 8300000, guid: 3654ba1201dd07441b6b6c25fa64878c, type: 3}
+  - {fileID: 8300000, guid: 7e207ad2147584d4cb82802ae61d1ea8, type: 3}
+  - {fileID: 8300000, guid: bb99440161d257d4b8964b9b7b5859c5, type: 3}
+  tauntAudioClips:
+  - {fileID: 8300000, guid: 3eb65045c9455594aa4057b29d59599a, type: 3}
+  - {fileID: 8300000, guid: 76b3ecb5098c5cf45ab23a78d97b8598, type: 3}
+  - {fileID: 8300000, guid: 1553b688a64b2654ea7d60dc31b53a44, type: 3}
+  - {fileID: 8300000, guid: bf18a88ab2e1310499e453a9d7a9c0ab, type: 3}
+  - {fileID: 8300000, guid: bf18a88ab2e1310499e453a9d7a9c0ab, type: 3}
+  - {fileID: 8300000, guid: 035715eec3e152d42b4c28a981006d40, type: 3}
+  - {fileID: 8300000, guid: 2930036b83e61034fbc55391d0b78d16, type: 3}
+  - {fileID: 8300000, guid: 515b17cd5d8d20e469f4e6956a3af365, type: 3}
+  - {fileID: 8300000, guid: 9ba04943e30ee89409a121914fbd700f, type: 3}
+  - {fileID: 8300000, guid: 923dfb2a9989c3a478b4b70ac7666536, type: 3}
+  - {fileID: 8300000, guid: 81cf2cd10123af4498822afaaf992999, type: 3}
   onAddScoreAudioClips:
   - {fileID: 8300000, guid: 11203e8b1b9744c4e8187920590489e4, type: 3}
   - {fileID: 8300000, guid: decd179f391348a4d889b9aac2ba4c15, type: 3}
