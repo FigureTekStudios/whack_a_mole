@@ -1352,6 +1352,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArcadeScenePrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 8711899606071234020, guid: bd3951710960276459886de115c37d53,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99998206
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711899606071234020, guid: bd3951710960276459886de115c37d53,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0059901094
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711899606071234020, guid: bd3951710960276459886de115c37d53,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.686
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
