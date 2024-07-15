@@ -3,7 +3,167 @@ guid: a62126f460c584c47aa5a4ec7c0acec8
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Belt_Belt_HD8FE8PDK2_lambert
+    second: {fileID: 2100000, guid: e01592700f430c54c86ad809082087b1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_BloodyShorts_Pants_FE6DJ7HAD5_blinn
+    second: {fileID: 2100000, guid: 3a716e21bd9c9d94c87ed4c1a76e4d55, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Body_Lamberts
+    second: {fileID: 2100000, guid: e46e4e49624c1e24b850a105b69f89c0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Bracers_Bracers_CW7EH7PPW6_lambert
+    second: {fileID: 2100000, guid: 173a6a864b9009a44937c58ca571ae6c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Brows_Lambert
+    second: {fileID: 2100000, guid: c761abde5883cd74e8917a0441520bde, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Brows_Mat
+    second: {fileID: 2100000, guid: bf0744cb5649d054eb3718fff8d46df9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Caruncle_Lambert
+    second: {fileID: 2100000, guid: 252a1d9700f89c047ba30695e7b2e869, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_CloseCutHair_MowhawkHairstyle_GA2JA9CJK7_lambert
+    second: {fileID: 2100000, guid: facd9e863ccb0a242b122337618a33fc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Coloredleather_Jacket_EE3HK6WGP5_lambert
+    second: {fileID: 2100000, guid: 827a50ca7231b4940a08fdd6388973ec, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Eyes_lambert
+    second: {fileID: 2100000, guid: 8e837ebb4a3b48c4d8bd647abc57dd98, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_FakeSpec_Lambert
+    second: {fileID: 2100000, guid: b0d5e1d62302d65479a6295b926e0ea0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Footwraps_Footwraps_JK3AJ4CWK4_lambert
+    second: {fileID: 2100000, guid: ad1cccf2a4afdc645a38d6f4ff27935d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Gloves_Gloves_KH6CA6WRG4_blinn
+    second: {fileID: 2100000, guid: 51c9065b5c70c934e92784d91b8a6004, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Gums_Lambert
+    second: {fileID: 2100000, guid: 260231630d0c0bf428f2ffc3ddc9310e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Handwraps_Handwraps_GJ5DD3DCH2_lambert
+    second: {fileID: 2100000, guid: c4e142f252f84a84dbeafa310b07b40a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_LeatherShorts_Shorts_GW9DH3ADG7_blinn
+    second: {fileID: 2100000, guid: ef5a4c4e2d31a924f88a6c7b5b34023f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Leather_Choker_EA8KP3FAF4_blinn
+    second: {fileID: 2100000, guid: ab89f16f608f8dc46ab02688ba433bc4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Leather_Jacket_EE3HK6WGP5_blinn
+    second: {fileID: 2100000, guid: f2a3c17bd6fd5664cb1b8b36d9356772, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Metal_Choker_EA8KP3FAF4_blinn
+    second: {fileID: 2100000, guid: 3f79451cf3bfb674d8f940dc6f68eeb8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Metal_FacePiercings_GF3WF8GER6_blinn
+    second: {fileID: 2100000, guid: 83145293141efa847bfdcb6b2747e0de, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Metal_Jacket_EE3HK6WGP5_blinn
+    second: {fileID: 2100000, guid: b608d281663d84b49b6736ee4da3aba0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_MohawkA_MowhawkHairstyle_GA2JA9CJK7_lambert
+    second: {fileID: 2100000, guid: 967f4bc631a07734abfef1363e2a7758, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_MohawkB_MowhawkHairstyle_GA2JA9CJK7_lambert
+    second: {fileID: 2100000, guid: 5ced12c9c11ecfc4a866be01fadcab29, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_MohawkC_MowhawkHairstyle_GA2JA9CJK7_lambert
+    second: {fileID: 2100000, guid: d2b8d7679d34f0748a4e11190f256532, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Plastic_EarPlugs_CC2HJ4PEA3_blinn
+    second: {fileID: 2100000, guid: cfae1fb3813f7434991bb747c1af6c8a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Plastic_FacePiercings_GF3WF8GER6_blinn
+    second: {fileID: 2100000, guid: 07caa1cd7d2e70a4d83e17d497381fba, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Shorts_Shorts_JJ2WC5REH8_lambert
+    second: {fileID: 2100000, guid: fba1dea82fcf92c4591b1aca4232c9c4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_TShirtA_SleevelessTShirt_KG9KD4PRG3_blinn
+    second: {fileID: 2100000, guid: 3598287754512ba41a77fcdad15e85c2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Teeth_Lambert
+    second: {fileID: 2100000, guid: c1d79f536881d3d4ea1c1ba77a836198, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_TransparencyA_SleevelessTShirt_KG9KD4PRG3_lambert
+    second: {fileID: 2100000, guid: f4f290d8b7e7ec9458ea4a93c2976a32, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Underware_Mat
+    second: {fileID: 2100000, guid: 9bce3f3804f73e54587f43ac614181f5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JR3_Viscous_Blinn
+    second: {fileID: 2100000, guid: 93d493203d3ebfb4cbdb6ce19919b692, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
