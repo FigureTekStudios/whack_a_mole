@@ -138,7 +138,8 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
             
             _multiplier = currentTimeRevealedInBeats >= perfectTimeInBeats ? 3 : currentTimeRevealedInBeats >= okTimeInBeats ? 2 : 1;
             SoundManager.Instance.PlaySound(hitAudioClip);
-            SoundManager.Instance.PlayOnAddScoreSFX(_multiplier);
+            SoundManager.Instance.PlayOnAddScoreSFX(audioSource, _multiplier);
+            SoundManager.Instance.PlayZombieHitSFX(audioSource);
             OnMoleHit?.Invoke(score, _multiplier);
             //animator.SetTrigger("Hit"); // create anim for this
 
@@ -156,7 +157,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
         _circleTimer.SetTimeInBeats(revealTimeInBeats);
         currentTimeRevealedInBeats = 0;
-
+        SoundManager.Instance.PlayZombieRevealSFX(audioSource);
         //yield return new WaitUntil(() => this.animator.GetCurrentAnimatorStateInfo(0).IsName("Reveal"));
         // set mole to idol.
         StateManager(MoleState.idle);
@@ -173,6 +174,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
             currentAnimTriggerName = GetRandomAnimation(state);
 
         animator.SetTrigger(currentAnimTriggerName);
+        SoundManager.Instance.PlayZombieRetreatSFX(audioSource);
 
         _circleTimer.StopTimer();
         yield return new WaitUntil(() => this.animator.GetCurrentAnimatorStateInfo(0).IsName(currentAnimTriggerName));
@@ -186,6 +188,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         state = MoleState.taunt;
         currentAnimTriggerName = GetRandomAnimation(state);
         animator.SetTrigger(currentAnimTriggerName);
+        SoundManager.Instance.PlayZombieTauntSFX(audioSource);
 
         _circleTimer.SetTimeInBeats(revealTimeInBeats);
         currentTimeRevealedInBeats = 0;
@@ -205,6 +208,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         state = MoleState.shocked;
         currentAnimTriggerName = "Shock";
         animator.SetTrigger(currentAnimTriggerName);
+
         _circleTimer.StopTimer();
         // Sound.Play();
         yield return new WaitUntil(() => GameManager.Instance.PowerUpEnabled == false);

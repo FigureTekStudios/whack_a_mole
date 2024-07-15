@@ -126,7 +126,7 @@ public class SoundManager : MonoBehaviour
         source.Play();
     }
 
-    public void PlayOnAddScoreSFX(int multiplier = 1)
+    public void PlayOnAddScoreSFX(AudioSource source, int multiplier = 1)
     {
         if (multiplier == 2)
             PlaySound(onAddScoreAudioClips[0]);
