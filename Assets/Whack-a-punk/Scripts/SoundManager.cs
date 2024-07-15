@@ -12,6 +12,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] List<AudioClip> hitAudioClips;
     [SerializeField] List<AudioClip> revealAudioClips;
     [SerializeField] List<AudioClip> retreatAudioClips;
+    [SerializeField] List<AudioClip> retreatDamagedAudioClips;
     [SerializeField] List<AudioClip> tauntAudioClips;
 
     [Header("Game Announcer VO Audio Clips")]
