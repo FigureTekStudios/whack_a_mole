@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cca18e4ade691d74cb3af696912842de
+guid: 5be0b686872a3e24b8e4a97e2bff1bf6
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -12,7 +12,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleCurves: 0
+    resampleCurves: 1
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
@@ -24,7 +24,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 0
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: ApertrueOpen
+      name: Aperture_Opening
       takeName: Take 001
       internalID: 1827226128182048838
-      firstFrame: 1
-      lastFrame: 45
+      firstFrame: 0
+      lastFrame: 15
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

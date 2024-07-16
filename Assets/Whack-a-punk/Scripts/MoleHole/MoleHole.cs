@@ -5,6 +5,11 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+public enum MoleState
+{
+    idle, hit, revealing, retreating, hiding, taunt, shocked
+}
+
 public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFinished, IMoleRevealAnimationEventFinished
 {
     [SerializeField] MoleState state = MoleState.hiding;
@@ -16,21 +21,22 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     private static int currentTauntingMoles = 0;
     private Coroutine tauntCoroutine;
 
-
     // Likeliness in percent that the mole will reveal itself each beat
     public int revealLikelinessInPercent = 20;
-    
+
     public int revealTimeInBeats = 16;
     private int currentTimeRevealedInBeats = 0;
-    
+
     // speed multiplier for mole reveal time
-    public int speed = 1; 
+    public int speed = 1;
     // score that gets returned to game manager
     public int score = 10;
-    
+
     private int _multiplier = 1;
 
     [SerializeField] Animator animator;
+    [SerializeField] Animator apertureAnimator; // Assign this in the inspector to the aperture's Animator
+
     private string currentAnimTriggerName = string.Empty;
     private List<string> idleAnimTriggerNames = new List<string>();
     private List<string> tauntAnimTriggerNames = new List<string>();
@@ -41,22 +47,19 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     public ParticleSystem hitParticle, revealParticle, retreatParticle;
 
     public Action<int, int> OnMoleHit;
-    
+
     [SerializeField]
     private CircleTimer _circleTimer;
 
-    [SerializeField] 
+    [SerializeField]
     private float perfectTimeInBeats;
     [SerializeField]
     private float okTimeInBeats;
 
     public MoleState State { get => state; }
 
-    //public string CurrentAnimTriggerName { get => currentAnimTriggerName; }
-
     private void Awake()
     {
-        //animator = GetComponentInChildren<Animator>(); 
         idleAnimTriggerNames.Add("Idle_0");
         idleAnimTriggerNames.Add("Idle_1");
 
@@ -76,16 +79,18 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         StateManager(MoleState.hiding);
     }
 
-    private void StateManager(MoleState state)
+    private void StateManager(MoleState newState)
     {
-        switch (state)
+        Debug.Log("StateManager: " + newState);
+        state = newState;
+        switch (newState)
         {
             case MoleState.idle:
-                StartCoroutine(Idle()); 
+                StartCoroutine(Idle());
                 break;
             case MoleState.hit:
                 Hit();
-                break; 
+                break;
             case MoleState.revealing:
                 if (!GameManager.Instance.PowerUpEnabled)
                     StartCoroutine(RevealMole());
@@ -110,37 +115,57 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
     public IEnumerator Idle()
     {
-        state = MoleState.idle;
-        currentAnimTriggerName = GetRandomAnimation(state);
+        Debug.Log("Entering Idle State");
+        currentAnimTriggerName = GetRandomAnimation(MoleState.idle);
         animator.SetTrigger(currentAnimTriggerName);
-        ScheduleTaunt();
-        yield return null;
+        yield return new WaitForSeconds(Random.Range(2f, 5f)); // Stay idle for a random duration
+
+        if (state == MoleState.idle)
+        {
+            // Only transition to taunt or retreat if still in idle state
+            if (currentTauntingMoles < maxMolesInTauntState && Random.Range(0, 100) < revealLikelinessInPercent)
+            {
+                StateManager(MoleState.taunt);
+            }
+            else
+            {
+                StateManager(MoleState.retreating);
+            }
+        }
     }
 
     public IEnumerator Hide()
     {
+        Debug.Log("Entering Hiding State");
         state = MoleState.hiding;
         currentAnimTriggerName = "Hide";
         animator.SetTrigger(currentAnimTriggerName);
         _hit = false;
-        yield return null;
+        CloseAperture();
+        yield return new WaitForSeconds(1f);
+        if (!GameManager.Instance.GameEnded)
+        {
+            if (Random.Range(0, 100) <= revealLikelinessInPercent)
+            {
+                StateManager(MoleState.revealing);
+            }
+        }
     }
 
     public void Hit()
     {
-        Debug.Log("hitting");
+        Debug.Log("Hitting");
         if (GameManager.Instance.IsPaused)
             return;
         if (state == MoleState.idle || state == MoleState.revealing || state == MoleState.taunt || state == MoleState.shocked)
         {
-            _hit = true; 
+            _hit = true;
             _circleTimer.StopTimer();
-            
+
             _multiplier = currentTimeRevealedInBeats >= perfectTimeInBeats ? 3 : currentTimeRevealedInBeats >= okTimeInBeats ? 2 : 1;
             SoundManager.Instance.PlaySound(hitAudioClip);
             SoundManager.Instance.PlayOnAddScoreSFX(_multiplier);
             OnMoleHit?.Invoke(score, _multiplier);
-            //animator.SetTrigger("Hit"); // create anim for this
 
             // set mole to retreat.
             StateManager(MoleState.retreating);
@@ -149,40 +174,46 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
     public IEnumerator RevealMole()
     {
+        Debug.Log("Revealing Mole");
         state = MoleState.revealing;
-        currentAnimTriggerName = "Reveal"; 
+        currentAnimTriggerName = "Reveal";
         animator.SetTrigger(currentAnimTriggerName);
+        OpenAperture();
         _hit = false;
 
         _circleTimer.SetTimeInBeats(revealTimeInBeats);
         currentTimeRevealedInBeats = 0;
 
-        //yield return new WaitUntil(() => this.animator.GetCurrentAnimatorStateInfo(0).IsName("Reveal"));
-        // set mole to idol.
         StateManager(MoleState.idle);
         yield return null;
     }
 
     public IEnumerator RetreatMole(bool hit = false)
     {
-        //StateManager(MoleState.retreating);
+        Debug.Log("Retreating Mole");
         state = MoleState.retreating;
         if (hit)
-            currentAnimTriggerName = "Retreat_Damaged";
+        {
+            // Randomly choose between Retreat_1 and Retreat_Damaged if hit
+            currentAnimTriggerName = Random.value > 0.5f ? "Retreat_1" : "Retreat_Damaged";
+        }
         else
-            currentAnimTriggerName = GetRandomAnimation(state);
+        {
+            currentAnimTriggerName = "Retreat_0";
+        }
 
         animator.SetTrigger(currentAnimTriggerName);
 
         _circleTimer.StopTimer();
-        yield return new WaitUntil(() => this.animator.GetCurrentAnimatorStateInfo(0).IsName(currentAnimTriggerName));
-        
+
+        // CloseAperture() will be called by the CloseApertureOnExit StateMachineBehaviour
+        yield return new WaitForSeconds(1f); // Wait for retreat animation to finish
         StateManager(MoleState.hiding);
     }
 
     public IEnumerator Taunt()
     {
-        Debug.Log("Enterng Taunt State!");
+        Debug.Log("Entering Taunt State!");
         state = MoleState.taunt;
         currentAnimTriggerName = GetRandomAnimation(state);
         animator.SetTrigger(currentAnimTriggerName);
@@ -190,27 +221,26 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         _circleTimer.SetTimeInBeats(revealTimeInBeats);
         currentTimeRevealedInBeats = 0;
 
+        currentTauntingMoles++;
+
+        yield return new WaitForSeconds(3f); // Taunt duration
         currentTauntingMoles--;
 
-        // TODO: this should be changes so its only a 50% chance
-        // to change to idle or retreat state.
-        StateManager(MoleState.idle); 
-        yield return null;
+        StateManager(MoleState.idle);
     }
 
     public IEnumerator Shock()
     {
+        Debug.Log("Shocking Mole");
         StopAllCoroutines();
         _hit = false; // just in case a hit is already detected for some reason
         state = MoleState.shocked;
         currentAnimTriggerName = "Shock";
         animator.SetTrigger(currentAnimTriggerName);
         _circleTimer.StopTimer();
-        // Sound.Play();
         yield return new WaitUntil(() => GameManager.Instance.PowerUpEnabled == false);
 
         StateManager(MoleState.retreating);
-
     }
 
     private void ScheduleTaunt()
@@ -223,10 +253,15 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     {
         yield return new WaitForSeconds(delay);
 
-        if (currentTauntingMoles < maxMolesInTauntState)
+        // Ensure the taunt only triggers if the mole is already up (revealing or idle)
+        if ((state == MoleState.revealing || state == MoleState.idle) && currentTauntingMoles < maxMolesInTauntState)
+        {
             StateManager(MoleState.taunt);
+        }
         else
+        {
             ScheduleTaunt(); // Reschedule taunt if conditions aren't met
+        }
     }
 
     private void OnBeat(int currentBeatInSong, int currentBeatInMeasure, int currentMeasure)
@@ -323,10 +358,23 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         if (Conductor.Instance)
             Conductor.Instance.OnBeat -= OnBeat;
     }
-}
 
+    // Methods to control the aperture
+    public void OpenAperture()
+    {
+        Debug.Log("Opening Aperture");
+        if (apertureAnimator != null)
+        {
+            apertureAnimator.SetTrigger("OpenTrigger");
+        }
+    }
 
-public enum MoleState
-{
-    idle, hit, revealing, retreating, hiding, taunt, shocked
+    public void CloseAperture()
+    {
+        Debug.Log("Closing Aperture");
+        if (apertureAnimator != null)
+        {
+            apertureAnimator.SetTrigger("CloseTrigger");
+        }
+    }
 }
