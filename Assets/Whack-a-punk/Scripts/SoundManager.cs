@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -6,6 +8,16 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance { get; private set; }
 
     private AudioSource audioSource;
+
+    private int idleCounter = 0;
+    private int idleMaxCount = 3;
+
+    private int revealedCounter;
+    private int revealedMaxCount = 3;
+
+    private int retreatCounter;
+    private int retreatMaxCount = 2;
+
 
     [Header("Zombie Punk VO Audio Clips")]
     [SerializeField] List<AudioClip> idleAudioClips;
@@ -46,8 +58,14 @@ public class SoundManager : MonoBehaviour
         audioSource.Play();
     }
 
-    public void PlayZombieIdleSFX(AudioSource source)
+    public IEnumerator PlayZombieIdleSFX(AudioSource source)
     {
+        if (idleCounter >= idleMaxCount) 
+        {
+            Debug.LogWarning("SoundManager: idle sounds Maxed out.");
+            yield return null;
+        }
+
         AudioClip clip = null;
         int randIndex = Random.Range(0, idleAudioClips.Count);
         clip = idleAudioClips[randIndex];
@@ -55,11 +73,13 @@ public class SoundManager : MonoBehaviour
         if (clip == null)
         {
             Debug.LogWarning("SoundManager: PlaySound called with null clip");
-            return;
+            yield return null;
         }
-
+        idleCounter++;
         source.clip = clip;
         source.Play();
+        yield return new WaitUntil(() => !source.isPlaying);
+        idleCounter--;
     }
 
     public void PlayZombieHitSFX(AudioSource source)
