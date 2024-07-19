@@ -123,8 +123,14 @@ public class SoundManager : MonoBehaviour
         revealedCounter--;
     }
 
-    public void PlayZombieRetreatSFX(AudioSource source)
+    public IEnumerator PlayZombieRetreatSFX(AudioSource source)
     {
+        if (retreatCounter >= retreatMaxCount)
+        {
+            Debug.LogWarning("SoundManager: retreat sounds Maxed out.");
+            yield return null;
+        }
+
         AudioClip clip = null;
         int randIndex = Random.Range(0, retreatAudioClips.Count);
         clip = retreatAudioClips[randIndex];
@@ -132,11 +138,14 @@ public class SoundManager : MonoBehaviour
         if (clip == null)
         {
             Debug.LogWarning("SoundManager: PlaySound called with null clip");
-            return;
+            yield return null;
         }
 
+        retreatCounter++; 
         source.clip = clip;
         source.Play();
+        yield return new WaitUntil(() => !source.isPlaying);
+        retreatCounter--;
     }
 
     public void PlayZombieTauntSFX(AudioSource source)
