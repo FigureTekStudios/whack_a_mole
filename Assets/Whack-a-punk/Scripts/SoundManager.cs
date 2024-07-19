@@ -98,8 +98,14 @@ public class SoundManager : MonoBehaviour
         source.Play();
     }
 
-    public void PlayZombieRevealSFX(AudioSource source)
+    public IEnumerator PlayZombieRevealSFX(AudioSource source)
     {
+        if (revealedCounter >= revealedMaxCount)
+        {
+            Debug.LogWarning("SoundManager: revealed sounds Maxed out.");
+            yield return null;
+        }
+
         AudioClip clip = null;
         int randIndex = Random.Range(0, revealAudioClips.Count);
         clip = revealAudioClips[randIndex];
@@ -107,11 +113,14 @@ public class SoundManager : MonoBehaviour
         if (clip == null)
         {
             Debug.LogWarning("SoundManager: PlaySound called with null clip");
-            return;
+            yield return null;
         }
 
+        revealedCounter++;  
         source.clip = clip;
         source.Play();
+        yield return new WaitUntil(() => !source.isPlaying);
+        revealedCounter--;
     }
 
     public void PlayZombieRetreatSFX(AudioSource source)
