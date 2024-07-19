@@ -144,7 +144,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         _hit = false;
         CloseAperture();
         yield return new WaitForSeconds(1f);
-        if (!GameManager.Instance.GameEnded)
+        if (!GameManager.Instance.GameEnded && GameManager.Instance.GameStarted)
         {
             if (Random.Range(0, 100) <= revealLikelinessInPercent)
             {
