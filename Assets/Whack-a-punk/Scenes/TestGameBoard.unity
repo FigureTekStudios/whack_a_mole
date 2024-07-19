@@ -649,11 +649,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MusicPlayer
       objectReference: {fileID: 0}
-    - target: {fileID: 4952696197941318761, guid: ea5e07453e0017b4c9af40d77e5b1834,
-        type: 3}
-      propertyPath: _song
-      value: 
-      objectReference: {fileID: 1312795149}
     - target: {fileID: 5047268537273225106, guid: ea5e07453e0017b4c9af40d77e5b1834,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -777,18 +772,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ded951e8942ec94c8a9a7002797ddb9, type: 3}
---- !u!114 &1312795149 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1697686207304621024, guid: 3ded951e8942ec94c8a9a7002797ddb9,
-    type: 3}
-  m_PrefabInstance: {fileID: 1312795148}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7eed0e61557e5384da3e3cbfad9ded69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1467398489 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2678209509118443783, guid: ad741adca8f819c44a2d50b779fc56e6,
