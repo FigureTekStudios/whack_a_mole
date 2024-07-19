@@ -117,6 +117,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     {
         Debug.Log("Entering Idle State");
         currentAnimTriggerName = GetRandomAnimation(MoleState.idle);
+        StartCoroutine(SoundManager.Instance.PlayZombieIdleSFX(audioSource));
         animator.SetTrigger(currentAnimTriggerName);
         yield return new WaitForSeconds(Random.Range(2f, 5f)); // Stay idle for a random duration
 
@@ -184,7 +185,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
 
         _circleTimer.SetTimeInBeats(revealTimeInBeats);
         currentTimeRevealedInBeats = 0;
-        SoundManager.Instance.PlayZombieRevealSFX(audioSource);
+        StartCoroutine(SoundManager.Instance.PlayZombieRevealSFX(audioSource));
         StateManager(MoleState.idle);
         yield return null;
     }
@@ -204,7 +205,7 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         }
 
         animator.SetTrigger(currentAnimTriggerName);
-        SoundManager.Instance.PlayZombieRetreatSFX(audioSource);
+        StartCoroutine(SoundManager.Instance.PlayZombieRetreatSFX(audioSource));
 
         _circleTimer.StopTimer();
 

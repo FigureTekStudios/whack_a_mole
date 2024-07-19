@@ -10,10 +10,10 @@ public class SoundManager : MonoBehaviour
     private AudioSource audioSource;
 
     private int idleCounter = 0;
-    private int idleMaxCount = 3;
+    private int idleMaxCount = 2;
 
     private int revealedCounter;
-    private int revealedMaxCount = 3;
+    private int revealedMaxCount = 2;
 
     private int retreatCounter;
     private int retreatMaxCount = 2;
@@ -36,9 +36,9 @@ public class SoundManager : MonoBehaviour
     {
         if (Instance == null)
         {
-            Instance = this;
+            Instance = this; 
             DontDestroyOnLoad(gameObject);
-            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource = GetComponent<AudioSource>();
         }
         else
         {
@@ -60,6 +60,12 @@ public class SoundManager : MonoBehaviour
 
     public IEnumerator PlayZombieIdleSFX(AudioSource source)
     {
+        if (audioSource.isPlaying || source.isPlaying)
+        {
+            Debug.LogWarning("SoundManager: prioritizing main audio source.");
+            yield return null;
+        }
+
         if (idleCounter >= idleMaxCount) 
         {
             Debug.LogWarning("SoundManager: idle sounds Maxed out.");
@@ -100,6 +106,12 @@ public class SoundManager : MonoBehaviour
 
     public IEnumerator PlayZombieRevealSFX(AudioSource source)
     {
+        if (audioSource.isPlaying || source.isPlaying)
+        {
+            Debug.LogWarning("SoundManager: prioritizing main audio source.");
+            yield return null;
+        }
+
         if (revealedCounter >= revealedMaxCount)
         {
             Debug.LogWarning("SoundManager: revealed sounds Maxed out.");
@@ -125,6 +137,12 @@ public class SoundManager : MonoBehaviour
 
     public IEnumerator PlayZombieRetreatSFX(AudioSource source)
     {
+        if (audioSource.isPlaying || source.isPlaying)
+        {
+            Debug.LogWarning("SoundManager: prioritizing main audio source.");
+            yield return null;
+        }
+
         if (retreatCounter >= retreatMaxCount)
         {
             Debug.LogWarning("SoundManager: retreat sounds Maxed out.");
@@ -184,4 +202,5 @@ public class SoundManager : MonoBehaviour
         int randIndex = Random.Range(0, onObtainedPowerUpAudioClips.Count);
         PlaySound(onUsePowerUpAudioClips[randIndex]);
     }
+
 }
