@@ -5,6 +5,7 @@ using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -63,7 +64,7 @@ public class GameManager : MonoBehaviour
     private float currentScoreFadeDuration = 1;
     private float currentScoreVisibleDuration = 1f;
 
-
+    [SerializeField] GameObject electrictyParticles;
     private void Awake()
     {
         // Singleton pattern implementation
@@ -358,10 +359,12 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator UsePowerUp()
     {
-        powerUpEnabled = true;
-        SoundManager.Instance.PlayOnUsePowerUpSFX();
+
         if (powerUpCount > 0)
         {
+            powerUpEnabled = true;
+            electrictyParticles.SetActive(powerUpEnabled);
+            SoundManager.Instance.PlayOnUsePowerUpSFX();
             powerUpCount--;
             UpdatePowerUpIcons();
 
@@ -374,9 +377,11 @@ public class GameManager : MonoBehaviour
             .ToList();
 
             foreach (var mole in moles) { StartCoroutine(mole.Shock()); }
+            yield return new WaitForSeconds(3f);
         }
-        yield return new WaitForSeconds(3f);  
-        powerUpEnabled = false; 
+        else { yield return null; }
+        powerUpEnabled = false;
+        electrictyParticles.SetActive(powerUpEnabled);
     }
 
     private void UpdatePowerUpProgress(int amount)
