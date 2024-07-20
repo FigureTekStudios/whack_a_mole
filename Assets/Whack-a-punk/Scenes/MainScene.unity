@@ -503,7 +503,7 @@ PrefabInstance:
     - target: {fileID: 7936393818249197109, guid: ad741adca8f819c44a2d50b779fc56e6,
         type: 3}
       propertyPath: areaSizeX
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7936393818249197109, guid: ad741adca8f819c44a2d50b779fc56e6,
         type: 3}
@@ -514,6 +514,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameBoard
+      objectReference: {fileID: 0}
+    - target: {fileID: 8307788227185871330, guid: ad741adca8f819c44a2d50b779fc56e6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.762
       objectReference: {fileID: 0}
     - target: {fileID: 8625675473402435386, guid: ad741adca8f819c44a2d50b779fc56e6,
         type: 3}

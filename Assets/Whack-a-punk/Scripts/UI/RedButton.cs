@@ -92,10 +92,8 @@ public class RedButton : MonoBehaviour, IHittable
         
             GameManager.Instance.StartGame();
         }
-        else
+        else if (GameManager.Instance.GameStarted)
         {
-            if (GameManager.Instance.PowerUpCount <= 0) return;
-            
             state = ButtonState.moveDown;
             GameManager.Instance.UsePowerUp();
         }
