@@ -43,7 +43,6 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
     private List<string> retreatAnimTriggerNames = new List<string>();
 
     [SerializeField] AudioSource audioSource;
-    private AudioClip idleAudioClip, hitAudioClip, revealAudioClip, retreatAudioClip;
     public ParticleSystem hitParticle, revealParticle, retreatParticle;
 
     public Action<int, int> OnMoleHit;
@@ -162,14 +161,13 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         {
             _hit = true;
             _circleTimer.StopTimer();
-
             _multiplier = currentTimeRevealedInBeats >= perfectTimeInBeats ? 3 : currentTimeRevealedInBeats >= okTimeInBeats ? 2 : 1;
             
             hitParticle.Play();
 
-            SoundManager.Instance.PlaySound(hitAudioClip);
             SoundManager.Instance.PlayOnAddScoreSFX(audioSource, _multiplier);
             SoundManager.Instance.PlayZombieHitSFX(audioSource);
+
             OnMoleHit?.Invoke(score, _multiplier);
 
             // set mole to retreat.

@@ -19,7 +19,14 @@ public class Mallet : MonoBehaviour
 
     private bool _hasReachedSufficientHeight;
     private float _lastTimeSufficientHeight;
-    
+
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();  
+    }
+
     private void Update()
     {
         if (malletCenter.transform.position.y > necessaryHeight)
@@ -58,6 +65,7 @@ public class Mallet : MonoBehaviour
             return;
         }
         
+        audioSource.Play();
         hittable.Hit();
     }
 }
