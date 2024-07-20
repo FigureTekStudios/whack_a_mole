@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: JR3_Coloredleather_Jacket_EE3HK6WGP5_lambert
+  m_Name: JR3_Coloredleather_Jacket_EE3HK6WGP5_lambert 1
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -129,8 +129,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.2850412, g: 0.3301887, b: 0.26633143, a: 1}
-    - _Color: {r: 0.28504118, g: 0.33018863, b: 0.2663314, a: 1}
-    - _EmissionColor: {r: 0.11928081, g: 0.38679248, b: 0.012771457, a: 1}
+    - _BaseColor: {r: 0.77254903, g: 0.172549, b: 0.76612777, a: 0}
+    - _Color: {r: 0.77254903, g: 0.17254895, b: 0.76612777, a: 0}
+    - _EmissionColor: {r: 0.5, g: 0.11084905, b: 0.494913, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

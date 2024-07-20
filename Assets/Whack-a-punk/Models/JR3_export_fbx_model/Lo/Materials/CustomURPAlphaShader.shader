@@ -7,6 +7,7 @@ Shader "Custom/URPAlphaMultiplyShader"
         _Color("Multiply Color", Color) = (1, 1, 1, 1)
         _UseAlphaTex("Use Alpha Texture", Float) = 0 // 0 means don't use, 1 means use
         _UseEmission("Use Emission", Float) = 0 // 0 means don't use, 1 means use
+        _EmissionColor("Emission Color", Color) = (0, 0, 0, 1) // Default emission color
     }
         SubShader
         {
@@ -17,73 +18,71 @@ Shader "Custom/URPAlphaMultiplyShader"
             {
                 Blend SrcAlpha OneMinusSrcAlpha
                 ZWrite On
-                CGPROGRAM
+                HLSLPROGRAM
                 #pragma vertex vert
                 #pragma fragment frag
 
-                #include "UnityCG.cginc"
+                #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
-                struct appdata
+                struct Attributes
                 {
-                    float4 vertex : POSITION;
+                    float4 position : POSITION;
                     float2 uv : TEXCOORD0;
                 };
 
-                struct v2f
+                struct Varyings
                 {
                     float2 uv : TEXCOORD0;
-                    UNITY_FOG_COORDS(1)
-                    float4 vertex : SV_POSITION;
+                    float4 position : SV_POSITION;
                 };
 
-                sampler2D _MainTex;
-                sampler2D _AlphaTex;
+                TEXTURE2D(_MainTex);
+                SAMPLER(sampler_MainTex);
+                TEXTURE2D(_AlphaTex);
+                SAMPLER(sampler_AlphaTex);
                 float4 _MainTex_ST;
                 float4 _Color;
                 float _UseAlphaTex;
                 float _UseEmission;
+                float4 _EmissionColor;
 
-                v2f vert(appdata v)
+                Varyings vert(Attributes v)
                 {
-                    v2f o;
-                    o.vertex = UnityObjectToClipPos(v.vertex);
+                    Varyings o;
+                    o.position = TransformObjectToHClip(v.position);
                     o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                    UNITY_TRANSFER_FOG(o, o.vertex);
                     return o;
                 }
 
-                fixed4 frag(v2f i) : SV_Target
+                half4 frag(Varyings i) : SV_Target
                 {
-                    // sample the main texture
-                    fixed4 col = tex2D(_MainTex, i.uv);
+                    // Sample the main texture
+                    half4 col = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
 
+                    // Apply alpha texture if needed
                     if (_UseAlphaTex > 0.5)
                     {
-                        // sample the alpha texture
-                        fixed4 alpha = tex2D(_AlphaTex, i.uv);
-                        // set the alpha value from the red channel of the alpha texture
+                        half4 alpha = SAMPLE_TEXTURE2D(_AlphaTex, sampler_AlphaTex, i.uv);
                         col.a = alpha.r;
                     }
                     else
                     {
-                        // no alpha texture, assume opaque
                         col.a = 1.0;
                     }
 
-                    // multiply the color by the specified color
+                    // Multiply the color by the specified color
                     col.rgb *= _Color.rgb;
 
+                    // Apply emission if enabled
                     if (_UseEmission > 0.5)
                     {
-                        // map the diffuse color to the emission channel
-                        col.rgb += col.rgb;
+                        col.rgb += _EmissionColor.rgb * col.rgb;
                     }
 
-                    // apply fog
-                    UNITY_APPLY_FOG(i.fogCoord, col);
                     return col;
                 }
-                ENDCG
+                ENDHLSL
             }
         }
+            FallBack "Diffuse"
 }
