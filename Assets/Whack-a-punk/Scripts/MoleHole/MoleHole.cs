@@ -164,6 +164,9 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
             _circleTimer.StopTimer();
 
             _multiplier = currentTimeRevealedInBeats >= perfectTimeInBeats ? 3 : currentTimeRevealedInBeats >= okTimeInBeats ? 2 : 1;
+            
+            hitParticle.Play();
+
             SoundManager.Instance.PlaySound(hitAudioClip);
             SoundManager.Instance.PlayOnAddScoreSFX(audioSource, _multiplier);
             SoundManager.Instance.PlayZombieHitSFX(audioSource);
@@ -196,12 +199,11 @@ public class MoleHole : MonoBehaviour, IHittable, IMoleRetreatAnimationEventFini
         state = MoleState.retreating;
         if (hit)
         {
-            // Randomly choose between Retreat_1 and Retreat_Damaged if hit
-            currentAnimTriggerName = Random.value > 0.5f ? "Retreat_1" : "Retreat_Damaged";
+            currentAnimTriggerName = "Retreat_Damaged";
         }
         else
         {
-            currentAnimTriggerName = "Retreat_0";
+            currentAnimTriggerName = Random.value > 0.5f ? "Retreat_0" : "Retreat_1";
         }
 
         animator.SetTrigger(currentAnimTriggerName);

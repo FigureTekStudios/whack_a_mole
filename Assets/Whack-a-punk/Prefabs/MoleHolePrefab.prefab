@@ -250,7 +250,7 @@ MonoBehaviour:
   animator: {fileID: 5712160024934541195}
   apertureAnimator: {fileID: 3215029815467889794}
   audioSource: {fileID: 7134593642541830173}
-  hitParticle: {fileID: 0}
+  hitParticle: {fileID: 6808569600055309658}
   revealParticle: {fileID: 0}
   retreatParticle: {fileID: 0}
   _circleTimer: {fileID: 4271711125202701882}
@@ -958,7 +958,7 @@ PrefabInstance:
     - target: {fileID: 7794958249645013317, guid: 7c38cc4bd962aa5478cd0a0175238989,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.014
       objectReference: {fileID: 0}
     - target: {fileID: 7794958249645013317, guid: 7c38cc4bd962aa5478cd0a0175238989,
         type: 3}
@@ -973,17 +973,17 @@ PrefabInstance:
     - target: {fileID: 7794958249645013317, guid: 7c38cc4bd962aa5478cd0a0175238989,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7794958249645013317, guid: 7c38cc4bd962aa5478cd0a0175238989,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7794958249645013317, guid: 7c38cc4bd962aa5478cd0a0175238989,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7794958249645013317, guid: 7c38cc4bd962aa5478cd0a0175238989,
         type: 3}
@@ -1008,6 +1008,12 @@ PrefabInstance:
 --- !u!4 &3206700533530524779 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7794958249645013317, guid: 7c38cc4bd962aa5478cd0a0175238989,
+    type: 3}
+  m_PrefabInstance: {fileID: 4660447296447776046}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6808569600055309658 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2220795672748290164, guid: 7c38cc4bd962aa5478cd0a0175238989,
     type: 3}
   m_PrefabInstance: {fileID: 4660447296447776046}
   m_PrefabAsset: {fileID: 0}

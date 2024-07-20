@@ -365,11 +365,12 @@ public class GameManager : MonoBehaviour
 
         if (powerUpCount > 0 && !powerUpEnabled && !isPowerUpOnCooldown)
         {
+            StartCoroutine(PowerUpCooldown());
             powerUpEnabled = true;
             electrictyParticles.SetActive(powerUpEnabled);
             SoundManager.Instance.PlayOnUsePowerUpVO();
             powerUpCount--;
-            StartCoroutine(PowerUpCooldown());
+
             UpdatePowerUpIcons();
 
             var moles = moleHoles
