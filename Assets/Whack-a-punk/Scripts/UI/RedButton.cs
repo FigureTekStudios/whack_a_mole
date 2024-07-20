@@ -80,8 +80,12 @@ public class RedButton : MonoBehaviour, IHittable
         if (state != ButtonState.idle || GameManager.Instance == null) return;
         
         Debug.Log(" Game Ended: " + GameManager.Instance.GameEnded + " Game Started: " + GameManager.Instance.GameStarted);
-
-        if (GameManager.Instance.GameEnded)
+        if (GameManager.Instance.GameStarted)
+        {
+            state = ButtonState.moveDown;
+            GameManager.Instance.UsePowerUp();
+        }
+        else if (GameManager.Instance.GameEnded)
         {
             state = ButtonState.moveDown;
         
@@ -92,10 +96,6 @@ public class RedButton : MonoBehaviour, IHittable
         
             GameManager.Instance.StartGame();
         }
-        else if (GameManager.Instance.GameStarted)
-        {
-            state = ButtonState.moveDown;
-            GameManager.Instance.UsePowerUp();
-        }
+
     }
 }
