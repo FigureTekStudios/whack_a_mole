@@ -82,8 +82,9 @@ public class RedButton : MonoBehaviour, IHittable
         Debug.Log(" Game Ended: " + GameManager.Instance.GameEnded + " Game Started: " + GameManager.Instance.GameStarted);
         if (GameManager.Instance.GameStarted)
         {
+            Debug.Log("HIIIIIIIITING");
             state = ButtonState.moveDown;
-            GameManager.Instance.UsePowerUp();
+            StartCoroutine(GameManager.Instance.UsePowerUp());
         }
         else if (GameManager.Instance.GameEnded)
         {
