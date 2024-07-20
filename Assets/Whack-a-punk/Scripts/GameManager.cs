@@ -32,7 +32,10 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI finalScoreText;
 
     private bool powerUpEnabled = false;
+    private bool isPowerUpOnCooldown = false;
+    public float powerUpCooldown = 5f; // Cooldown time in seconds
     public Image[] powerUpIcons; // UI Images to display power-up icons
+    private Coroutine cooldownCoroutine;
 
     // these are references to objects in the second monitor
     public TextMeshProUGUI preGameCountdownText1;
@@ -360,12 +363,13 @@ public class GameManager : MonoBehaviour
     public IEnumerator UsePowerUp()
     {
 
-        if (powerUpCount > 0)
+        if (powerUpCount > 0 && !powerUpEnabled && !isPowerUpOnCooldown)
         {
             powerUpEnabled = true;
             electrictyParticles.SetActive(powerUpEnabled);
             SoundManager.Instance.PlayOnUsePowerUpVO();
             powerUpCount--;
+            StartCoroutine(PowerUpCooldown());
             UpdatePowerUpIcons();
 
             var moles = moleHoles
@@ -378,10 +382,18 @@ public class GameManager : MonoBehaviour
 
             foreach (var mole in moles) { StartCoroutine(mole.Shock()); }
             yield return new WaitForSeconds(3f);
+            powerUpEnabled = false;
+            electrictyParticles.SetActive(powerUpEnabled);
         }
         else { yield return null; }
-        powerUpEnabled = false;
-        electrictyParticles.SetActive(powerUpEnabled);
+       
+    }
+
+    private IEnumerator PowerUpCooldown()
+    {
+        isPowerUpOnCooldown = true;
+        yield return new WaitForSeconds(powerUpCooldown);
+        isPowerUpOnCooldown = false;
     }
 
     private void UpdatePowerUpProgress(int amount)
