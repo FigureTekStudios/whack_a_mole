@@ -1427,11 +1427,6 @@ PrefabInstance:
       propertyPath: powerUpIcons1.Array.data[2]
       value: 
       objectReference: {fileID: 63015689}
-    - target: {fileID: 6404741680960115950, guid: 8d8fff466898f154c985a148c088b958,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

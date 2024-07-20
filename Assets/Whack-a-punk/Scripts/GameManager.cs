@@ -364,7 +364,7 @@ public class GameManager : MonoBehaviour
         {
             powerUpEnabled = true;
             electrictyParticles.SetActive(powerUpEnabled);
-            SoundManager.Instance.PlayOnUsePowerUpSFX();
+            SoundManager.Instance.PlayOnUsePowerUpVO();
             powerUpCount--;
             UpdatePowerUpIcons();
 

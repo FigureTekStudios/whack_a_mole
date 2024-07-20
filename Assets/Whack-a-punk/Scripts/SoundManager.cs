@@ -190,7 +190,7 @@ public class SoundManager : MonoBehaviour
             PlaySound(onAddScoreAudioClips[1]);
     }
 
-    public void PlayOnUsePowerUpSFX()
+    public void PlayOnUsePowerUpVO()
     {
         int randIndex = Random.Range(0, onUsePowerUpAudioClips.Count);
         PlaySound(onUsePowerUpAudioClips[randIndex]);
