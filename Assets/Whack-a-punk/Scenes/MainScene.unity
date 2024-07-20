@@ -1114,7 +1114,7 @@ PrefabInstance:
     - target: {fileID: 174330569950312791, guid: bd3951710960276459886de115c37d53,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.21
       objectReference: {fileID: 0}
     - target: {fileID: 174330569950312791, guid: bd3951710960276459886de115c37d53,
         type: 3}
@@ -1165,6 +1165,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ArcadeScenePrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 8505376239367142870, guid: bd3951710960276459886de115c37d53,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.759
       objectReference: {fileID: 0}
     - target: {fileID: 8711899606071234020, guid: bd3951710960276459886de115c37d53,
         type: 3}

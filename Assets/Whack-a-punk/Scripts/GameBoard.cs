@@ -108,7 +108,11 @@ public class GameBoard : MonoBehaviour
             foreach (var hitCollider in hitColliders)
             {
                 //Debug.Log("Sphere hit: " + hitCollider.name + " at position: " + hit.point);
-
+                if (hitCollider.CompareTag("Destroyer"))
+                {
+                    canSpawn = false;
+                    break;
+                }
                 if (hitCollider.CompareTag("MoleHole"))
                 {
                     Debug.Log($"hitting moleHole: {hitCollider.transform.name}");
