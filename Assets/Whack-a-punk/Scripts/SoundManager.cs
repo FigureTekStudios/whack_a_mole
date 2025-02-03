@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
@@ -9,14 +10,19 @@ public class SoundManager : MonoBehaviour
 
     private AudioSource audioSource;
 
-    private int idleCounter = 0;
-    private int idleMaxCount = 2;
+    // This is kinda a global counter to ensure only two vo SFX are playing
+    // for any state.
+    [SerializeField] int totalSFXCounter = 0;
+    private int maxTotalSFXCount = 2;
 
-    private int revealedCounter;
-    private int revealedMaxCount = 2;
+    [SerializeField] int idleCounter = 0;
+    private int idleMaxCount = 1;
 
-    private int retreatCounter;
-    private int retreatMaxCount = 2;
+    [SerializeField] int revealedCounter;
+    private int revealedMaxCount = 1;
+
+    [SerializeField] int retreatCounter;
+    private int retreatMaxCount = 1;
 
 
     [Header("Zombie Punk VO Audio Clips")]
@@ -31,6 +37,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] List<AudioClip> onAddScoreAudioClips;
     [SerializeField] List<AudioClip> onUsePowerUpAudioClips;
     [SerializeField] List<AudioClip> onObtainedPowerUpAudioClips;
+
 
     private void Awake()
     {
@@ -63,13 +70,19 @@ public class SoundManager : MonoBehaviour
         if (audioSource.isPlaying || source.isPlaying)
         {
             Debug.LogWarning("SoundManager: prioritizing main audio source.");
-            yield return null;
+            yield break;
+        }
+
+        if (totalSFXCounter >= maxTotalSFXCount)
+        {
+            Debug.LogWarning("SoundManager: Too many SFX playing, not playing this one.");
+            yield break;
         }
 
         if (idleCounter >= idleMaxCount) 
         {
             Debug.LogWarning("SoundManager: idle sounds Maxed out.");
-            yield return null;
+            yield break;
         }
 
         AudioClip clip = null;
@@ -79,13 +92,16 @@ public class SoundManager : MonoBehaviour
         if (clip == null)
         {
             Debug.LogWarning("SoundManager: PlaySound called with null clip");
-            yield return null;
+            yield break;
         }
         idleCounter++;
+        totalSFXCounter++;
         source.clip = clip;
         source.Play();
         yield return new WaitUntil(() => !source.isPlaying);
+        yield return new WaitForSeconds(1.5f); // A slight delay to prevent a similar SFX from playing immediately. 
         idleCounter--;
+        totalSFXCounter--;
     }
 
     public void PlayZombieHitSFX(AudioSource source)
@@ -109,13 +125,19 @@ public class SoundManager : MonoBehaviour
         if (audioSource.isPlaying || source.isPlaying)
         {
             Debug.LogWarning("SoundManager: prioritizing main audio source.");
-            yield return null;
+            yield break;
+        }
+
+        if (totalSFXCounter >= maxTotalSFXCount)
+        {
+            Debug.LogWarning("SoundManager: Too many SFX playing, not playing this one.");
+            yield break;
         }
 
         if (revealedCounter >= revealedMaxCount)
         {
             Debug.LogWarning("SoundManager: revealed sounds Maxed out.");
-            yield return null;
+            yield break;
         }
 
         AudioClip clip = null;
@@ -125,14 +147,17 @@ public class SoundManager : MonoBehaviour
         if (clip == null)
         {
             Debug.LogWarning("SoundManager: PlaySound called with null clip");
-            yield return null;
+            yield break;
         }
 
-        revealedCounter++;  
+        revealedCounter++;
+        totalSFXCounter++;
         source.clip = clip;
         source.Play();
         yield return new WaitUntil(() => !source.isPlaying);
+        yield return new WaitForSeconds(1.5f); // A slight delay to prevent a similar SFX from playing immediately. 
         revealedCounter--;
+        totalSFXCounter--;
     }
 
     public IEnumerator PlayZombieRetreatSFX(AudioSource source)
@@ -140,13 +165,19 @@ public class SoundManager : MonoBehaviour
         if (audioSource.isPlaying || source.isPlaying)
         {
             Debug.LogWarning("SoundManager: prioritizing main audio source.");
-            yield return null;
+            yield break;
+        }
+
+        if (totalSFXCounter >= maxTotalSFXCount)
+        {
+            Debug.LogWarning("SoundManager: Too many SFX playing, not playing this one.");
+            yield break;
         }
 
         if (retreatCounter >= retreatMaxCount)
         {
             Debug.LogWarning("SoundManager: retreat sounds Maxed out.");
-            yield return null;
+            yield break;
         }
 
         AudioClip clip = null;
@@ -156,14 +187,17 @@ public class SoundManager : MonoBehaviour
         if (clip == null)
         {
             Debug.LogWarning("SoundManager: PlaySound called with null clip");
-            yield return null;
+            yield break;
         }
 
-        retreatCounter++; 
+        retreatCounter++;
+        totalSFXCounter++;
         source.clip = clip;
         source.Play();
         yield return new WaitUntil(() => !source.isPlaying);
+        yield return new WaitForSeconds(1.5f); // A slight delay to prevent a similar SFX from playing immediately. 
         retreatCounter--;
+        totalSFXCounter--;
     }
 
     public void PlayZombieTauntSFX(AudioSource source)
