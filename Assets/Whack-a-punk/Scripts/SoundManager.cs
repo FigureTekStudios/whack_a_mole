@@ -12,17 +12,17 @@ public class SoundManager : MonoBehaviour
 
     // This is kinda a global counter to ensure only two vo SFX are playing
     // for any state.
-    [SerializeField] int totalSFXCounter = 0;
-    private int maxTotalSFXCount = 2;
+    private int totalSFXCounter = 0;
+    [SerializeField] int maxTotalSFXCount = 2;
 
-    [SerializeField] int idleCounter = 0;
-    private int idleMaxCount = 1;
+    private int idleCounter = 0;
+    [SerializeField] int idleMaxCount = 1;
 
-    [SerializeField] int revealedCounter;
-    private int revealedMaxCount = 1;
+    private int revealedCounter;
+    [SerializeField] int revealedMaxCount = 1;
 
-    [SerializeField] int retreatCounter;
-    private int retreatMaxCount = 1;
+    private int retreatCounter;
+    [SerializeField] int retreatMaxCount = 1;
 
 
     [Header("Zombie Punk VO Audio Clips")]
