@@ -1427,6 +1427,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestClickInput
       objectReference: {fileID: 0}
+    - target: {fileID: 5633197343252652528, guid: 0af515da6a0218d40aa81bdf83dae1e3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
